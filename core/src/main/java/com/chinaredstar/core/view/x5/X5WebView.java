@@ -1,4 +1,4 @@
-package com.chinaredstar.core.utils.x5;
+package com.chinaredstar.core.view.x5;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
