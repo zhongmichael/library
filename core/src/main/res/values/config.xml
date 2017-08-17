@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ss_name">chinaredstar</string>
+    <!--数据库名-->
+    <string name="db_name">chinaredstar.db</string>
+
+    <!--数据当前版本号-->
+    <integer name="db_version">1</integer>
+
+    <!--表-->
+    <string-array name="db_tables">
+        <!-- item为实体类的类名 -->
+        <item> </item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+    <!--升级表-->
+    <string-array name="db_tables_upgrade">
+        <!-- item为实体类的类名 -->
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+</resources>

@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+    /*    manifestPlaceholders = [
+                JPUSH_APPKEY : "ccec05a5696627efff888ab2",
+                JPUSH_CHANNEL: "developer-default",
+                FLYME_APPID  : "888888888",
+                FLYME_APPKEY : "9999999",
+                MIUI_APPID   : "222222222",
+                MIUI_APPKEY  : "444444444",
+                PACKAGE_NAME : "com.chinaredstar.demo"
+        ]*/
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
+//    compile 'cn.jiguang.sdk:jpush:3.0.8'  // 此处以JPush 3.0.3 版本为例。
+//    compile 'cn.jiguang.sdk:jcore:1.1.6'  // 此处以JCore 1.1.1 版本为例。
+}

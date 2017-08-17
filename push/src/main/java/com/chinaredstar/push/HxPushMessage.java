@@ -1,0 +1,78 @@
+package com.chinaredstar.push;
+
+import com.chinaredstar.push.utils.Platform;
+
+import java.io.Serializable;
+
+/**
+ * Created by hairui.xiang on 2017/8/8.
+ */
+
+public class HxPushMessage implements Serializable {
+    private int notifyID;  //这个字段用于通知的消息类型，在透传中都是默认0
+    private String messageID;
+    private String title;
+    private String message;
+    private String extra;
+    private Platform platform;
+
+    public int getNotifyID() {
+        return notifyID;
+    }
+
+    public void setNotifyID(int notifyID) {
+        this.notifyID = notifyID;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    @Override
+    public String toString() {
+        return "HxPushMessage{" +
+                "notifyID=" + notifyID +
+                ", messageID='" + messageID + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", extra='" + extra + '\'' +
+                ", platform=" + platform +
+                '}';
+    }
+}
