@@ -29,7 +29,7 @@ public class LeakCanaryUtil {
     }
 
     private static void enabledStrictMode() {
-        if (Build.VERSION.SDK_INT >= 9) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             //耗时操作
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
             //内存泄漏

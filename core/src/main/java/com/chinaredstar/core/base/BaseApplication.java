@@ -2,6 +2,7 @@ package com.chinaredstar.core.base;
 
 import android.app.Application;
 
+import com.chinaredstar.core.cache.db.DatabaseConfig;
 import com.chinaredstar.core.fresco.ImageConfig;
 import com.chinaredstar.core.okhttp.OkHttpUtils;
 import com.chinaredstar.core.okhttp.https.HttpsUtils;
@@ -16,6 +17,8 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.tencent.smtt.sdk.QbSdk;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -32,19 +35,11 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initLogger();
+        initDatabase();
         initOkhttp();
         initFresco();
         initLeakCanary();
         initX5();
-      /*   if(!LeakCanary.isInAnalyzerProcess(this)) {
-            LeakCanary.install(this);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {//开启严格模式
-            //耗时操作
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
-            //内存泄漏
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
-        }*/
     }
 
     private void initOkhttp() {
@@ -108,10 +103,54 @@ public class BaseApplication extends Application {
         LogUtil.init(isPrintLog());
     }
 
+    private void initDatabase() {
+        DatabaseConfig
+                .newBuild()
+                .setDatabaseName(getDatabaseName())
+                .setDatabaseVersion(getDatabaseVersion())
+                .addTables(getDatabaseTables())
+                .addUpgradeTables(getDatabaseUpgradeTables());
+    }
+
+    /**
+     * default empty
+     */
+    public List<Class<?>> getDatabaseTables() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * default empty
+     */
+    public List<Class<?>> getDatabaseUpgradeTables() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * default 1
+     */
+    public int getDatabaseVersion() {
+        return 1;
+    }
+
+    /**
+     * default 'chinaredstar'
+     */
+    public String getDatabaseName() {
+        return "chinaredstar";
+    }
+
+
+    /**
+     * default true
+     */
     public boolean isPrintLog() {
         return true;
     }
 
+    /**
+     * default true
+     */
     public boolean isOpenLeakCanary() {
         return true;
     }

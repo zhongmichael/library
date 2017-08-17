@@ -13,12 +13,12 @@ import java.util.List;
  * Created by hairui.xiang on 2017/7/31.
  */
 
-public class DataBaseDao<T> {
-    private DataBaseHelper helper;
+public class DatabaseDao<T> {
+    private DatabaseHelper helper;
     private Dao dao;
 
-    public DataBaseDao(Context context, Class clazz) {
-        this.helper = DataBaseHelper.getInstance(context);
+    public DatabaseDao(Context context, Class clazz) {
+        this.helper = DatabaseHelper.getInstance(context);
         try {
             this.dao = helper.getDao(clazz);
         } catch (SQLException e) {

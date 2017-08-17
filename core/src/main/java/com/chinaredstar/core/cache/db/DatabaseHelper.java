@@ -4,7 +4,6 @@ package com.chinaredstar.core.cache.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.chinaredstar.core.R;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -18,27 +17,30 @@ import java.util.Map;
  * Created by hairui.xiang on 2017/7/31.
  */
 
-public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private Context mContext;
-    private static DataBaseHelper mDataBaseHelper;
+    private static DatabaseHelper mDataBaseHelper;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
-    public DataBaseHelper(Context context) {
-        super(context, context.getResources().getString(R.string.db_name), null, context.getResources().getInteger(R.integer.db_version));
+    public DatabaseHelper(Context context) {
+//        super(context, context.getResources().getString(R.string.db_name), null, context.getResources().getInteger(R.integer.db_version));
+        super(context, DatabaseConfig.getDatabaseName(), null, DatabaseConfig.getDatabaseVersion());
         mContext = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            String[] db_tables = mContext.getResources().getStringArray(R.array.db_tables);
+         /*   String[] db_tables = mContext.getResources().getStringArray(R.array.db_tables);
             for (String table : db_tables) {
                 TableUtils.createTableIfNotExists(connectionSource, Class.forName(table));
+            }*/
+
+            for (Class<?> clazz : DatabaseConfig.getTables()) {
+                TableUtils.createTableIfNotExists(connectionSource, clazz);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -46,23 +48,24 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            String[] db_tables = mContext.getResources().getStringArray(R.array.db_tables_upgrade);
+           /* String[] db_tables = mContext.getResources().getStringArray(R.array.db_tables_upgrade);
             for (String table : db_tables) {
                 TableUtils.dropTable(connectionSource, Class.forName(table), true);
+            }*/
+            for (Class<?> clazz : DatabaseConfig.getUpgradeTables()) {
+                TableUtils.dropTable(connectionSource, clazz, true);
             }
             onCreate(database, connectionSource);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static DataBaseHelper getInstance(Context context) {
+    public static DatabaseHelper getInstance(Context context) {
         if (mDataBaseHelper == null) {
-            synchronized (DataBaseHelper.class) {
+            synchronized (DatabaseHelper.class) {
                 if (mDataBaseHelper == null) {
-                    mDataBaseHelper = new DataBaseHelper(context.getApplicationContext());
+                    mDataBaseHelper = new DatabaseHelper(context.getApplicationContext());
                 }
             }
         }
