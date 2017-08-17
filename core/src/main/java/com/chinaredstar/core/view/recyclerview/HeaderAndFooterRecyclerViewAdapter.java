@@ -213,7 +213,7 @@ public class HeaderAndFooterRecyclerViewAdapter extends RecyclerView.Adapter<Rec
                 }
             }*/
 
-            if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+          /*  if (mLayoutManager instanceof StaggeredGridLayoutManager) {
                 StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) mLayoutManager;
                 if (isHeader(position) || isFooter(position) || null != mSpanSizeLookup && manager.getSpanCount() == mSpanSizeLookup.getSpanSize(position)) {
                     ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
@@ -222,7 +222,7 @@ public class HeaderAndFooterRecyclerViewAdapter extends RecyclerView.Adapter<Rec
                         params.setFullSpan(true);
                     }
                 }
-            }
+            }*/
 
 
         } else {
