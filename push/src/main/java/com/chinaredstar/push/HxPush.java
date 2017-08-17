@@ -3,6 +3,7 @@ package com.chinaredstar.push;
 import android.content.Context;
 
 import com.chinaredstar.push.jpush.JPushProvider;
+import com.chinaredstar.push.utils.JHandler;
 import com.chinaredstar.push.utils.Platform;
 import com.chinaredstar.push.utils.RomUtil;
 
@@ -35,12 +36,17 @@ public class HxPush {
     }
 
 
-    public static void register(Context context) {
-        build();
-        if (!hasProvider()) {
-            intDefaultProvider();
-        }
-        getPushProvider().registerPush(context.getApplicationContext());
+    public static void register(final Context context) {
+        JHandler.handler().post(new Runnable() {
+            @Override
+            public void run() {
+                build();
+                if (!hasProvider()) {
+                    intDefaultProvider();
+                }
+                getPushProvider().registerPush(context.getApplicationContext());
+            }
+        });
     }
 
     public static void unregister(Context context) {

@@ -15,14 +15,23 @@ public class FlymePushProvider implements IHxPushProvider {
     private String appID;
     private String appKey;
 
+
     public FlymePushProvider(Context context) {
-        appID = MetaDataUtil.getFlymeAppID(context).toString();
-        appKey = MetaDataUtil.getFlymeAppKey(context).toString();
+        try {
+            appID = MetaDataUtil.getFlymeAppID(context).toString().replace("FLYME", "");
+            appKey = MetaDataUtil.getFlymeAppKey(context).toString().replace("FLYME", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public FlymePushProvider(String appID, String appKey) {
-        this.appID = appID;
-        this.appKey = appKey;
+        try {
+            this.appID = appID.replace("FLYME", "");
+            this.appKey = appKey.replace("FLYME", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
