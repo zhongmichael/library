@@ -33,8 +33,8 @@ public class BaseApplication extends Application {
         initLogger();
         initOkhttp();
         initFresco();
-//        initLeakCanary();
-//        initX5();
+        initLeakCanary();
+        initX5();
       /*   if(!LeakCanary.isInAnalyzerProcess(this)) {
             LeakCanary.install(this);
         }
@@ -91,21 +91,21 @@ public class BaseApplication extends Application {
         Fresco.initialize(this, ImageConfig.getOkHttpImagePipelineConfig(this));
     }
 
-    protected void initLeakCanary() {
+    private void initLeakCanary() {
         if (isOpenLeakCanary()) {
             LeakCanaryUtil.initLeakCanary(this);
         }
     }
 
-    protected void initLogger() {
+    private void initLogger() {
         LogUtil.init(isPrintLog());
     }
 
-    protected boolean isPrintLog() {
+    public boolean isPrintLog() {
         return true;
     }
 
-    protected boolean isOpenLeakCanary() {
+    public boolean isOpenLeakCanary() {
         return true;
     }
 
