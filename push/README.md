@@ -34,10 +34,10 @@
                 manifestPlaceholders = [
                       JPUSH_APPKEY : "极光appkey",
                       JPUSH_CHANNEL: "统计渠道",
-                      FLYME_APPID  : "魅族推送appid",
-                      FLYME_APPKEY : "魅族推送appkey",
-                      MIUI_APPID   : "小米推送appid",
-                      MIUI_APPKEY  : "小米推送appkey",
+                      FLYME_APPID  : "FLYME + 魅族推送appid",//加一个前缀，防止纯数字自动格式化,如：FLYME8989899999
+                      FLYME_APPKEY : "FLYME + 魅族推送appkey",//加一个前缀，防止纯数字自动格式化
+                      MIUI_APPID   : "MIUI + 小米推送appid",//加一个前缀，防止纯数字自动格式化,如：MIUI8989899999
+                      MIUI_APPKEY  : "MIUI + 小米推送appkey",//加一个前缀，防止纯数字自动格式化
                  ]
          }
          
