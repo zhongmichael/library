@@ -7,7 +7,7 @@ import com.chinaredstar.core.fresco.ImageConfig;
 import com.chinaredstar.core.okhttp.OkHttpUtils;
 import com.chinaredstar.core.okhttp.https.HttpsUtils;
 import com.chinaredstar.core.okhttp.log.LoggerInterceptor;
-import com.chinaredstar.core.utils.CHandler;
+import com.chinaredstar.core.utils.HandlerUtil;
 import com.chinaredstar.core.utils.LeakCanaryUtil;
 import com.chinaredstar.core.utils.LogUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -77,7 +77,7 @@ public class BaseApplication extends Application {
             }
         };
 
-        CHandler.handler().post(new Runnable() {
+        HandlerUtil.handler().post(new Runnable() {
             @Override
             public void run() {
                 //x5内核初始化接口
