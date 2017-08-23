@@ -6,10 +6,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.chinaredstar.core.okhttp.OkHttpUtils;
+import com.chinaredstar.core.okhttp.callback.ListCallback;
 import com.chinaredstar.core.okhttp.cookie.CookieJarImpl;
 import com.chinaredstar.push.utils.MetaDataUtil;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 
+import java.util.List;
+
+import okhttp3.Call;
 import okhttp3.CookieJar;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +32,17 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(MetaDataUtil.getFlymeAppKey(this).toString());
         System.out.println(MetaDataUtil.getMiuiAppID(this).toString());
         System.out.println(MetaDataUtil.getMiuiAppKey(this).toString());
+        OkHttpUtils.post().url(url).build().execute(new ListCallback<User>(User.class) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(List<User> response, int id) {
+
+            }
+        });
 //        JPushInterface.stopPush(this);
       /*  OkHttpUtils
                 .get()

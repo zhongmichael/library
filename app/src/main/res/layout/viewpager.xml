@@ -4,15 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="load demo"
-        android:gravity="center"/>
+        android:layout_height="40dp" />
 
-    <com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView
-        android:id="@+id/lrv_list"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/holo_green_dark"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

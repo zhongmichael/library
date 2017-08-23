@@ -1,12 +1,13 @@
 package com.chinaredstar.demo;
 
 import com.chinaredstar.core.base.BaseApplication;
-import com.chinaredstar.core.utils.LeakCanaryUtil;
 import com.chinaredstar.push.HxPush;
 import com.chinaredstar.push.emui.EmuiPushProvider;
 import com.chinaredstar.push.flyme.FlymePushProvider;
 import com.chinaredstar.push.jpush.JPushProvider;
 import com.chinaredstar.push.miui.MiuiPushProvider;
+
+import java.util.List;
 
 /**
  * Created by hairui.xiang on 2017/8/1.
@@ -16,7 +17,6 @@ public class MyApp extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanaryUtil.initLeakCanary(this);
         //1,默认只会创建jpush推送
 //        HxPush.register(this);
 
@@ -29,12 +29,32 @@ public class MyApp extends BaseApplication {
     }
 
     @Override
-    protected boolean isPrintLog() {
+    public boolean isPrintLog() {
         return BuildConfig.LOG_DEBUG;
     }
 
     @Override
-    protected boolean isOpenLeakCanary() {
+    public boolean isOpenLeakCanary() {
         return BuildConfig.MEMORY_LEAK_CHECK;
+    }
+
+    @Override
+    public List<Class<?>> getDatabaseTables() {
+        return super.getDatabaseTables();
+    }
+
+    @Override
+    public List<Class<?>> getDatabaseUpgradeTables() {
+        return super.getDatabaseUpgradeTables();
+    }
+
+    @Override
+    public int getDatabaseVersion() {
+        return super.getDatabaseVersion();
+    }
+
+    @Override
+    public String getDatabaseName() {
+        return super.getDatabaseName();
     }
 }

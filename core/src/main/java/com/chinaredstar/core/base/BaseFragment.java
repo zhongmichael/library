@@ -12,9 +12,10 @@ import android.view.ViewGroup;
  */
 
 public abstract class BaseFragment extends Fragment {
-    private View mFragmentView;
-    private boolean isLoading;
+    private View mRootView;
+    private boolean isOnCreated;
     private boolean isVisible;
+    private boolean isLoaded;
 
     protected abstract int getLayoutResID();
 
@@ -24,13 +25,25 @@ public abstract class BaseFragment extends Fragment {
     protected void initValue() {
     }
 
+    /**
+     * 1，ViewPager + Fragment  懒加载
+     * ,2， hide，show framgent  懒加载
+     */
     private void lazyinit() {
-        if (!isLoading || !isVisible) {
+        if (!isOnCreated || !isVisible) {
             return;
         }
+        if (isLoaded) {
+            return;
+        }
+        //因为fragment每次显示到屏幕上时，都会调用initData方法，isLoaded字段为了只调用一次initData方法
+        isLoaded = true;
         initData();
     }
 
+    /**
+     * 此方法只会在fragment显示到屏幕时才会调用
+     **/
     protected void initData() {
 
     }
@@ -39,24 +52,54 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+    /**
+     * 默认开启懒加载
+     * 重写该方法，return fasle关闭懒加载
+     */
+    protected boolean openLazyinit() {
+        return true;
+    }
+
+    /**
+     * 根据id查找view
+     *
+     * @param res
+     * @return
+     */
+    public <T extends View> T findViewById(int res) {
+        if (null != mRootView) {
+            return mRootView.findViewById(res);
+        } else {
+            return null;
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (null == mFragmentView) {
-            mFragmentView = inflater.inflate(getLayoutResID(), container, false);
+        if (null == mRootView) {
+            mRootView = inflater.inflate(getLayoutResID(), container, false);
         }
-        ViewGroup mViewGroup = (ViewGroup) mFragmentView.getParent();
+        ViewGroup mViewGroup = (ViewGroup) mRootView.getParent();
         if (null != mViewGroup) {
-            mViewGroup.removeView(mFragmentView);
+            mViewGroup.removeView(mRootView);
         }
-        isLoading = true;
+        isOnCreated = true;
         initValue();
         initWidget();
         initListener();
-        lazyinit();
-        return mFragmentView;
+        if (openLazyinit()) {
+            lazyinit();
+        } else {
+            initData();
+        }
+        return mRootView;
     }
 
+    /**
+     * ViewPager + Fragment
+     * 切换页面时会回调
+     **/
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -66,8 +109,16 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    /**
+     * add多个fragment到同一个layout id的时，
+     * 调用hide和show时回调
+     **/
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        isVisible = !hidden;
+        if (isVisible) {
+            lazyinit();
+        }
     }
 }
