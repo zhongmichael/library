@@ -53,11 +53,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 默认开启懒加载
-     * 重写该方法，return fasle关闭懒加载
+     * 默认关闭懒加载
+     * 重写该方法，return true 开启懒加载
      */
     protected boolean openLazyinit() {
-        return true;
+        return false;
     }
 
     /**
