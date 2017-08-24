@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--虚拟键盘最小高度-->
+    <dimen name="min_keyboard_height">80dp</dimen>
+</resources>
