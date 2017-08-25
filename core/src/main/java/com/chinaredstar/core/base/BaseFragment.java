@@ -103,8 +103,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (isVisible && isVisible != getUserVisibleHint()) {
+            onFakePause();
+        }
         isVisible = getUserVisibleHint();
         if (isVisible) {
+            onFakeResume();
             lazyinit();
         }
     }
@@ -116,9 +120,26 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        if (isVisible && hidden) {
+            onFakePause();
+        }
         isVisible = !hidden;
         if (isVisible) {
+            onFakeResume();
             lazyinit();
         }
     }
+
+    /**
+     * fragment可见时回调
+     */
+    protected void onFakeResume() {
+    }
+
+    /**
+     * fragment不可见时回调
+     */
+    protected void onFakePause() {
+    }
+
 }

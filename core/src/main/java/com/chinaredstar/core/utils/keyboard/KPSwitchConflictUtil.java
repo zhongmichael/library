@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chinaredstar.core.utils;
+package com.chinaredstar.core.utils.keyboard;
 
 import android.app.Activity;
 import android.view.MotionEvent;

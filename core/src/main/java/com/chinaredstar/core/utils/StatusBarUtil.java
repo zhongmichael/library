@@ -15,14 +15,18 @@
  */
 package com.chinaredstar.core.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 /**
  * <p/>
  * In order to avoid the layout of the Status bar.
  */
-public class StatusBarHeightUtil {
+public class StatusBarUtil {
 
     private static boolean INIT = false;
     private static int STATUS_BAR_HEIGHT = 50;
@@ -38,11 +42,28 @@ public class StatusBarHeightUtil {
             if (resourceId > 0) {
                 STATUS_BAR_HEIGHT = context.getResources().getDimensionPixelSize(resourceId);
                 INIT = true;
-                Log.d("StatusBarHeightUtil",
+                Log.d("StatusBarUtil",
                         String.format("Get status bar height %d", STATUS_BAR_HEIGHT));
             }
         }
 
         return STATUS_BAR_HEIGHT;
+    }
+
+    /**
+     * 设置沉浸式主题
+     *
+     * @param statusBar
+     * @param activity
+     */
+    public static void setImmersiveStatusBar(View statusBar, Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //添加一个状态栏高度的view，替代系统的状态栏
+            statusBar.setVisibility(View.VISIBLE);
+            int statusBarHeight = getStatusBarHeight(activity);//状态栏高度
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) statusBar.getLayoutParams(); // 取控件当前的布局参数
+            linearParams.height = statusBarHeight;// 当控件的高强制设成
+            statusBar.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件
+        }
     }
 }

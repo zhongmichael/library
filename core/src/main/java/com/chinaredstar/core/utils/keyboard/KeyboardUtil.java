@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chinaredstar.core.utils;
+package com.chinaredstar.core.utils.keyboard;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -30,6 +30,7 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
 import com.chinaredstar.core.R;
+import com.chinaredstar.core.utils.StatusBarUtil;
 
 
 /**
@@ -154,7 +155,7 @@ public class KeyboardUtil {
             this.isFullScreen = isFullScreen;
             this.isTranslucentStatus = isTranslucentStatus;
             this.isFitSystemWindows = isFitSystemWindows;
-            this.statusBarHeight = StatusBarHeightUtil.getStatusBarHeight(contentView.getContext());
+            this.statusBarHeight = StatusBarUtil.getStatusBarHeight(contentView.getContext());
             this.keyboardShowingListener = listener;
             this.screenHeight = screenHeight;
         }
