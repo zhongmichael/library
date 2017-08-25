@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.chinaredstar.core.R;
+import com.chinaredstar.core.utils.ActivityStack;
 import com.chinaredstar.core.utils.StatusBarUtil;
 
 import java.util.List;
@@ -39,8 +40,15 @@ public class BaseActivity extends FragmentActivity implements EasyPermissions.Pe
     private LayoutInflater mLayoutInflater;
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityStack.pop(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityStack.push(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
