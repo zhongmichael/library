@@ -42,6 +42,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
+     * 懒加载模式下
      * 此方法只会在fragment显示到屏幕时才会调用
      **/
     protected void initData() {
