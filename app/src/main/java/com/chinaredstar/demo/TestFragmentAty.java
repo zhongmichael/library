@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 
 import com.chinaredstar.core.base.BaseActivity;
+import com.chinaredstar.demo.fragment.TestFragment;
 
 /**
  * Created by hairui.xiang on 2017/8/23.

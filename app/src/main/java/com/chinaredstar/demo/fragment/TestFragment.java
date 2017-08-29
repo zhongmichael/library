@@ -1,10 +1,11 @@
-package com.chinaredstar.demo;
+package com.chinaredstar.demo.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.chinaredstar.core.base.BaseFragment;
+import com.chinaredstar.demo.R;
 
 /**
  * Created by hairui.xiang on 2017/8/23.

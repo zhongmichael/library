@@ -1,6 +1,6 @@
 package com.chinaredstar.demo;
 
-import android.os.Bundle;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.chinaredstar.core.base.BaseActivity;
+import com.chinaredstar.demo.fragment.TestFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,18 @@ public class ViewPagerDemo extends BaseActivity {
     List<String> mLabel = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.viewpager);
+    protected int getContentLayoutId() {
+        return R.layout.viewpager;
+    }
+
+    @Override
+    protected boolean retainStatusBarHeight() {
+        return false;
+    }
+
+    @Override
+    protected void initWidget() {
+        setStatusBarBackgroundColor(Color.BLUE);
         tablayout = findViewById(R.id.tablayout);
         viewpager = findViewById(R.id.viewpager);
 
