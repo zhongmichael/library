@@ -36,6 +36,7 @@ dependencies {
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5' // or 1.4-beta1
     compile 'pub.devrel:easypermissions:0.2.1'
     compile 'com.orhanobut:logger:2.1.1'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
