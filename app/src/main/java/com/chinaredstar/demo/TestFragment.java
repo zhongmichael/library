@@ -48,4 +48,9 @@ public class TestFragment extends BaseFragment {
     protected int getLayoutResID() {
         return R.layout.fragment;
     }
+
+    @Override
+    protected boolean openLazyinit() {
+        return true;
+    }
 }
