@@ -10,4 +10,5 @@
     <string name="settings_dialog_canceled">设置对话框取消</string>
     <string name="returned_from_app_settings_to_activity">Returned from app settings to MainActivity</string>
     <string name="has_read_sms_permission">已读短信权限: %b</string>
+    <string name="rationale_storage">这个程序需要读写权限。</string>
 </resources>
