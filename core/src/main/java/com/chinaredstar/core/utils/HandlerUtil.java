@@ -10,9 +10,11 @@ public class HandlerUtil {
     private static android.os.Handler mHandler = null;
 
     public static android.os.Handler handler() {
-        if (mHandler == null) {
+        if (null == mHandler) {
             synchronized (HandlerUtil.class) {
-                mHandler = new android.os.Handler(Looper.getMainLooper());
+                if (null == mHandler) {
+                    mHandler = new android.os.Handler(Looper.getMainLooper());
+                }
             }
         }
         return mHandler;
