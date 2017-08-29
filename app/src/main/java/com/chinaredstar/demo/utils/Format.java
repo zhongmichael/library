@@ -1,4 +1,4 @@
-package com.chinaredstar.demo;
+package com.chinaredstar.demo.utils;
 
 public class Format {
 	/**

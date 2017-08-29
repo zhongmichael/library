@@ -8,6 +8,7 @@ import android.view.View;
 import com.chinaredstar.core.okhttp.OkHttpUtils;
 import com.chinaredstar.core.okhttp.callback.ListCallback;
 import com.chinaredstar.core.okhttp.cookie.CookieJarImpl;
+import com.chinaredstar.demo.bean.User;
 import com.chinaredstar.push.utils.MetaDataUtil;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 

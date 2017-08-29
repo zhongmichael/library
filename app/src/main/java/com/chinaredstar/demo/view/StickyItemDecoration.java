@@ -1,4 +1,4 @@
-package com.chinaredstar.demo;
+package com.chinaredstar.demo.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

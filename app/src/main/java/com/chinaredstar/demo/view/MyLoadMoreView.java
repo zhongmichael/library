@@ -1,10 +1,11 @@
-package com.chinaredstar.demo;
+package com.chinaredstar.demo.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.chinaredstar.core.view.recyclerview.BaseLoadMoreView;
+import com.chinaredstar.demo.R;
 
 /**
  * Created by hairui.xiang on 2017/8/16.

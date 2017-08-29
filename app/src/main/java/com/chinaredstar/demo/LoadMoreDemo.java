@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView;
 import com.chinaredstar.core.view.recyclerview.OnLoadMoreListener;
+import com.chinaredstar.demo.view.StickyItemDecoration;
 import com.chinaredstar.push.utils.JHandler;
 
 import java.io.IOException;

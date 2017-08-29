@@ -12,7 +12,7 @@ import com.chinaredstar.demo.fragment.TestFragment;
  * Created by hairui.xiang on 2017/8/23.
  */
 
-public class TestFragmentAty extends BaseActivity {
+public class TestFragmentDemo extends BaseActivity {
     FrameLayout id_fragment;
     TabLayout id_tablayout;
     Fragment fragment0;

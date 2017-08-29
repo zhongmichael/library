@@ -1,9 +1,10 @@
-package com.chinaredstar.demo;
+package com.chinaredstar.demo.receiver;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.chinaredstar.core.utils.JsonUtil;
+import com.chinaredstar.demo.MainActivity;
 import com.chinaredstar.push.HxPushMessage;
 import com.chinaredstar.push.HxPushReceiver;
 

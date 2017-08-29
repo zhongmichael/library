@@ -1,4 +1,4 @@
-package com.chinaredstar.demo;
+package com.chinaredstar.demo.bean;
 
 import com.chinaredstar.core.base.BaseBean;
 import com.j256.ormlite.field.DataType;
