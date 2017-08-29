@@ -1,6 +1,8 @@
 package com.chinaredstar.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,6 +20,7 @@ import okhttp3.Call;
 import okhttp3.CookieJar;
 
 public class MainActivity extends AppCompatActivity {
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, LeackDemo.class));
+            }
+        });
         String url = "http://www.jianshu.com/p/3af806782a01?open_source=weibo_search";
         System.out.println(MetaDataUtil.getFlymeAppID(this).toString());
         System.out.println(MetaDataUtil.getFlymeAppKey(this).toString());

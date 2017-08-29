@@ -1,12 +1,14 @@
 package com.chinaredstar.demo;
 
 import com.chinaredstar.core.base.BaseApplication;
+import com.chinaredstar.demo.bean.User;
 import com.chinaredstar.push.HxPush;
 import com.chinaredstar.push.emui.EmuiPushProvider;
 import com.chinaredstar.push.flyme.FlymePushProvider;
 import com.chinaredstar.push.jpush.JPushProvider;
 import com.chinaredstar.push.miui.MiuiPushProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +42,9 @@ public class MyApp extends BaseApplication {
 
     @Override
     public List<Class<?>> getDatabaseTables() {
-        return super.getDatabaseTables();
+        List<Class<?>> tables = new ArrayList<>();
+        tables.add(User.class);
+        return tables;
     }
 
     @Override

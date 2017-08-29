@@ -24,18 +24,23 @@ public class ViewPagerDemo extends BaseActivity {
     List<String> mLabel = new ArrayList<>();
 
     @Override
+    protected int getHeaderLayoutId() {
+        return R.layout.header;
+    }
+
+    @Override
     protected int getContentLayoutId() {
         return R.layout.viewpager;
     }
 
     @Override
     protected boolean retainStatusBarHeight() {
-        return false;
+        return true;
     }
 
     @Override
     protected void initWidget() {
-        setStatusBarBackgroundColor(Color.BLUE);
+        setStatusBarBackgroundColor(Color.parseColor("#ff669900"));
         tablayout = findViewById(R.id.tablayout);
         viewpager = findViewById(R.id.viewpager);
 
@@ -44,6 +49,10 @@ public class ViewPagerDemo extends BaseActivity {
         tablayout.addTab(tablayout.newTab().setText("tab3"));
         tablayout.addTab(tablayout.newTab().setText("tab4"));
         tablayout.setupWithViewPager(viewpager);
+
+        tablayout.setSelectedTabIndicatorColor(Color.parseColor("#ff669900"));
+        tablayout.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ff669900"));
+        tablayout.setSelectedTabIndicatorHeight(4);
 
         fragments.add(TestFragment.newInstance(0));
         fragments.add(TestFragment.newInstance(1));
