@@ -51,7 +51,7 @@ public class BaseActivity extends PermissionsActivity {
         if (retainStatusBarHeight()) {
             StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
         }
-        if (getHeaderLayoutId() > -1) {
+        if (this.getHeaderLayoutId() > -1) {
             this.mHeaderView = (ViewGroup) this.getInflater().inflate(this.getHeaderLayoutId(), null);
             this.mRootView.addView(this.mHeaderView, -1, -2);
         }
