@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.utils.ActivityStack;
+import com.chinaredstar.core.utils.HandlerUtil;
 import com.chinaredstar.core.utils.NetworkUtil;
 import com.chinaredstar.core.utils.StatusBarUtil;
 
@@ -24,7 +25,6 @@ import static com.chinaredstar.core.utils.NetworkUtil.NETWORK_CHANGE_ACTION;
  */
 
 public class BaseActivity extends PermissionsActivity {
-    private Handler mHandler;
     private View mStatusBar;
     private LinearLayout mRootView;
     private ViewGroup mHeaderView;
@@ -116,10 +116,7 @@ public class BaseActivity extends PermissionsActivity {
     }
 
     public Handler getHandler() {
-        if (null == this.mHandler) {
-            this.mHandler = new Handler(this.getMainLooper());
-        }
-        return this.mHandler;
+        return HandlerUtil.handler();
     }
 
     private final static BroadcastReceiver mNetworkMonitorReceiver = new BroadcastReceiver() {
