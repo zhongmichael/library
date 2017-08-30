@@ -51,6 +51,9 @@ public class BaseApplication extends Application {
         initX5();
     }
 
+    /**
+     * 初始化okhttp
+     */
     private void initOkhttp() {
         ClearableCookieJar cookieJar1 = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
@@ -71,6 +74,9 @@ public class BaseApplication extends Application {
         OkHttpUtils.initClient(okHttpClient);
     }
 
+    /**
+     * 初始化腾讯x5内核
+     */
     private void initX5() {
 //        QbSdk.setDownloadWithoutWifi(true);//非wifi条件下允许下载X5内核
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
@@ -102,21 +108,30 @@ public class BaseApplication extends Application {
         Fresco.initialize(this, ImageConfig.getOkHttpImagePipelineConfig(this));
     }
 
+    /**
+     * 内存泄漏以及anr监控
+     */
     private void initLeakCanary() {
         LeakCanaryUtil.initLeakCanary(isOpenLeakCanary());
     }
 
+    /**
+     * 打印日志
+     */
     private void initLogger() {
         LogUtil.init(isPrintLog());
     }
 
+    /**
+     * 数据库
+     * */
     private void initDatabase() {
         DatabaseConfig
                 .newBuild()
-                .setDatabaseName(getDatabaseName())
-                .setDatabaseVersion(getDatabaseVersion())
-                .addTables(getDatabaseTables())
-                .addUpgradeTables(getDatabaseUpgradeTables());
+                .setDatabaseName(getDatabaseName())//数据库名
+                .setDatabaseVersion(getDatabaseVersion())//数据库版本(修改版本号实现数据库升级)
+                .addTables(getDatabaseTables())//表
+                .addUpgradeTables(getDatabaseUpgradeTables());//修改更新的表
     }
 
     private void intCrashCollector() {
