@@ -47,6 +47,7 @@ public class BaseApplication extends Application {
         initOkhttp();
         initFresco();
         initLeakCanary();
+        intCrashCollector();
         initX5();
     }
 
@@ -118,6 +119,9 @@ public class BaseApplication extends Application {
                 .addUpgradeTables(getDatabaseUpgradeTables());
     }
 
+    private void intCrashCollector() {
+    }
+
     /**
      * default empty
      */
@@ -144,6 +148,10 @@ public class BaseApplication extends Application {
      */
     public String getDatabaseName() {
         return "chinaredstar";
+    }
+
+    public boolean isCollectCrashLog() {
+        return isPrintLog();
     }
 
 
