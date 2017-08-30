@@ -31,9 +31,17 @@ import okhttp3.OkHttpClient;
  */
 
 public class BaseApplication extends Application {
+    private static BaseApplication mInstance;
+
+    public static Application getInstance() {
+        return mInstance;
+    }
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mInstance = this;
         initLogger();
         initDatabase();
         initOkhttp();
