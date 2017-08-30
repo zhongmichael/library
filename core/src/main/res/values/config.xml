@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ss_name">chinaredstar</string>
+    <string name="ss_name">core_lib_ss_name</string>
     <!--数据库名-->
-    <string name="db_name">chinaredstar.db</string>
+    <string name="db_name">core_lib.db</string>
 
     <!--数据当前版本号-->
     <integer name="db_version">1</integer>
