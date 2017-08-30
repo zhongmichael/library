@@ -19,7 +19,7 @@ public class FormUtil {
         //生成表单编号
         String no = gnerateFormNo();
         //保存当前表单数据
-        SharedPreferencesHelper.putObj(context, no, json);
+        SharedPreferencesHelper.putObj(no, json);
         //将新表单和以往表单合并
         refreshCache(context, no);
     }
@@ -28,14 +28,14 @@ public class FormUtil {
         String userName = "";
         List<String> nos = readUncommittedFormNos(context, userName);
         nos.add(no);
-        SharedPreferencesHelper.putList(context, userName, nos);
+        SharedPreferencesHelper.putList(userName, nos);
     }
 
     /**
      * 读取当前登录用户的所有未提交表单的编号
      **/
     public static List<String> readUncommittedFormNos(Context context, String userName) {
-        return SharedPreferencesHelper.getList(context, userName, String.class);
+        return SharedPreferencesHelper.getList(userName, String.class);
     }
 
 
@@ -43,7 +43,7 @@ public class FormUtil {
      * 根据表单编号，查找表单
      */
     public static FromData readUncommittedFormByNo(Context context, String no) {
-        return SharedPreferencesHelper.getObj(context, no, FromData.class);
+        return SharedPreferencesHelper.getObj(no, FromData.class);
     }
 
     /**
