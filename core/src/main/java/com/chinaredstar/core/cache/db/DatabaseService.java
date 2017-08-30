@@ -2,8 +2,6 @@ package com.chinaredstar.core.cache.db;
 
 import com.j256.ormlite.dao.Dao;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -15,12 +13,8 @@ import java.util.Map;
 
 public class DatabaseService<T, ID> implements IBaseService<T, ID> {
     private DatabaseDao<T, ID> dao;
-    private Class<T> clazz;
 
-    public DatabaseService() {
-        Type type = getClass().getGenericSuperclass();
-        Type[] params = ((ParameterizedType) type).getActualTypeArguments();
-        this.clazz = (Class<T>) params[0];
+    public DatabaseService(Class<T> clazz) {
         this.dao = new DatabaseDao<T, ID>(clazz);
     }
 
