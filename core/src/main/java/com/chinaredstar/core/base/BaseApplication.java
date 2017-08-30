@@ -144,10 +144,10 @@ public class BaseApplication extends Application {
     }
 
     /**
-     * default 'chinaredstar'
+     * default ''
      */
     public String getDatabaseName() {
-        return "chinaredstar";
+        return "core_lib_db_name";
     }
 
     public boolean isCollectCrashLog() {
