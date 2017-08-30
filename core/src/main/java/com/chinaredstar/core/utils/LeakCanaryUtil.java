@@ -1,9 +1,9 @@
 package com.chinaredstar.core.utils;
 
-import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.chinaredstar.core.base.BaseApplication;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -17,10 +17,12 @@ public class LeakCanaryUtil {
     private LeakCanaryUtil() {
     }
 
-    public static void initLeakCanary(Application application) {
-        if (!LeakCanary.isInAnalyzerProcess(application)) {
+    public static void initLeakCanary(boolean isOpenLeakCanary) {
+        if (isOpenLeakCanary) {
             enabledStrictMode();
-            mRefWater = LeakCanary.install(application);
+            if (!LeakCanary.isInAnalyzerProcess(BaseApplication.getInstance())) {
+                mRefWater = LeakCanary.install(BaseApplication.getInstance());
+            }
         }
     }
 
@@ -33,8 +35,7 @@ public class LeakCanaryUtil {
             //耗时操作
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
             //内存泄漏
-//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         }
-
     }
 }

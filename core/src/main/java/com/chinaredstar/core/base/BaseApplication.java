@@ -102,9 +102,7 @@ public class BaseApplication extends Application {
     }
 
     private void initLeakCanary() {
-        if (isOpenLeakCanary()) {
-            LeakCanaryUtil.initLeakCanary(this);
-        }
+        LeakCanaryUtil.initLeakCanary(isOpenLeakCanary());
     }
 
     private void initLogger() {
