@@ -33,7 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ParseDemo"
+            android:name=".EventBusDemo"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -43,7 +43,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LeackDemo"
+            android:name=".CacheDemo"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".ParseDemo"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".EventBus2Demo"
             android:configChanges="orientation" />
 
         <receiver

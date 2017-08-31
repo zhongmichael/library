@@ -77,6 +77,7 @@ public class ActivityStack {
             for (int i = mActivityStacks.size() - 1; i >= 0; i--) {
                 if (ac == mActivityStacks.get(i).get()) {
                     mActivityStacks.remove(i);
+                    LogUtil.i("-----activity stack  remove : -----" + ac);
                     ac.finish();
                     break;
                 }
@@ -89,6 +90,7 @@ public class ActivityStack {
      */
     public static void push(Activity ac) {
         push(ac, 0);
+        LogUtil.i("-----activity stack  add : -----" + ac);
     }
 
     /**

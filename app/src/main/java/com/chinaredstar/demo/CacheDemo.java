@@ -25,7 +25,7 @@ public class CacheDemo extends BaseActivity {
         u.setAge(30);
         u.setName("ma");
         u.setId(1L);
-//        dao.create(u);
+        dao.create(u);
         System.out.println(dao.queryForAll());
         dao.updateId(u, 10L);
         System.out.println(dao.queryForAll());
@@ -33,5 +33,12 @@ public class CacheDemo extends BaseActivity {
         SharedPreferencesHelper.clear();
         SharedPreferencesHelper.putObj("user", u);
         System.out.println(SharedPreferencesHelper.getObj("user",User.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //-------------------------------------------------------
+        dao.close();
     }
 }

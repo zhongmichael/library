@@ -13,10 +13,15 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.chinaredstar.core.R;
+import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.utils.ActivityStack;
 import com.chinaredstar.core.utils.HandlerUtil;
 import com.chinaredstar.core.utils.NetworkUtil;
 import com.chinaredstar.core.utils.StatusBarUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import static com.chinaredstar.core.utils.NetworkUtil.NETWORK_CHANGE_ACTION;
 
@@ -35,12 +40,18 @@ public class BaseActivity extends PermissionsActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityStack.pop(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.push(this);
+        if (ebsEnabled()) {
+            EventBus.getDefault().register(this);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -144,5 +155,31 @@ public class BaseActivity extends PermissionsActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mNetworkMonitorReceiver);
+    }
+
+    /**
+     * POSTING, 该事件在哪个线程发布出来的，就会在这个线程中运行，也就是说发布事件和接收事件线程在同一个线程。
+     * 使用这个方法时，不能执行耗时操作，如果执行耗时操作容易导致事件分发延迟。
+     * <p>
+     * MAIN, 不论事件是在哪个线程中发布出来的，都会在UI线程中执行，接收事件就会在UI线程中运行，所以在方法中是不能执行耗时操作的。
+     * <p>
+     * BACKGROUND, 如果事件是在UI线程中发布出来的，会在子线程中运行，如果事件本来就是子线程中发布出来的，那么函数直接在该子线程中执行。
+     * <p>
+     * ASYNC 无论事件在哪个线程发布，都会创建新的子线程在执行
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)//, priority = 100
+    public void onEventCenter(EventCenter event) {
+        onEventCallback(event);
+    }
+
+    protected void onEventCallback(EventCenter event) {
+
+    }
+
+    /**
+     * 注册event bus
+     */
+    protected boolean ebsEnabled() {
+        return false;
     }
 }
