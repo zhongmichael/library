@@ -1,7 +1,7 @@
 package com.chinaredstar.core.okhttp.callback;
 
-import com.chinaredstar.core.okhttp.callback.tools.IGenericsTranslator;
-import com.chinaredstar.core.okhttp.callback.tools.JsonTranslator;
+import com.chinaredstar.core.okhttp.callback.tools.IGenericsParser;
+import com.chinaredstar.core.okhttp.callback.tools.JsonParser;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
@@ -11,17 +11,17 @@ import okhttp3.Response;
 
 
 public abstract class GenericsListCallback<T> extends Callback<List<T>> {
-    private IGenericsTranslator mGenericsSerializator;
+    private IGenericsParser mGenericsSerializator;
 
-    public GenericsListCallback(IGenericsTranslator serializator) {
+    public GenericsListCallback(IGenericsParser serializator) {
         mGenericsSerializator = serializator;
         if (null == mGenericsSerializator) {
-            mGenericsSerializator = new JsonTranslator();
+            mGenericsSerializator = new JsonParser();
         }
     }
 
     public GenericsListCallback() {
-        mGenericsSerializator = new JsonTranslator();
+        mGenericsSerializator = new JsonParser();
     }
 
     @Override
