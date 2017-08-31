@@ -5,28 +5,26 @@ import com.chinaredstar.core.okhttp.callback.tools.JsonTranslator;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import okhttp3.Response;
 
 
-public abstract class GenericsCallback<T> extends Callback<T> {
+public abstract class GenericsListCallback<T> extends Callback<List<T>> {
     private IGenericsTranslator mGenericsSerializator;
 
-    public GenericsCallback(IGenericsTranslator serializator) {
+    public GenericsListCallback(IGenericsTranslator serializator) {
         mGenericsSerializator = serializator;
     }
 
-    public GenericsCallback() {
+    public GenericsListCallback() {
         mGenericsSerializator = new JsonTranslator();
     }
 
     @Override
-    public T parseNetworkResponse(Response response, int id) throws IOException {
+    public List<T> parseNetworkResponse(Response response, int id) throws IOException {
         String string = response.body().string();
         Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        if (entityClass == String.class) {
-            return (T) string;
-        }
-        return mGenericsSerializator.transformT(string, entityClass);
+        return mGenericsSerializator.transformListT(string, entityClass);
     }
 }

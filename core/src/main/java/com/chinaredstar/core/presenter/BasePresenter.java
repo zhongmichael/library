@@ -9,7 +9,6 @@ import com.chinaredstar.core.okhttp.builder.PostFileBuilder;
 import com.chinaredstar.core.okhttp.builder.PostFormBuilder;
 import com.chinaredstar.core.okhttp.builder.PostStringBuilder;
 import com.chinaredstar.core.okhttp.request.RequestCall;
-import com.chinaredstar.core.presenter.view.IMvpView;
 import com.chinaredstar.core.utils.JsonUtil;
 
 import okhttp3.MediaType;
@@ -18,13 +17,15 @@ import okhttp3.MediaType;
  * Created by hairui.xiang on 2017/8/24.
  */
 
-public class BasePresenter<T> extends Presenter<IMvpView<T>> {
+public class BasePresenter<T> extends Presenter<T> {
 
-    public BasePresenter(IMvpView<T> mvpView, Context context) {
+    public BasePresenter(T mvpView, Context context) {
         super(mvpView, context);
     }
 
     /**
+     * from表单文件上传
+     * addFile(String name, String filename, File file)
      */
     protected RequestCall post() {
         PostFormBuilder builder = OkHttpUtils.post();
@@ -106,6 +107,8 @@ public class BasePresenter<T> extends Presenter<IMvpView<T>> {
     }
 
     /**
+     * 单文件上传
+     * setFile(File mFile)
      */
     protected RequestCall postFile() {
         PostFileBuilder builder = OkHttpUtils.postFile();
