@@ -15,6 +15,9 @@ public abstract class GenericsListCallback<T> extends Callback<List<T>> {
 
     public GenericsListCallback(IGenericsTranslator serializator) {
         mGenericsSerializator = serializator;
+        if (null == mGenericsSerializator) {
+            mGenericsSerializator = new JsonTranslator();
+        }
     }
 
     public GenericsListCallback() {
