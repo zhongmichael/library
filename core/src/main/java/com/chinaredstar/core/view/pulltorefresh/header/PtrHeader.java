@@ -15,17 +15,17 @@ import in.srain.cube.views.ptr.indicator.PtrIndicator;
  * Created by hairui.xiang on 2017/8/4.
  */
 
-public class HeaderView extends FrameLayout implements PtrUIHandler {
+public class PtrHeader extends FrameLayout implements PtrUIHandler {
 
-    public HeaderView(@NonNull Context context) {
+    public PtrHeader(@NonNull Context context) {
         super(context);
     }
 
-    public HeaderView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public PtrHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public HeaderView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public PtrHeader(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
