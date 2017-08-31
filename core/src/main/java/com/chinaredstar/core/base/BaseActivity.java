@@ -173,7 +173,7 @@ public class BaseActivity extends PermissionsActivity {
     }
 
     protected void onEventCallback(EventCenter event) {
-
+        // handle event
     }
 
     /**
