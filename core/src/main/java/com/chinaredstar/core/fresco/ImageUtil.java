@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.chinaredstar.core.base.BaseApplication;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -91,23 +92,23 @@ public class ImageUtil {
     /**
      * 图片保存到相册
      **/
-    public static void savePicToAlbum(final String url, final Context context, final String title, final String description) {
+    public static void savePicToAlbum(final String url,  final String title, final String description) {
         ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
-        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, context);
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, BaseApplication.getInstance());
         dataSource.subscribe(new BaseBitmapDataSubscriber() {
             @Override
             public void onNewResultImpl(Bitmap bitmap) {
                 try {
-                    String url = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, description);
+                    String url = MediaStore.Images.Media.insertImage(BaseApplication.getInstance().getContentResolver(), bitmap, title, description);
                     if (url == null) {
                         return;
                     }
-                    String filePath = getFilePathByContentResolver(context, Uri.parse(url));
+                    String filePath = getFilePathByContentResolver(BaseApplication.getInstance(), Uri.parse(url));
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(filePath));
                     intent.setData(uri);
-                    context.sendBroadcast(intent);
+                    BaseApplication.getInstance().sendBroadcast(intent);
                     //context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(url)));
                 } catch (Exception e) {
                     e.printStackTrace();
