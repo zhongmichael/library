@@ -3,8 +3,10 @@ package com.chinaredstar.core.utils;
 import android.app.Activity;
 
 import java.lang.ref.SoftReference;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by hairui.xiang on 2017/8/25.
@@ -14,9 +16,9 @@ public class ActivityStack {
     private ActivityStack() {
     }
 
-    private static LinkedList<SoftReference<Activity>> mActivityStacks = new LinkedList<>();
+    private static List<SoftReference<Activity>> mActivityStacks = Collections.synchronizedList(new LinkedList<SoftReference<Activity>>());
 
-    public static LinkedList<SoftReference<Activity>> getStack() {
+    public static List<SoftReference<Activity>> getStack() {
         return mActivityStacks;
     }
 
@@ -32,9 +34,9 @@ public class ActivityStack {
             Iterator<SoftReference<Activity>> it = mActivityStacks.iterator();
             while (it.hasNext()) {
                 Activity ac = it.next().get();
-                if (!ac.getClass().getName().equals(acName)) {
+                if (null == ac || !ac.getClass().getName().equals(acName)) {
                     it.remove();
-                    ac.finish();
+                    finish(ac);
                     continue;
                 }
                 break;
@@ -52,7 +54,7 @@ public class ActivityStack {
                 Activity activity = it.next().get();
                 if (ac != activity) {
                     it.remove();
-                    ac.finish();
+                    finish(ac);
                     continue;
                 }
                 break;
@@ -65,7 +67,7 @@ public class ActivityStack {
      */
     public static void popStacktop() {
         if (mActivityStacks.size() > 0) {
-            mActivityStacks.removeFirst().get().finish();
+            finish(mActivityStacks.remove(0).get());
         }
     }
 
@@ -73,12 +75,14 @@ public class ActivityStack {
      * 移除靠近栈顶的activity
      */
     public static void pop(Activity ac) {
-        if (null != ac) {
-            for (int i = mActivityStacks.size() - 1; i >= 0; i--) {
-                if (ac == mActivityStacks.get(i).get()) {
-                    mActivityStacks.remove(i);
-                    LogUtil.i("-----activity stack  remove : -----" + ac);
-                    ac.finish();
+        if (mActivityStacks.size() > 0) {
+            Iterator<SoftReference<Activity>> it = mActivityStacks.iterator();
+            while (it.hasNext()) {
+                Activity activity = it.next().get();
+                if (ac == activity) {
+                    LogUtil.i("-----activity stack  pop : -----" + ac);
+                    it.remove();
+                    finish(ac);
                     break;
                 }
             }
@@ -87,10 +91,12 @@ public class ActivityStack {
 
     /**
      * 入栈
+     * D  C  B   A
+     * 0  1  2   3
      */
     public static void push(Activity ac) {
-        push(ac, 0);
-        LogUtil.i("-----activity stack  add : -----" + ac);
+        push(ac, 0);// 栈顶 index == 0
+        LogUtil.i("-----activity stack  push : -----" + ac);
     }
 
     /**
@@ -99,7 +105,7 @@ public class ActivityStack {
      * @param max 栈里当前activity的数量最多max个
      */
     public static void push(Activity ac, int max) {
-        mActivityStacks.addFirst(element(ac));
+        mActivityStacks.add(0, element(ac));
         if (max > 0) {
             //-----
             int same = 0;//相同的页面数量
@@ -108,15 +114,15 @@ public class ActivityStack {
                     same++;
                 }
             }
-            //max = 3  size = 4 remove 1
+            //max = 3  same = 4 remove 1
             int remove = same - max;
             if (remove > 0) {
                 for (int i = mActivityStacks.size() - 1; i >= 0; i--) {//从栈底开始删除
+                    if (remove == 0) {
+                        break;
+                    }
                     if (ac.getClass().getName().equals(mActivityStacks.get(i).get().getClass().getName())) {
-                        if (remove == 0) {
-                            break;
-                        }
-                        mActivityStacks.remove(i).get().finish();
+                        finish(mActivityStacks.remove(i).get());
                         remove--;
                     }
                 }
@@ -126,5 +132,11 @@ public class ActivityStack {
 
     private static SoftReference<Activity> element(Activity ac) {
         return new SoftReference<>(ac);
+    }
+
+    private static void finish(Activity ac) {
+        if (null != ac) {
+            ac.finish();
+        }
     }
 }
