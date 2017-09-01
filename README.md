@@ -1,5 +1,21 @@
+     
+        ApkDemo apk更新，进度获取，安装
         
-      ```  **push库使用法法**`````
+        AcitvityStakTestDemo activity栈管理工作类的测试
+               注：可实现回首页功能
+        
+        CacheDemo  数据库缓存，share文件缓存
+              注：数据库配置在MyApp类里,升级数据库需配置升级的表以及更新数据库版本
+              
+        EventBusDemo 对eventbus的使用demo
+        
+        PareDemo 网络请求，以及json解析demo
+        
+        TestFragmentDemo和ViewPagerDemo 是对Fragment的懒加载 以及 伪生命周期的测试
+        
+        其他功能参加core库
+         
+      ``*`*--------------push库使用法法------------------**`````
         
         **1，在build文件里添加 **
             compile project(':push')
