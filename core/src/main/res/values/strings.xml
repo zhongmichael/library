@@ -11,4 +11,5 @@
     <string name="returned_from_app_settings_to_activity">Returned from app settings to MainActivity</string>
     <string name="has_read_sms_permission">已读短信权限: %b</string>
     <string name="rationale_storage">这个程序需要读写权限。</string>
+    <string name="rationale">我们需要访问您的.......</string>
 </resources>

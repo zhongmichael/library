@@ -84,7 +84,7 @@ public class BaseApplication extends Application {
             @Override
             public void onViewInitFinished(boolean arg0) {
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-                LogUtil.d("app", " onViewInitFinished is " + arg0);
+                LogUtil.d("app", " web x5 onViewInitFinished is " + arg0);
             }
 
             @Override

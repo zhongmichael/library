@@ -18,7 +18,6 @@ public class FrescoDemo extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fresco);
-        hasStoragePermissions();
         icon = findViewById(R.id.icon);
         icon.setImageURI(url);
         ImageUtil.savePicToAlbum(url, "flower", "this is pic");
