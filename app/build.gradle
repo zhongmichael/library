@@ -4,18 +4,18 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     signingConfigs {
-        /*config {
-            keyAlias ''
-            keyPassword ''
-            storeFile file('')
-            storePassword ''
+        config {
+            keyAlias 'keystore'
+            keyPassword 'keystore'
+            storeFile file('keystore.jsk')
+            storePassword 'keystore'
             // 同时满足下面两个条件才需要此配置
             // 1. Gradle版本 >= 2.14.1
             // 2. Android Gradle Plugin 版本 >= 2.2.0
             // 作用是只使用旧版签名，禁用V2版签名模式
             //v2SigningEnabled false
             v2SigningEnabled false
-        }*/
+        }
     }
     defaultConfig {
         applicationId "com.chinaredstar.demo"
@@ -62,7 +62,7 @@ android {
             //内存泄露检查
             buildConfigField "boolean", "MEMORY_LEAK_CHECK", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
         }
     }
 }
