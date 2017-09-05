@@ -6,9 +6,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'keystore'
-            keyPassword 'hxmklyj'
-            storeFile file('keystore.jks')
-            storePassword 'hxmklyj'
+            keyPassword 'keystore'
+            storeFile file('keystore.jsk')
+            storePassword 'keystore'
             // 同时满足下面两个条件才需要此配置
             // 1. Gradle版本 >= 2.14.1
             // 2. Android Gradle Plugin 版本 >= 2.2.0

@@ -11,6 +11,8 @@
         
         PareDemo 网络请求，以及json解析demo
         
+        FrescoDemo 图片加载，以及图片下载demo
+        
         TestFragmentDemo和ViewPagerDemo 是对Fragment的懒加载 以及 伪生命周期的测试
         
         其他功能参加core库
