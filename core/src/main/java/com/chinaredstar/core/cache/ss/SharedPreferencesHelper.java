@@ -40,7 +40,21 @@ public class SharedPreferencesHelper {
 
     public static <T> T getObj(String key, Class<T> clazz) {
         try {
-            return JsonUtil.parse(getSharedpreFrences().getString(key, null), clazz);
+            T t = JsonUtil.parse(getSharedpreFrences().getString(key, null), clazz);
+            if (null == t) {
+                if (Integer.class == clazz) {
+                    t = (T) new Integer(0);
+                } else if (Long.class == clazz) {
+                    t = (T) new Long(0);
+                } else if (Float.class == clazz) {
+                    t = (T) new Float(0);
+                } else if (Double.class == clazz) {
+                    t = (T) new Double(0);
+                } else if (Boolean.class == clazz) {
+                    t = (T) new Boolean(false);
+                }
+            }
+            return t;
         } catch (Exception e) {
             e.printStackTrace();
         }
