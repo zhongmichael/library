@@ -1,4 +1,4 @@
-package com.chinaredstar.core.ucrop.tools;
+package com.chinaredstar.core.ucrop;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

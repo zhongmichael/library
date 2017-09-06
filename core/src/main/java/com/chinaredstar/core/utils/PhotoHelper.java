@@ -2,16 +2,12 @@ package com.chinaredstar.core.utils;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.chinaredstar.core.cache.ss.SharedPreferencesHelper;
-import com.chinaredstar.core.ucrop.CropActivity;
-import com.chinaredstar.core.ucrop.tools.Crop;
+import com.chinaredstar.core.ucrop.Crop;
 import com.yalantis.ucrop.UCrop;
-import com.yalantis.ucrop.UCropActivity;
 
 import java.io.File;
 
@@ -45,12 +41,12 @@ public class PhotoHelper {
                     } else if ("file".equals(data.getScheme())) {
                     }*/
                     if (isCrop) {
-                        Crop.of(data.getData(), Uri.fromFile(getOutputPhoto(true)))
+                        /*Crop.of(data.getData(), Uri.fromFile(getOutputPhoto(true)))
                                 .withAspectRatio(1, 1)
                                 .withMaxResultSize(250, 250)
 //                                .withOptions(options)
                                 .withTargetActivity(CropActivity.class)
-                                .start(activity);
+                                .start(activity);*/
                     } else {
                         if (null != l) {
                             l.onGetPhotoPath(data.getData());
@@ -59,7 +55,7 @@ public class PhotoHelper {
                     break;
                 case RC_ACTION_IMAGE_CAPTURE://SharedPreferencesHelper.getObj("take_photos_result", String.class)
                     if (isCrop) {
-                        Crop.Options options = new Crop.Options();
+                        /*Crop.Options options = new Crop.Options();
                         //设置裁剪图片的保存格式
                         options.setCompressionFormat(Bitmap.CompressFormat.PNG);
                         //设置裁剪图片的图片质量
@@ -80,7 +76,7 @@ public class PhotoHelper {
                                 .withMaxResultSize(250, 250)
                                 .withOptions(options)
                                 .withTargetActivity(CropActivity.class)
-                                .start(activity);
+                                .start(activity);*/
                     } else {
                         if (null != l) {
                             l.onGetPhotoPath(Uri.fromFile(new File(getPhotosPath())));
