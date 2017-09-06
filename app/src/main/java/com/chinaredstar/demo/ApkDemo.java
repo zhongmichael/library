@@ -30,7 +30,7 @@ public class ApkDemo extends BaseActivity {
     @Override
     protected void onUserPermitPermissionsDothing() {
         LogUtil.d("用户同意了。。。。。。。。。。。。。。。。。");
-        ApkUtil.download("http://imtt.dd.qq.com/16891/D8A0D91C87420C8B7FA66806015C4D94.apk?fsname=com.istone.activity_6.4.2_53.apk&csr=97c2", "update", "ap d a.....", true);
+        ApkUtil.download("http://imtt.dd.qq.com/16891/D8A0D91C87420C8B7FA66806015C4D94.apk?fsname=com.istone.activity_6.4.2_53.apk&csr=97c2", "2.0", "update", "ap d a.....");
     }
 
     @Override

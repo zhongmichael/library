@@ -50,10 +50,24 @@ public class ApkUtil {
     };
 
     /**
+     * 不可见更新
+     */
+    public static void download(String url, String newVersion) {
+        download(url, newVersion, "", " ", false);
+    }
+
+    /**
+     * app更新放到通知栏
+     */
+    public static void download(String url, String newVersion, String notifyTitle, String notifyDesc) {
+        download(url, newVersion, notifyTitle, notifyDesc, true);
+    }
+
+    /**
      * 通知栏下载
      * Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE
      */
-    public static void download(String url, String title, String desc, boolean isShowNotiUI) {
+    private static void download(String url, String newVersion, String title, String desc, boolean isShowNotiUI) {
         //注册内容改变监听
         BaseApplication.getInstance().getContentResolver().registerContentObserver(Uri.parse("content://downloads/my_downloads"), true, mObserver);
         // 创建下载请求
@@ -78,7 +92,7 @@ public class ApkUtil {
         if (!apkDir.exists()) {
             apkDir.mkdirs();
         }
-        String apkName = "V_" + DeviceUtil.getVersionName() + ".apk";
+        String apkName = "V_" + newVersion + ".apk";
         down.setDestinationInExternalPublicDir(apkDir.getAbsolutePath(), apkName);
         // 将下载请求放入队列
         long refernece = ((DownloadManager) BaseApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(down);
