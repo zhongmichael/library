@@ -7,7 +7,7 @@ android {
         config {
             keyAlias 'keystore'
             keyPassword 'keystore'
-            storeFile file('keystore.jsk')
+            storeFile file('keystore.jks')
             storePassword 'keystore'
             // 同时满足下面两个条件才需要此配置
             // 1. Gradle版本 >= 2.14.1
@@ -60,7 +60,7 @@ android {
             resValue "string", "appname", "release_demo"
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //内存泄露检查
-            buildConfigField "boolean", "MEMORY_LEAK_CHECK", "false"
+            buildConfigField "boolean", "MEMORY_LEAK_CHECK", "true"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }

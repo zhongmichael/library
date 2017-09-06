@@ -46,6 +46,10 @@ public class TimeUtil {
         return new SimpleDateFormat(dPattern).format(parse(timeStr, sPattern));
     }
 
+    public static String format(String pattern) {
+        return new SimpleDateFormat(pattern).format(new Date());
+    }
+
     /**
      * 解析时间
      *

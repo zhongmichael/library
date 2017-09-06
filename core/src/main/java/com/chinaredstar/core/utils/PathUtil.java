@@ -36,7 +36,7 @@ public class PathUtil {
      * sd card
      */
     public static File getExternalCacheDir() {
-        return new File(Environment.getExternalStorageState(), "/Android/data/" + BaseApplication.getInstance().getPackageName() + "/cache/");
+        return new File(Environment.getExternalStorageDirectory(), "/Android/data/" + BaseApplication.getInstance().getPackageName() + "/cache/");
     }
 
     /**
@@ -47,7 +47,7 @@ public class PathUtil {
     }
 
     public static File getExternalFilesDir() {
-        return new File(Environment.getExternalStorageState(), "/Android/data/" + BaseApplication.getInstance().getPackageName() + "/files/");
+        return new File(Environment.getExternalStorageDirectory(), "/Android/data/" + BaseApplication.getInstance().getPackageName() + "/files/");
     }
 
     public static File getInnerFilesDir() {
