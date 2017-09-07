@@ -78,12 +78,12 @@ public class PhotoHelper {
                     if (null != ucrop) {
                         if (!ucrop.onStartUCrop(data.getData(), Uri.fromFile(getOutputPhoto(true)))) {
                             if (null != l) {// 异常返回原图
-                                l.onGetPhotoPath(PhotoHelper.queryPathByUri(data.getData()));
+                                l.onGetPhotoPath(queryPathByUri(data.getData()));
                             }
                         }
                     } else {
                         if (null != l) {
-                            l.onGetPhotoPath(PhotoHelper.queryPathByUri(data.getData()));
+                            l.onGetPhotoPath(queryPathByUri(data.getData()));
                         }
                     }
                     break;
@@ -91,18 +91,18 @@ public class PhotoHelper {
                     if (null != ucrop) {
                         if (!ucrop.onStartUCrop(Uri.fromFile(new File(getPhotosPath())), Uri.fromFile(getOutputPhoto(true)))) {
                             if (null != l) {// 异常返回原图
-                                l.onGetPhotoPath(PhotoHelper.queryPathByUri(Uri.fromFile(new File(getPhotosPath()))));
+                                l.onGetPhotoPath(queryPathByUri(Uri.fromFile(new File(getPhotosPath()))));
                             }
                         }
                     } else {
                         if (null != l) {
-                            l.onGetPhotoPath(PhotoHelper.queryPathByUri(Uri.fromFile(new File(getPhotosPath()))));
+                            l.onGetPhotoPath(queryPathByUri(Uri.fromFile(new File(getPhotosPath()))));
                         }
                     }
                     break;
                 case Crop.REQUEST_CROP:
                     if (null != l) {
-                        l.onGetPhotoPath(PhotoHelper.queryPathByUri(Crop.getOutput(data)));
+                        l.onGetPhotoPath(queryPathByUri(Crop.getOutput(data)));
                     }
                     break;
             }
