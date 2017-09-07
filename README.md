@@ -7,6 +7,8 @@
         CacheDemo  数据库缓存，share文件缓存
               注：数据库配置在MyApp类里,升级数据库需配置升级的表以及更新数据库版本
               
+        CameraDemo 图片采集已经裁剪
+        
         EventBusDemo 对eventbus的使用demo
         
         PareDemo 网络请求，以及json解析demo
