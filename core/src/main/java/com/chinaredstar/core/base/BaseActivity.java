@@ -54,14 +54,16 @@ public class BaseActivity extends PermissionsActivity {
         if (ebsEnabled()) {
             EventBus.getDefault().register(this);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        if (isImmersiveStyle()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
         }
         this.setContentView(R.layout.activity_libbase_layout);
         this.mStatusBar = findViewById(R.id.id_statusbar_view);
         this.mRootView = findViewById(R.id.id_root_view);
-        if (retainStatusBarHeight()) {
+        if (isImmersiveStyle() && retainStatusBarHeight()) {
             StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
         }
         if (this.getHeaderLayoutId() > -1) {
@@ -100,6 +102,13 @@ public class BaseActivity extends PermissionsActivity {
 
     protected void setStatusBarBackgroundColor(int color) {
         this.mStatusBar.setBackgroundColor(color);
+    }
+
+    /**
+     * 沉浸式
+     */
+    protected boolean isImmersiveStyle() {
+        return false;
     }
 
     protected int getHeaderLayoutId() {
