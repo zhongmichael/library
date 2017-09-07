@@ -47,6 +47,9 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 //        mQRCodeView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
         // 显示扫描框
         mQRCodeView.showScanRect();
+
+        // 延迟1.5秒后开始识别
+        mQRCodeView.startSpot();
     }
 
     @Override
