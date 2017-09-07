@@ -1,11 +1,11 @@
 package com.chinaredstar.core.qrcode;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.chinaredstar.core.R;
@@ -25,6 +25,10 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Delegate, PhotoHelper.OnPhotoGetListener {
     private static final String TAG = QRCodeScanActivity.class.getSimpleName();
     private QRCodeView mQRCodeView;
+
+    public void openGallery(View view) {
+        chooseQRCodeFromGallery();
+    }
 
     @Override
     protected void initWidget() {
@@ -158,8 +162,9 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     }
 
     @Override
-    public void onGetPhotoPath(final Uri uri) {
-        mDecodeQRCodeTask.execute(uri.getPath());
+    public void onGetPhotoPath(String path) {
+        mDecodeQRCodeTask = new DecodeQRCodeTask();
+        mDecodeQRCodeTask.execute(path);
     }
 
     @Override
@@ -170,7 +175,9 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         PhotoHelper.onActivityResult(requestCode, resultCode, data, null, this);
     }
 
-    private static final AsyncTask mDecodeQRCodeTask = new AsyncTask<String, Void, String>() {
+    private static DecodeQRCodeTask mDecodeQRCodeTask;
+
+    private static final class DecodeQRCodeTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             return QRCodeDecoder.syncDecodeQRCode(params[0]);
@@ -184,5 +191,5 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 Toast.makeText(BaseApplication.getInstance(), result, Toast.LENGTH_SHORT).show();
             }
         }
-    };
+    }
 }

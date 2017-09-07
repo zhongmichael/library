@@ -49,8 +49,7 @@ public class CameraDemo extends BaseActivity implements PhotoHelper.OnPhotoGetLi
     }
 
     @Override
-    public void onGetPhotoPath(Uri uri) {
-        System.out.println("onGet: " + uri.toString());
+    public void onGetPhotoPath(String uri) {
     }
 
     @Override

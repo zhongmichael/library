@@ -14,7 +14,7 @@ import com.chinaredstar.core.qrcode.QRCodeScanActivity;
 public class ScanDemo extends BaseActivity {
     @Override
     protected String[] iNeedPermissions() {
-        return new String[]{Manifest.permission.CAMERA};
+        return new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     }
 
     @Override

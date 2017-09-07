@@ -1,12 +1,17 @@
 package com.chinaredstar.core.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
+import com.chinaredstar.core.base.BaseApplication;
 import com.chinaredstar.core.cache.ss.SharedPreferencesHelper;
 import com.chinaredstar.core.ucrop.Crop;
 
@@ -31,7 +36,7 @@ public class PhotoHelper {
     public final static int RC_ACTION_PICK = 2002;
 
     public interface OnPhotoGetListener {
-        void onGetPhotoPath(Uri uri);
+        void onGetPhotoPath(String path);
     }
 
     public interface IUCrop {
@@ -73,12 +78,12 @@ public class PhotoHelper {
                     if (null != ucrop) {
                         if (!ucrop.onStartUCrop(data.getData(), Uri.fromFile(getOutputPhoto(true)))) {
                             if (null != l) {// 异常返回原图
-                                l.onGetPhotoPath(data.getData());
+                                l.onGetPhotoPath(PhotoHelper.queryPathByUri(data.getData()));
                             }
                         }
                     } else {
                         if (null != l) {
-                            l.onGetPhotoPath(data.getData());
+                            l.onGetPhotoPath(PhotoHelper.queryPathByUri(data.getData()));
                         }
                     }
                     break;
@@ -86,18 +91,18 @@ public class PhotoHelper {
                     if (null != ucrop) {
                         if (!ucrop.onStartUCrop(Uri.fromFile(new File(getPhotosPath())), Uri.fromFile(getOutputPhoto(true)))) {
                             if (null != l) {// 异常返回原图
-                                l.onGetPhotoPath(Uri.fromFile(new File(getPhotosPath())));
+                                l.onGetPhotoPath(PhotoHelper.queryPathByUri(Uri.fromFile(new File(getPhotosPath()))));
                             }
                         }
                     } else {
                         if (null != l) {
-                            l.onGetPhotoPath(Uri.fromFile(new File(getPhotosPath())));
+                            l.onGetPhotoPath(PhotoHelper.queryPathByUri(Uri.fromFile(new File(getPhotosPath()))));
                         }
                     }
                     break;
                 case Crop.REQUEST_CROP:
                     if (null != l) {
-                        l.onGetPhotoPath(Crop.getOutput(data));
+                        l.onGetPhotoPath(PhotoHelper.queryPathByUri(Crop.getOutput(data)));
                     }
                     break;
             }
@@ -166,5 +171,50 @@ public class PhotoHelper {
 
     public static String getPhotosPath() {
         return SharedPreferencesHelper.getObj(KEY_TAKE_PHOTOS_RESULT, String.class);
+    }
+
+    public static String queryPathByUri(Uri uri) {
+        String path = null;
+        if ("content".equals(uri.getScheme())) {
+            ContentResolver mCr = BaseApplication.getInstance().getContentResolver();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                    DocumentsContract.isDocumentUri(BaseApplication.getInstance(), uri)) {
+                String wholeID = DocumentsContract.getDocumentId(uri);
+                String id = wholeID.split(":")[1];
+                String[] column = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};
+                String sel = MediaStore.Images.Media._ID + "= ?";
+                Cursor mCursor = mCr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel, new String[]{id},
+                        null);
+                if (null != mCursor) {
+                    if (mCursor.moveToFirst()) {
+                        int _idColumn = mCursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+                        int image_column_index = mCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                        int _id = mCursor.getInt(_idColumn);
+                        String img_path = mCursor.getString(image_column_index);
+                        path = img_path;
+                    }
+                    mCursor.close();
+                }
+
+            } else {
+                String[] proj = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};
+                Cursor mCursor = mCr.query(uri, proj, null, null, null);
+                if (null != mCursor) {
+                    if (mCursor.moveToFirst()) {
+                        int _idColumn = mCursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+                        int image_column_index = mCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                        int _id = mCursor.getInt(_idColumn);
+                        String img_path = mCursor.getString(image_column_index);
+                        path = img_path;
+                    }
+                    mCursor.close();
+                }
+            }
+        } else if ("file".equals(uri.getScheme())) {
+            path = uri.toString().substring(uri.getScheme().length());
+        }
+        return path;
     }
 }
