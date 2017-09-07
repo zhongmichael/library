@@ -2,10 +2,12 @@ package com.chinaredstar.demo;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.chinaredstar.core.base.BaseActivity;
-import com.chinaredstar.core.utils.LogUtil;
+import com.chinaredstar.core.ucrop.Crop;
+import com.chinaredstar.core.ucrop.CropActivity;
 import com.chinaredstar.core.utils.PhotoHelper;
 
 /**
@@ -26,12 +28,10 @@ public class CameraDemo extends BaseActivity implements PhotoHelper.OnPhotoGetLi
 
     @Override
     protected void onUserPermitPermissionsDothing() {
-        LogUtil.d("用户同意了。。。。。。。。。。。。。。。。。");
     }
 
     @Override
     protected void onUserRejectPermissionDothing() {
-        super.onUserRejectPermissionDothing();
     }
 
     /**
@@ -56,7 +56,17 @@ public class CameraDemo extends BaseActivity implements PhotoHelper.OnPhotoGetLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PhotoHelper.onActivityResult(this, requestCode, resultCode, data, true, this);
+        PhotoHelper.onActivityResult(requestCode, resultCode, data, new PhotoHelper.IUCrop() {
+            @Override
+            public void onStartUCrop(@NonNull Uri source, @NonNull Uri destination) {
+                Crop.of(source, destination)
+                        .withAspectRatio(1, 1)
+                        .withMaxResultSize(400, 400)
+                        .withOptions(PhotoHelper.getDefaultUCropOptions())
+                        .withTargetActivity(CropActivity.class)
+                        .start(mActivity);
+            }
+        }, this);
     }
 
 }

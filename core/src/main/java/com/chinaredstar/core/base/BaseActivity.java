@@ -1,5 +1,6 @@
 package com.chinaredstar.core.base;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import static com.chinaredstar.core.utils.NetworkUtil.NETWORK_CHANGE_ACTION;
  */
 
 public class BaseActivity extends PermissionsActivity {
+    protected Activity mActivity = this;
     private View mStatusBar;
     private LinearLayout mRootView;
     private ViewGroup mHeaderView;

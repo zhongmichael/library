@@ -2,12 +2,13 @@ package com.chinaredstar.core.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 
 import com.chinaredstar.core.cache.ss.SharedPreferencesHelper;
 import com.chinaredstar.core.ucrop.Crop;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
@@ -33,20 +34,40 @@ public class PhotoHelper {
         void onGetPhotoPath(Uri uri);
     }
 
-    public static void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data, boolean isCrop, OnPhotoGetListener l) {
+    public interface IUCrop {
+        void onStartUCrop(@NonNull Uri source, @NonNull Uri destination);
+    }
+
+    public static Crop.Options getDefaultUCropOptions() {
+        Crop.Options options = new Crop.Options();
+        //设置裁剪图片的保存格式
+        options.setCompressionFormat(Bitmap.CompressFormat.JPEG);//  JPEG,PNG,WEBP;
+        //设置裁剪图片的图片质量
+        options.setCompressionQuality(80);//[0-100]
+        //设置你想要指定的可操作的手势
+//        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
+//        options.setMaxScaleMultiplier(5);
+//        options.setImageToCropBoundsAnimDuration(666);
+//        options.setCircleDimmedLayer(true);
+//        options.setDimmedLayerColor(Color.DKGRAY);
+//        options.setShowCropFrame(false);
+//        options.setCropGridStrokeWidth(1);
+//        options.setCropGridColor(Color.WHITE);
+//        options.setCropGridColumnCount(3);
+//        options.setCropGridRowCount(3);
+//        options.setHideBottomControls(true);
+        return options;
+    }
+
+    public static void onActivityResult(int requestCode, int resultCode, Intent data, IUCrop ucrop, OnPhotoGetListener l) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case RC_ACTION_PICK://data.getData().toString()
                    /* if ("content".equals(data.getScheme())) {
                     } else if ("file".equals(data.getScheme())) {
                     }*/
-                    if (isCrop) {
-                        /*Crop.of(data.getData(), Uri.fromFile(getOutputPhoto(true)))
-                                .withAspectRatio(1, 1)
-                                .withMaxResultSize(250, 250)
-//                                .withOptions(options)
-                                .withTargetActivity(CropActivity.class)
-                                .start(activity);*/
+                    if (null != ucrop) {
+                        ucrop.onStartUCrop(data.getData(), Uri.fromFile(getOutputPhoto(true)));
                     } else {
                         if (null != l) {
                             l.onGetPhotoPath(data.getData());
@@ -54,36 +75,15 @@ public class PhotoHelper {
                     }
                     break;
                 case RC_ACTION_IMAGE_CAPTURE://SharedPreferencesHelper.getObj("take_photos_result", String.class)
-                    if (isCrop) {
-                        /*Crop.Options options = new Crop.Options();
-                        //设置裁剪图片的保存格式
-                        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
-                        //设置裁剪图片的图片质量
-                        options.setCompressionQuality(90);
-                        //设置你想要指定的可操作的手势
-                        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
-                        //设置uCropActivity里的UI样式
-                        options.setMaxScaleMultiplier(5);
-                        options.setImageToCropBoundsAnimDuration(666);
-                        options.setDimmedLayerColor(Color.CYAN);
-                        options.setShowCropFrame(false);
-                        options.setCropGridStrokeWidth(20);
-                        options.setCropGridColor(Color.GREEN);
-                        options.setCropGridColumnCount(2);
-                        options.setCropGridRowCount(1);
-                        Crop.of(data.getData(), Uri.fromFile(getOutputPhoto(true)))
-                                .withAspectRatio(1, 1)
-                                .withMaxResultSize(250, 250)
-                                .withOptions(options)
-                                .withTargetActivity(CropActivity.class)
-                                .start(activity);*/
+                    if (null != ucrop) {
+                        ucrop.onStartUCrop(Uri.fromFile(new File(getPhotosPath())), Uri.fromFile(getOutputPhoto(true)));
                     } else {
                         if (null != l) {
                             l.onGetPhotoPath(Uri.fromFile(new File(getPhotosPath())));
                         }
                     }
                     break;
-                case UCrop.REQUEST_CROP:
+                case Crop.REQUEST_CROP:
                     if (null != l) {
                         l.onGetPhotoPath(Crop.getOutput(data));
                     }
@@ -117,9 +117,15 @@ public class PhotoHelper {
      * 打开相册
      */
     public static void onOpenAlbum(Activity activity) {
-        Intent intent = new Intent(Intent.ACTION_PICK, null);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        activity.startActivityForResult(intent, RC_ACTION_PICK);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        activity.startActivityForResult(Intent.createChooser(intent, "选择图片"), RC_ACTION_PICK);
+
+       /* Intent intent = new Intent(Intent.ACTION_PICK, null);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image*//*");
+        activity.startActivityForResult(intent, RC_ACTION_PICK);*/
     }
 
 
