@@ -35,9 +35,4 @@
         app:qrcv_toolbarHeight="56dp"
         app:qrcv_topOffset="90dp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="openGallery"
-        android:onClick="openGallery"/>
 </FrameLayout>

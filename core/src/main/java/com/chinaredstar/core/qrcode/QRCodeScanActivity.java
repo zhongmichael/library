@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.chinaredstar.core.R;
@@ -25,10 +24,6 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Delegate, PhotoHelper.OnPhotoGetListener {
     private static final String TAG = QRCodeScanActivity.class.getSimpleName();
     private QRCodeView mQRCodeView;
-
-    public void openGallery(View view) {
-        chooseQRCodeFromGallery();
-    }
 
     @Override
     protected void initWidget() {
