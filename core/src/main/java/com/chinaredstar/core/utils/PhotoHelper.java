@@ -35,7 +35,7 @@ public class PhotoHelper {
     }
 
     public interface IUCrop {
-        void onStartUCrop(@NonNull Uri source, @NonNull Uri destination);
+        boolean onStartUCrop(@NonNull Uri source, @NonNull Uri destination);
     }
 
     public static Crop.Options getDefaultUCropOptions() {
@@ -59,6 +59,10 @@ public class PhotoHelper {
         return options;
     }
 
+    /**
+     * @param ucrop 如果为null返回原图
+     * @param l     图片地址回传
+     */
     public static void onActivityResult(int requestCode, int resultCode, Intent data, IUCrop ucrop, OnPhotoGetListener l) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
@@ -67,7 +71,11 @@ public class PhotoHelper {
                     } else if ("file".equals(data.getScheme())) {
                     }*/
                     if (null != ucrop) {
-                        ucrop.onStartUCrop(data.getData(), Uri.fromFile(getOutputPhoto(true)));
+                        if (!ucrop.onStartUCrop(data.getData(), Uri.fromFile(getOutputPhoto(true)))) {
+                            if (null != l) {// 异常返回原图
+                                l.onGetPhotoPath(data.getData());
+                            }
+                        }
                     } else {
                         if (null != l) {
                             l.onGetPhotoPath(data.getData());
@@ -76,7 +84,11 @@ public class PhotoHelper {
                     break;
                 case RC_ACTION_IMAGE_CAPTURE://SharedPreferencesHelper.getObj("take_photos_result", String.class)
                     if (null != ucrop) {
-                        ucrop.onStartUCrop(Uri.fromFile(new File(getPhotosPath())), Uri.fromFile(getOutputPhoto(true)));
+                        if (!ucrop.onStartUCrop(Uri.fromFile(new File(getPhotosPath())), Uri.fromFile(getOutputPhoto(true)))) {
+                            if (null != l) {// 异常返回原图
+                                l.onGetPhotoPath(Uri.fromFile(new File(getPhotosPath())));
+                            }
+                        }
                     } else {
                         if (null != l) {
                             l.onGetPhotoPath(Uri.fromFile(new File(getPhotosPath())));

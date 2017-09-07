@@ -58,13 +58,14 @@ public class CameraDemo extends BaseActivity implements PhotoHelper.OnPhotoGetLi
         super.onActivityResult(requestCode, resultCode, data);
         PhotoHelper.onActivityResult(requestCode, resultCode, data, new PhotoHelper.IUCrop() {
             @Override
-            public void onStartUCrop(@NonNull Uri source, @NonNull Uri destination) {
+            public boolean onStartUCrop(@NonNull Uri source, @NonNull Uri destination) {
                 Crop.of(source, destination)
                         .withAspectRatio(1, 1)
                         .withMaxResultSize(400, 400)
                         .withOptions(PhotoHelper.getDefaultUCropOptions())
                         .withTargetActivity(CropActivity.class)
                         .start(mActivity);
+                return true;
             }
         }, this);
     }
