@@ -9,6 +9,7 @@
             </intent-filter>
         </receiver>
 
+        <!---->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -16,6 +17,10 @@
 
         <activity
             android:name="com.chinaredstar.core.ucrop.CropActivity"
+            android:screenOrientation="portrait" />
+        <!---->
+        <activity
+            android:name="com.chinaredstar.core.qrcode.QRCodeScanActivity"
             android:screenOrientation="portrait" />
     </application>
 
