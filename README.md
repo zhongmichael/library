@@ -1,5 +1,5 @@
-# demo说明<br>
-#####1，ApkUpdateDemo
+# demo说明
+#####1，ApkUpdateDemo#####
       apk下载更新
 #####2，EventBusDemo,EventBus2Demo 
       封装EventBus后的使用
