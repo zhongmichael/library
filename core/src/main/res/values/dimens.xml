@@ -2,4 +2,6 @@
 <resources>
     <!--虚拟键盘最小高度-->
     <dimen name="min_keyboard_height">80dp</dimen>
+    <!--标题栏高度-->
+    <dimen name="titlebar_height">45dp</dimen>
 </resources>

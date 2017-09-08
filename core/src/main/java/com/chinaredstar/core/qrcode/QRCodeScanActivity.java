@@ -33,6 +33,21 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     }
 
     @Override
+    protected int getHeaderLayoutId() {//不要头
+        return -1;
+    }
+
+    @Override
+    protected boolean retainStatusBarHeight() {//不要状态栏
+        return false;
+    }
+
+    @Override
+    protected boolean enabledImmersiveStyle() {//沉浸式
+        return true;
+    }
+
+    @Override
     protected int getContentLayoutId() {
         return R.layout.activity_qrcode_scan;
     }

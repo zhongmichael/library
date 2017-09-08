@@ -54,18 +54,9 @@ public class BaseActivity extends PermissionsActivity {
         if (ebsEnabled()) {
             EventBus.getDefault().register(this);
         }
-        if (isImmersiveStyle()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
-        }
         this.setContentView(R.layout.activity_libbase_layout);
         this.mStatusBar = findViewById(R.id.id_statusbar_view);
         this.mRootView = findViewById(R.id.id_root_view);
-        if (isImmersiveStyle() && retainStatusBarHeight()) {
-            StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
-        }
         if (this.getHeaderLayoutId() > -1) {
             this.mHeaderView = (ViewGroup) this.getInflater().inflate(this.getHeaderLayoutId(), null);
             this.mRootView.addView(this.mHeaderView, -1, -2);
@@ -73,6 +64,9 @@ public class BaseActivity extends PermissionsActivity {
         if (this.getContentLayoutId() > -1) {
             this.mContentView = (ViewGroup) this.getInflater().inflate(this.getContentLayoutId(), null);
             this.mRootView.addView(this.mContentView, -1, -1);
+        }
+        if (enabledImmersiveStyle()) {
+            initImmersiveStyle();
         }
         if (!NetworkUtil.isNetworkAvailable(this)) {
             onNetworkInvalid();
@@ -100,19 +94,45 @@ public class BaseActivity extends PermissionsActivity {
         return true;
     }
 
-    protected void setStatusBarBackgroundColor(int color) {
-        this.mStatusBar.setBackgroundColor(color);
+    /**
+     * 状态栏颜色
+     */
+    protected int getStatusBarBackgroundColor() {
+        return R.color.colorPrimary;
+    }
+
+    /**
+     * 标题栏颜色
+     */
+    protected int getTitlebarBackgroundColor() {
+        return R.color.colorPrimary;
+    }
+
+    private void initImmersiveStyle() {
+        if (null != this.mStatusBar && retainStatusBarHeight()) {
+            this.mStatusBar.setBackgroundColor(getStatusBarBackgroundColor());
+            StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
+        }
+        if (null != this.mHeaderView) {
+            this.mHeaderView.setBackgroundColor(getTitlebarBackgroundColor());
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     /**
      * 沉浸式
+     *
+     * @return true 沉浸式 ，false 普通模式
      */
-    protected boolean isImmersiveStyle() {
-        return false;
+    protected boolean enabledImmersiveStyle() {
+        return true;
     }
 
     protected int getHeaderLayoutId() {
-        return -1;
+        return R.layout.libbase_header_layout;
     }
 
     protected int getContentLayoutId() {
