@@ -3,6 +3,8 @@ package com.chinaredstar.core.view.pulltorefresh;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.chinaredstar.core.view.pulltorefresh.header.PullHeader;
+
 /**
  * Created by hairui.xiang on 2017/8/4.
  */
@@ -35,11 +37,11 @@ public class PulToRefreshLayout extends Issues282PtrFrameLayout {
         // default is true
         this.setKeepHeaderWhenRefresh(true);
         // 这里初始化上面的头View：
-        //
+        PullHeader mPullHeader = new PullHeader(getContext());
         // 这里设置头View为上面自定义的头View：
-//        this.setHeaderView();
+        this.setHeaderView(mPullHeader);
         // 下拉和刷新状态监听：
         // 因为ParallaxHeader已经实现过PtrUIHandler接口，所以直接设置为ParallaxHeader：
-//        this.addPtrUIHandler();
+        this.addPtrUIHandler(mPullHeader);
     }
 }

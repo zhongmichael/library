@@ -15,7 +15,7 @@ public class DefaultLoadMoreView extends BaseLoadMoreView {
 
     @Override
     protected int getResourceId() {
-        return R.layout.default_loadmore_footer;
+        return R.layout.libbase_loadmore_footer;
     }
 
     @Override
