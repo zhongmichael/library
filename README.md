@@ -1,24 +1,23 @@
-# demo说明
-#####1，ApkUpdateDemo#####
+#####1，ApkUpdateDemo
       apk下载更新
 #####2，EventBusDemo,EventBus2Demo 
       封装EventBus后的使用
-  #####3，FrescoDemo
+#####3，FrescoDemo
       图片加载和下载
-  #####4,NetRequestJsonParseDemo
+#####4,NetRequestJsonParseDemo
       接口请求以及数据反射
-  #####5，PhotoGetDemo
+#####5，PhotoGetDemo
        拍照和相册图片获取
-  #####6,QRCodeScanDemo
+#####6,QRCodeScanDemo
        二维码扫描
-  #####7,SqlSSCacheDemo
+#####7,SqlSSCacheDemo
        SQL存储 以及 sharexxxx存储
-  #####8，TestFragmentDemo和ViewPagerDemo
+#####8，TestFragmentDemo和ViewPagerDemo
        Fragment懒加载事列
-  #####9，MyApp
+#####9，MyApp
        自定义Application，包含了对数据库等的配置设置
        
-  ######其他功能参加core库
+######其他功能参加core库
          
   #push库使用法法
         
