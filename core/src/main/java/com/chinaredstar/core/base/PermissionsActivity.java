@@ -16,13 +16,14 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.chinaredstar.core.constant.RC.RC_FOR_PERMISSIONS;
+import static com.chinaredstar.core.constant.RC.RC_SETTINGS_SCREEN;
+
 /**
  * Created by hairui.xiang on 2017/8/29.
  */
 
 public class PermissionsActivity extends FragmentActivity implements EasyPermissions.PermissionCallbacks {
-    protected static final int RC_SETTINGS_SCREEN = 125;
-    protected static final int RC_FOR_PERMISSIONS = 124;
 
     protected String[] iNeedPermissions() {
         return null;

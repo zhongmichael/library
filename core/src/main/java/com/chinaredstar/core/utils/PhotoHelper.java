@@ -19,6 +19,8 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
+import static com.chinaredstar.core.constant.RC.RC_ACTION_IMAGE_CAPTURE;
+import static com.chinaredstar.core.constant.RC.RC_ACTION_PICK;
 
 /**
  * Created by hairui.xiang on 2017/9/6.
@@ -26,14 +28,6 @@ import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 
 public class PhotoHelper {
     private static final String KEY_TAKE_PHOTOS_RESULT = "take_photos_result";
-    /**
-     * 打开相机
-     */
-    public final static int RC_ACTION_IMAGE_CAPTURE = 2001;
-    /**
-     * 打开相册
-     */
-    public final static int RC_ACTION_PICK = 2002;
 
     public interface OnPhotoGetListener {
         void onGetPhotoPath(String path);

@@ -9,7 +9,7 @@ import com.chinaredstar.demo.bean.User;
  * Created by hairui.xiang on 2017/8/30.
  */
 
-public class CacheDemo extends BaseActivity {
+public class SqlSSCacheDemo extends BaseActivity {
     DatabaseService<User, Long> dao;
 
     @Override

@@ -14,7 +14,7 @@ import com.chinaredstar.core.utils.PhotoHelper;
  * Created by hairui.xiang on 2017/9/6.
  */
 
-public class CameraDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener {
+public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener {
 
     @Override
     protected int getContentLayoutId() {

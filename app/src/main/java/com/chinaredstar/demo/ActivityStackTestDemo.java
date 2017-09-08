@@ -17,6 +17,6 @@ public class ActivityStackTestDemo extends BaseActivity {
     }
 
     public void onNext(View view) {
-        startActivity(new Intent(this, CacheDemo.class));
+        startActivity(new Intent(this, SqlSSCacheDemo.class));
     }
 }

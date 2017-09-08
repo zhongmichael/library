@@ -3,6 +3,7 @@ package com.chinaredstar.demo;
 import android.Manifest;
 
 import com.chinaredstar.core.base.BaseActivity;
+import com.chinaredstar.core.constant.RC;
 import com.chinaredstar.core.utils.ApkUtil;
 import com.chinaredstar.core.utils.LogUtil;
 
@@ -15,7 +16,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by hairui.xiang on 2017/9/1.
  */
 
-public class ApkDemo extends BaseActivity {
+public class ApkUpdateDemo extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
@@ -63,7 +64,7 @@ public class ApkDemo extends BaseActivity {
                     .setTitle(getString(R.string.title_settings_dialog))
                     .setPositiveButton(getString(R.string.setting))
                     .setNegativeButton(getString(R.string.cancel), null /* click listener */)
-                    .setRequestCode(RC_SETTINGS_SCREEN)
+                    .setRequestCode(RC.RC_SETTINGS_SCREEN)
                     .build()
                     .show();
         }

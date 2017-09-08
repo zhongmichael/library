@@ -3,14 +3,13 @@ package com.chinaredstar.core.qrcode;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Vibrator;
-import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.base.BaseActivity;
-import com.chinaredstar.core.base.BaseApplication;
+import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PhotoHelper;
+
+import java.lang.ref.SoftReference;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
@@ -23,6 +22,7 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Delegate, PhotoHelper.OnPhotoGetListener {
     private static final String TAG = QRCodeScanActivity.class.getSimpleName();
+    public static final String KEY_SCAN_RESULT = "scan_qrcode_result";
     private QRCodeView mQRCodeView;
 
     @Override
@@ -76,11 +76,19 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
      */
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Log.i(TAG, "result:" + result);
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         vibrate();
         // 延迟1.5秒后开始识别
-        mQRCodeView.startSpot();
+//        mQRCodeView.startSpot();
+        resultCallback(result);
+    }
+
+    private void resultCallback(String result) {
+        LogUtil.i(TAG, "result: " + result);
+        Intent data = new Intent();
+        data.putExtra(KEY_SCAN_RESULT, result);
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     /**
@@ -88,7 +96,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
      */
     @Override
     public void onScanQRCodeOpenCameraError() {
-        Log.e(TAG, "打开相机出错!");
+        LogUtil.e(TAG, "打开相机出错!");
     }
 
     public void startSpot() {
@@ -158,7 +166,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
     @Override
     public void onGetPhotoPath(String path) {
-        mDecodeQRCodeTask = new DecodeQRCodeTask();
+        mDecodeQRCodeTask = new DecodeQRCodeTask(this);
         mDecodeQRCodeTask.execute(path);
     }
 
@@ -173,6 +181,12 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     private static DecodeQRCodeTask mDecodeQRCodeTask;
 
     private static final class DecodeQRCodeTask extends AsyncTask<String, Void, String> {
+        SoftReference<QRCodeScanActivity> mActivity;
+
+        public DecodeQRCodeTask(QRCodeScanActivity activity) {
+            this.mActivity = new SoftReference<>(activity);
+        }
+
         @Override
         protected String doInBackground(String... params) {
             return QRCodeDecoder.syncDecodeQRCode(params[0]);
@@ -180,11 +194,14 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
         @Override
         protected void onPostExecute(String result) {
-            if (TextUtils.isEmpty(result)) {
+            if (null != this.mActivity && null != this.mActivity.get()) {
+                this.mActivity.get().resultCallback(result);
+            }
+           /* if (TextUtils.isEmpty(result)) {
                 Toast.makeText(BaseApplication.getInstance(), "未发现二维码!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(BaseApplication.getInstance(), result, Toast.LENGTH_SHORT).show();
-            }
+            }*/
         }
     }
 }

@@ -9,7 +9,7 @@ import com.chinaredstar.demo.presenter.view.WeatherView;
  * Created by hairui.xiang on 2017/8/30.
  */
 
-public class ParseDemo extends BaseActivity implements WeatherView {
+public class NetRequestJsonParseDemo extends BaseActivity implements WeatherView {
     final WeatherPresenter mWeatherPresenter = new WeatherPresenter(this, this);
 
     @Override
