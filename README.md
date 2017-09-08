@@ -1,7 +1,7 @@
 # demo说明
-  #####1，ApkUpdateDemo
+#####1，ApkUpdateDemo
       apk下载更新
-  #####2，EventBusDemo,EventBus2Demo 
+#####2，EventBusDemo,EventBus2Demo 
       封装EventBus后的使用
   #####3，FrescoDemo
       图片加载和下载
