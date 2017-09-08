@@ -40,7 +40,7 @@ public class ViewPagerDemo extends BaseActivity {
 
     @Override
     protected void initWidget() {
-        setStatusBarBackgroundColor(Color.parseColor("#ff669900"));
+//        setStatusBarBackgroundColor(Color.parseColor("#ff669900"));
         tablayout = findViewById(R.id.tablayout);
         viewpager = findViewById(R.id.viewpager);
 
