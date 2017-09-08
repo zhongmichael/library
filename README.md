@@ -21,7 +21,7 @@
        
 ###### 其他功能 见core库
          
-# push库使用法法
+# push库使用方法
         
 ##### 1，在build文件里添加 **
             compile project(':push')
