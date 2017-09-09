@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">core</string>
     <string name="rationale_camera">我们需要访问您的相机才可以采集照片。</string>
@@ -12,4 +13,5 @@
     <string name="has_read_sms_permission">已读短信权限: %b</string>
     <string name="rationale_storage">这个程序需要读写权限。</string>
     <string name="rationale">我们需要访问您的.......</string>
+    <string name="dm_disable">您的手机禁用了下载列表功能，请开启该功能，步骤如下： 设置->应用程序管理->全部->下载列表->启动</string>
 </resources>

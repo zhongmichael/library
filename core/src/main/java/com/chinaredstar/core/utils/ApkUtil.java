@@ -4,10 +4,13 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.widget.Toast;
 
+import com.chinaredstar.core.R;
 import com.chinaredstar.core.base.BaseApplication;
 import com.chinaredstar.core.base.BaseBean;
 import com.chinaredstar.core.cache.ss.SharedPreferencesHelper;
@@ -50,10 +53,29 @@ public class ApkUtil {
     };
 
     /**
+     * 不可见更新
+     */
+    public static void download(String url, String newVersion) {
+        download(url, newVersion, "", " ", false);
+    }
+
+    /**
+     * app更新放到通知栏
+     */
+    public static void download(String url, String newVersion, String notifyTitle, String notifyDesc) {
+        download(url, newVersion, notifyTitle, notifyDesc, true);
+    }
+
+    /**
      * 通知栏下载
      * Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE
      */
-    public static void download(String url, String title, String desc, boolean isShowNotiUI) {
+    private static void download(String url, String newVersion, String title, String desc, boolean isShowNotiUI) {
+        if (!enabledDownloadManager()) {
+            Toast.makeText(BaseApplication.getInstance(), BaseApplication.getInstance().getString(R.string.dm_disable), Toast.LENGTH_SHORT).show();
+            return;
+            //
+        }
         //注册内容改变监听
         BaseApplication.getInstance().getContentResolver().registerContentObserver(Uri.parse("content://downloads/my_downloads"), true, mObserver);
         // 创建下载请求
@@ -78,7 +100,7 @@ public class ApkUtil {
         if (!apkDir.exists()) {
             apkDir.mkdirs();
         }
-        String apkName = "V_" + DeviceUtil.getVersionName() + ".apk";
+        String apkName = "V_" + newVersion + ".apk";
         down.setDestinationInExternalPublicDir(apkDir.getAbsolutePath(), apkName);
         // 将下载请求放入队列
         long refernece = ((DownloadManager) BaseApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(down);
@@ -186,5 +208,15 @@ public class ApkUtil {
             //关闭旧版本的应用程序的进程
             android.os.Process.killProcess(android.os.Process.myPid());
         }
+    }
+
+    public static boolean enabledDownloadManager() {
+        int state = BaseApplication.getInstance().getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
+        if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                || state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
+                || state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED) {
+            return false;
+        }
+        return true;
     }
 }

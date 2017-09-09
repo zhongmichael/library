@@ -1,1 +1,1 @@
-include ':app', ':core','push'
+include ':demo', ':core', 'push'

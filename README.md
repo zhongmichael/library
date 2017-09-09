@@ -1,28 +1,32 @@
-     
-        ApkDemo apk更新，进度获取，安装
-        
-        AcitvityStakTestDemo activity栈管理工作类的测试
-               注：可实现回首页功能
-        
-        CacheDemo  数据库缓存，share文件缓存
-              注：数据库配置在MyApp类里,升级数据库需配置升级的表以及更新数据库版本
-              
-        EventBusDemo 对eventbus的使用demo
-        
-        PareDemo 网络请求，以及json解析demo
-        
-        FrescoDemo 图片加载，以及图片下载demo
-        
-        TestFragmentDemo和ViewPagerDemo 是对Fragment的懒加载 以及 伪生命周期的测试
-        
-        其他功能参加core库
+# demo 说明
+
+##### 1，ApkUpdateDemo
+      apk下载更新
+##### 2，EventBusDemo, EventBus2Demo 
+      封装EventBus后的使用
+##### 3，FrescoDemo
+      图片加载和下载
+##### 4,NetRequestJsonParseDemo
+      接口请求以及数据解析
+##### 5，PhotoGetDemo
+       拍照和相册图片获取
+##### 6,QRCodeScanDemo
+       二维码扫描
+##### 7,SqlSSCacheDemo
+       SQL存储 以及 sharexxxx存储
+##### 8，TestFragmentDemo和ViewPagerDemo
+       Fragment懒加载
+##### 9，MyApp
+       自定义Application，包含了对数据库等的配置设置
+       
+###### 其他功能 见core库
          
-      ``*`*--------------push库使用法法------------------**`````
+# push库使用方法
         
-        **1，在build文件里添加 **
+##### 1，在build文件里添加 **
             compile project(':push')
             
-        **2，在Manifest添加**
+##### 2，在Manifest添加**
                 <!--JPUSH-->
                 <meta-data
                     android:name="JPUSH_CHANNEL"
@@ -50,7 +54,7 @@
          
                     
                     
-        **3，在app的build文件里添加如下配置，并替换为各平台申请的值。**
+##### 3，在app的build文件里添加如下配置，并替换为各平台申请的值。**
          defaultConfig {
                 manifestPlaceholders = [
                       JPUSH_APPKEY : "极光appkey",
@@ -63,16 +67,16 @@
          }
          
          
-         **4，在application的oncreate方法里添加下列代码，push库将根据当前手机的room自动判断注册的平台**
+##### 4，在application的oncreate方法里添加下列代码，push库将根据当前手机的room自动判断注册的平台**
                 HxPush.addPushProvider(new JPushProvider());
                 HxPush.addPushProvider(new MiuiPushProvider(this));
                 HxPush.addPushProvider(new FlymePushProvider(this));
                 HxPush.addPushProvider(new EmuiPushProvider());
                 HxPush.register(this);
                 
-               **注：如果不分平台，只使用极光推送，则只在application里添加一行代码：HxPush.register(this);**
+###### 注：如果不分平台，只使用极光推送，则只在application里添加一行代码：HxPush.register(this);**
                 
-          **5，创建自己的receiver并继承HxPushReceiver**
+##### 5，创建自己的receiver并继承HxPushReceiver**
           public class MyReceiver extends HxPushReceiver {
               @Override
               public void onReceivePassThroughMessage(Context context, HxPushMessage message) {
@@ -90,7 +94,7 @@
               }
           }
           
-          **6，在在Manifest添加注册自己的receiver**
+##### 6，在在Manifest添加注册自己的receiver**
                   <receiver
                       android:name=".MyReceiver"
                       android:exported="true">
@@ -106,4 +110,4 @@
                   </receiver>
                   
                   
-           **注：透传消息，通知，通知栏被点击这3类action不是所有平台都全部支持。**       
+###### 注：透传消息，通知，通知栏被点击这3类action不是所有平台都全部支持。**       

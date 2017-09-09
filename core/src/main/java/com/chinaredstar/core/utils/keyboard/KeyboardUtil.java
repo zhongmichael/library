@@ -40,23 +40,20 @@ public class KeyboardUtil {
 
     public static void showKeyboard(final View view) {
         view.requestFocus();
-        InputMethodManager inputManager =
-                (InputMethodManager) view.getContext().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(view, 0);
+        ((InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                .showSoftInput(view, 0);
     }
 
     public static void hideKeyboard(final View view) {
-        InputMethodManager imm =
-                (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        ((InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public static void hideKeyboard(Context context) {
         if (context == null)
             return;
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private static int MIN_KEYBOARD_HEIGHT = 0;

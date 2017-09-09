@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    signingConfigs {
+        config {
+            keyAlias 'keystore'
+            keyPassword 'keystore'
+            storeFile file('keystore.jks')
+            storePassword 'keystore'
+            // 同时满足下面两个条件才需要此配置
+            // 1. Gradle版本 >= 2.14.1
+            // 2. Android Gradle Plugin 版本 >= 2.2.0
+            // 作用是只使用旧版签名，禁用V2版签名模式
+            //v2SigningEnabled false
+            v2SigningEnabled false
+        }
+    }
+    defaultConfig {
+        applicationId "com.chinaredstar.demo"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Specifies the ABI configurations of your native
+        // libraries Gradle should build and package with your APK.
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+
+        manifestPlaceholders = [
+                JPUSH_APPKEY : "ccec05a5696627efff888ab2",
+                JPUSH_CHANNEL: "developer-default",
+                FLYME_APPID  : "FLYME111043",
+                FLYME_APPKEY : "FLYMEd9d0e44312bf4dd592ba50fae5323375",
+                MIUI_APPID   : "MIUI2882303761517604935",//字符串"miui"+ appid
+                MIUI_APPKEY  : "MIUI5301760491935",//字符串"miui"+ appkey
+                PACKAGE_NAME : "com.chinaredstar.demo"
+        ]
+    }
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            resValue "string", "appname", "debug_demo"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //内存泄露检查
+            buildConfigField "boolean", "MEMORY_LEAK_CHECK", "true"
+        }
+
+        release {
+            minifyEnabled false
+            debuggable true
+            resValue "string", "appname", "release_demo"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //内存泄露检查
+            buildConfigField "boolean", "MEMORY_LEAK_CHECK", "true"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.+'
+    testCompile 'junit:junit:4.12'
+    compile project(':core')
+    compile project(':push')
+}
