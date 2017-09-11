@@ -1,5 +1,8 @@
 package com.chinaredstar.demo;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.chinaredstar.core.base.BaseApplication;
 import com.chinaredstar.demo.bean.User;
 import com.chinaredstar.push.HxPush;
@@ -60,5 +63,10 @@ public class MyApp extends BaseApplication {
     @Override
     public String getDatabaseName() {
         return super.getDatabaseName();
+    }
+
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

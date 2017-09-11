@@ -40,6 +40,7 @@ android {
                 MIUI_APPKEY  : "MIUI5301760491935",//字符串"miui"+ appkey
                 PACKAGE_NAME : "com.chinaredstar.demo"
         ]
+        multiDexEnabled true
     }
     lintOptions {
         abortOnError false
@@ -78,4 +79,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':core')
     compile project(':push')
+    compile 'com.android.support:multidex:'
 }
