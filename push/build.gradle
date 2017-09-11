@@ -35,7 +35,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    testCompile 'junit:junit:4.12'
     compile 'com.meizu.flyme.internet:push-internal-publish:3.3.+@aar'
 //    compile 'cn.jiguang.sdk:jpush:3.0.8'  // 此处以JPush 3.0.3 版本为例。
 //    compile 'cn.jiguang.sdk:jcore:1.1.6'  // 此处以JCore 1.1.1 版本为例。

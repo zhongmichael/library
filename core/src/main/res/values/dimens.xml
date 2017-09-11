@@ -8,4 +8,6 @@
     <dimen name="ptr_circle_size">6dp</dimen>
 
     <dimen name="ptr_circle_margin">10dp</dimen>
+
+    <dimen name="loading_progressbar_size">18dp</dimen>
 </resources>

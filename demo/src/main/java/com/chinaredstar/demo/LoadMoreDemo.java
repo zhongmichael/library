@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinaredstar.core.base.BaseActivity;
+import com.chinaredstar.core.view.recyclerview.DefaultLoadMoreView;
 import com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView;
 import com.chinaredstar.core.view.recyclerview.OnLoadMoreListener;
-import com.chinaredstar.demo.view.StickyItemDecoration;
 import com.chinaredstar.push.utils.JHandler;
 
 import java.io.IOException;
@@ -38,19 +38,19 @@ public class LoadMoreDemo extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loadmore);
         mLoadMoreRecyclerView = (LoadMoreRecyclerView) findViewById(R.id.lrv_list);
-        final LinearLayoutManager layout = new LinearLayoutManager(this);
+//        final LinearLayoutManager layout = new LinearLayoutManager(this);
 //        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 //        layout.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        mLoadMoreRecyclerView.setLayoutManager(layout);
-//        mLoadMoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mLoadMoreRecyclerView.setLoadMoreView(new DefaultLoadMoreView(this));
-//        mLoadMoreRecyclerView.setHideViewWhenNoMore(true);
-//        mLoadMoreRecyclerView.addItemDecoration(new SpaceItemDecoration(10));
-        mLoadMoreRecyclerView.addItemDecoration(new StickyItemDecoration(this));
+//        mLoadMoreRecyclerView.setLayoutManager(layout);
+        mLoadMoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLoadMoreRecyclerView.setLoadMoreView(new DefaultLoadMoreView(this));
+        mLoadMoreRecyclerView.setHideViewWhenNoMore(false);
+        mLoadMoreRecyclerView.addItemDecoration(new SpaceItemDecoration(10));
+//        mLoadMoreRecyclerView.addItemDecoration(new StickyItemDecoration(this));
         mLoadMoreRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoad() {
-              /*  JHandler.handler().postDelayed(new Runnable() {
+                JHandler.handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         count++;
@@ -64,7 +64,7 @@ public class LoadMoreDemo extends BaseActivity {
                             mLoadMoreRecyclerView.setHasLoadMore(true);
                         }
                     }
-                }, 2000);*/
+                }, 2000);
             }
         });
 
@@ -75,19 +75,18 @@ public class LoadMoreDemo extends BaseActivity {
                     mDatas.add("");
                 }
                 mLoadMoreAdapter.notifyDataSetChanged();
+                mLoadMoreRecyclerView.setHasLoadMore(true);
 //                mLoadMoreRecyclerView.setHasLoadMore(true);
             }
         });
         mLoadMoreAdapter = new LoadMoreAdapter();
         mLoadMoreRecyclerView.setAdapter(mLoadMoreAdapter);
-        mLoadMoreRecyclerView.setSpanSizeLookup(new LoadMoreRecyclerView.SpanSizeLookup() {
+       /* mLoadMoreRecyclerView.setSpanSizeLookup(new LoadMoreRecyclerView.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 return position == 20 || position == 68 ? 2 : 1;
             }
-        });
-
-        isFileExists("h5_5");
+        });*/
     }
 
     /**
