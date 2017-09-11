@@ -3,7 +3,7 @@ package com.chinaredstar.core.view.pulltorefresh;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.chinaredstar.core.view.pulltorefresh.header.ScaleDotsHeader;
+import com.chinaredstar.core.view.pulltorefresh.header.ThreeColourDotsHeader;
 
 /**
  * Created by hairui.xiang on 2017/8/4.
@@ -29,7 +29,7 @@ public class PulToRefreshLayout extends Issues282PtrFrameLayout {
     private void init() {
         // the following are default settings
         this.setResistance(1.7f);
-        this.setRatioOfHeaderHeightToRefresh(1.2f);
+        this.setRatioOfHeaderHeightToRefresh(1.1f);
         this.setDurationToClose(200);
         this.setDurationToCloseHeader(500);
         // default is false
@@ -37,7 +37,7 @@ public class PulToRefreshLayout extends Issues282PtrFrameLayout {
         // default is true
         this.setKeepHeaderWhenRefresh(true);
         // 这里初始化上面的头View：
-        ScaleDotsHeader mPullHeader = new ScaleDotsHeader(getContext());
+        ThreeColourDotsHeader mPullHeader = new ThreeColourDotsHeader(getContext());
         // 这里设置头View为上面自定义的头View：
         this.setHeaderView(mPullHeader);
         // 下拉和刷新状态监听：
