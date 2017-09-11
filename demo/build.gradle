@@ -56,12 +56,12 @@ android {
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
             debuggable true
             resValue "string", "appname", "release_demo"
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //内存泄露检查
-            buildConfigField "boolean", "MEMORY_LEAK_CHECK", "true"
+            buildConfigField "boolean", "MEMORY_LEAK_CHECK", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
