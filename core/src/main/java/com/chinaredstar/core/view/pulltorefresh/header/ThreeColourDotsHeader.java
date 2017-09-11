@@ -23,7 +23,7 @@ import in.srain.cube.views.ptr.indicator.PtrIndicator;
  * Created by hairui.xiang on 2017/8/4.
  */
 
-public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
+public class ThreeColourDotsHeader extends FrameLayout implements PtrUIHandler {
     private ImageView iv_orange_dot;
     private ImageView iv_green_dot;
     private ImageView iv_blue_dot;
@@ -44,17 +44,21 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
 
     private boolean isInitAnimation = false;
 
-    public ScaleDotsHeader(@NonNull Context context) {
+    private float mOrangeY;
+    private float mGreenY;
+    private float mBlueY;
+
+    public ThreeColourDotsHeader(@NonNull Context context) {
         super(context);
         init();
     }
 
-    public ScaleDotsHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ThreeColourDotsHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ScaleDotsHeader(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public ThreeColourDotsHeader(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -65,6 +69,10 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
         if (!isInitAnimation) {
             isInitAnimation = true;
             mTotalDragDistance = getMeasuredHeight();
+            mOrangeY = iv_orange_dot.getY();
+            mGreenY = iv_green_dot.getY();
+            mBlueY = iv_blue_dot.getY();
+            hideDots();
             animationSetting();
         }
     }
@@ -89,6 +97,12 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
                 iv_blue_dot.getVisibility() == View.VISIBLE;
     }
 
+    private void hideDots() {
+        iv_orange_dot.setY(mOrangeY - mTotalDragDistance);
+        iv_green_dot.setY(mGreenY - mTotalDragDistance);
+        iv_blue_dot.setY(mBlueY - mTotalDragDistance);
+    }
+
     /***
      * 创建动画
      */
@@ -102,12 +116,6 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
         orange.setInterpolator(new AccelerateDecelerateInterpolator());
         orange.setDuration(mAppearAniTime);
         orange.setStartDelay(mAppearAniTime / 10);
-        orange.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                System.out.println("ValueAnimator: " + valueAnimator.getAnimatedValue());
-            }
-        });
         ObjectAnimator green = ObjectAnimator.ofFloat(iv_green_dot, "translationY", -mTotalDragDistance, 0);
         green.setInterpolator(new AccelerateDecelerateInterpolator());
         green.setDuration(mAppearAniTime);
@@ -154,6 +162,7 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
      * 重置view状态
      */
     private void endAnimation() {
+        hideDots();
         if (mAppearAnimatorSet.isStarted()) {
             mAppearAnimatorSet.end();
         }
@@ -170,19 +179,16 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
 
     @Override
     public void onUIReset(PtrFrameLayout frame) {
-        System.out.println("onUIReset: ");
-        endAnimation();
         setDotVisibility(View.INVISIBLE);
+        endAnimation();
     }
 
     @Override
     public void onUIRefreshPrepare(PtrFrameLayout frame) {
-        System.out.println("onUIRefreshPrepare: ");
     }
 
     @Override
     public void onUIRefreshBegin(PtrFrameLayout frame) {
-        System.out.println("onUIRefreshBegin: ");
         mOrangeDotAnimatorSet.start();
         mGreenDotAnimatorSet.start();
         mBlueDotAnimatorSet.start();
@@ -190,18 +196,16 @@ public class ScaleDotsHeader extends FrameLayout implements PtrUIHandler {
 
     @Override
     public void onUIRefreshComplete(PtrFrameLayout frame) {
-        System.out.println("onUIRefreshComplete: ");
         endAnimation();
     }
 
     @Override
     public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
-//        System.out.println("----------------------------getCurrentPosY: " + ptrIndicator.getCurrentPosY());
         if (!frame.isRefreshing()) {
-            if (ptrIndicator.getCurrentPosY() >= mTotalDragDistance && !dotIsVisible()) {
+            if (ptrIndicator.getCurrentPosY() >= mTotalDragDistance / 2 && !dotIsVisible()) {
                 mAppearAnimatorSet.start();
                 setDotVisibility(View.VISIBLE);
-            } else if (ptrIndicator.getCurrentPosY() <= mTotalDragDistance && dotIsVisible()) {
+            } else if (ptrIndicator.getCurrentPosY() <= mTotalDragDistance / 2 && dotIsVisible()) {
                 setDotVisibility(View.INVISIBLE);
                 endAnimation();
             }
