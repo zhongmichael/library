@@ -1,6 +1,5 @@
 package com.chinaredstar.demo;
 
-import android.content.res.AssetManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +17,6 @@ import com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView;
 import com.chinaredstar.core.view.recyclerview.OnLoadMoreListener;
 import com.chinaredstar.push.utils.JHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,31 +85,6 @@ public class LoadMoreDemo extends BaseActivity {
                 return position == 20 || position == 68 ? 2 : 1;
             }
         });*/
-    }
-
-    /**
-     * 判断assets文件夹下的文件是否存在
-     *
-     * @return false 不存在    true 存在
-     */
-    private boolean isFileExists(String filename) {
-        AssetManager assetManager = getAssets();
-        try {
-            String[] names = assetManager.list("h5/h6");
-            for (int i = 0; i < names.length; i++) {
-                System.out.println("------------------name:  " + names[i]);
-                if (names[i].equals(filename.trim())) {
-                    System.out.println(filename + "存在");
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(filename + "不存在");
-            return false;
-        }
-        System.out.println(filename + "不存在");
-        return false;
     }
 
     class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
