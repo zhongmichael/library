@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f5f5f5"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/activityStack"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="ActivityStackDemo"/>
+
+        <TextView
+            android:id="@+id/activityUpdate"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="ActivityApkUpdate"/>
+
+        <TextView
+            android:id="@+id/eventBusDemo2"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="EventBusDemo2"/>
+
+
+        <TextView
+            android:id="@+id/eventBusDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="EventBusDemo"/>
+
+
+        <TextView
+            android:id="@+id/frescoDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="FrescoDemo"/>
+
+        <TextView
+            android:id="@+id/leackDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="leackDemo"/>
+
+        <TextView
+            android:id="@+id/loadmoreDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="LoadDemo"/>
+        <TextView
+            android:id="@+id/mainActivity"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="MainActivity"/>
+
+        <TextView
+            android:id="@+id/jsonParseDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="netResuestJsonParseDemo"/>
+
+        <TextView
+            android:id="@+id/photoGetDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="photoGetDemo"/>
+        <TextView
+            android:id="@+id/pullRefresh"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="PullRefreshDemo"/>
+        <TextView
+            android:id="@+id/qrcodeScan"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="QscodeScanDemo"/>
+        <TextView
+            android:id="@+id/sqlsslCacheDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="sqlsslCacheDemo"/>
+        <TextView
+            android:id="@+id/testFramentDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="TestFragmentDemo"/>
+
+        <TextView
+            android:id="@+id/viewPagerDemo"
+            style="@style/test_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="viewpageDemo"/>
+    </LinearLayout>
+
+</ScrollView>

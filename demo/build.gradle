@@ -79,5 +79,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':core')
     compile project(':push')
-    compile 'com.android.support:multidex:'
+//    compile 'com.android.support:multidex:'
+    compile "com.android.support:multidex:1.0.1"
+    compile 'com.jakewharton:butterknife:8.8.1'
 }
