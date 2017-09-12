@@ -15,8 +15,8 @@ import android.util.AttributeSet;
 
 public class BannerViewPager extends ViewPager {
     private BannerAdapter mAdapter;
-    private static final int mScrollSpeed = 1200;
-    private static final int mSwitchDuration = 4000;
+    private static final int mScrollSpeed = 1000;
+    private static final int mSwitchDuration = 3500;
 
     public BannerViewPager(Context context) {
         super(context);

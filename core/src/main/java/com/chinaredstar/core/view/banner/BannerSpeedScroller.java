@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
  */
 
 public class BannerSpeedScroller extends Scroller {
-    private int mScrollSpeed = 1200;
+    private int mScrollSpeed = 1000;
 
     public BannerSpeedScroller(Context context) {
         super(context);
