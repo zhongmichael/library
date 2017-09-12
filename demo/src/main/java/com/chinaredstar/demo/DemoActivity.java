@@ -77,4 +77,8 @@ public class DemoActivity extends BaseActivity {
     public void stickheader(View v) {
         startPager(ScrollableLayoutDemo.class);
     }
+
+    public void stickheader2(View v) {
+        startPager(ScrollableLayoutDemo2.class);
+    }
 }

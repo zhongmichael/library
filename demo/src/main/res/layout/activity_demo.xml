@@ -85,6 +85,12 @@
             android:layout_height="40dp"
             android:onClick="stickheader"
             android:text="粘性头 demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="stickheader2"
+            android:text="粘性头 demo2" />
     </LinearLayout>
 </ScrollView>
 

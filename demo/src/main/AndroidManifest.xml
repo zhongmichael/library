@@ -89,6 +89,9 @@
         <activity
             android:name=".ScrollableLayoutDemo"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScrollableLayoutDemo2"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".receiver.MyReceiver"

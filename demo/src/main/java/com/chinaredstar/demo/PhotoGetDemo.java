@@ -1,5 +1,6 @@
 package com.chinaredstar.demo;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -23,7 +24,7 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
 
     @Override
     protected String[] iNeedPermissions() {
-        return new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        return new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     }
 
     @Override
