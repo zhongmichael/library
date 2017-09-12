@@ -4,12 +4,19 @@ import android.content.Intent;
 import android.view.View;
 
 import com.chinaredstar.core.base.BaseActivity;
+import com.networkbench.agent.impl.NBSAppAgent;
 
 /**
  * Created by hairui.xiang on 2017/9/12.
  */
 
 public class DemoActivity extends BaseActivity {
+    @Override
+    protected void initValue() {
+        NBSAppAgent.setLicenseKey("efa90bd6885c419ab7e8f01692de3390").withLocationServiceEnabled(true).
+                start(this.getApplicationContext());
+    }
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_demo;
@@ -67,4 +74,7 @@ public class DemoActivity extends BaseActivity {
         startPager(ViewPagerDemo.class);
     }
 
+    public void stickheader(View v) {
+        startPager(ScrollableLayoutDemo.class);
+    }
 }
