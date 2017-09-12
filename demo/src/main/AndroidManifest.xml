@@ -45,6 +45,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ApkUpdateDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EventBusDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EventBus2Demo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FrescoDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoadMoreDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NetRequestJsonParseDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PhotoGetDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PullRefreshDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRcodeScanDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SqlSSCacheDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TestFragmentDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ViewPagerDemo"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ActivityStackTestDemo"

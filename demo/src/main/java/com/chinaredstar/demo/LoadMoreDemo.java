@@ -1,6 +1,5 @@
 package com.chinaredstar.demo;
 
-import android.content.res.AssetManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinaredstar.core.base.BaseActivity;
+import com.chinaredstar.core.view.recyclerview.DefaultLoadMoreView;
 import com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView;
 import com.chinaredstar.core.view.recyclerview.OnLoadMoreListener;
-import com.chinaredstar.demo.view.StickyItemDecoration;
 import com.chinaredstar.push.utils.JHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,19 +36,19 @@ public class LoadMoreDemo extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loadmore);
         mLoadMoreRecyclerView = (LoadMoreRecyclerView) findViewById(R.id.lrv_list);
-        final LinearLayoutManager layout = new LinearLayoutManager(this);
+//        final LinearLayoutManager layout = new LinearLayoutManager(this);
 //        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 //        layout.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        mLoadMoreRecyclerView.setLayoutManager(layout);
-//        mLoadMoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mLoadMoreRecyclerView.setLoadMoreView(new DefaultLoadMoreView(this));
-//        mLoadMoreRecyclerView.setHideViewWhenNoMore(true);
-//        mLoadMoreRecyclerView.addItemDecoration(new SpaceItemDecoration(10));
-        mLoadMoreRecyclerView.addItemDecoration(new StickyItemDecoration(this));
+//        mLoadMoreRecyclerView.setLayoutManager(layout);
+        mLoadMoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLoadMoreRecyclerView.setLoadMoreView(new DefaultLoadMoreView(this));
+        mLoadMoreRecyclerView.setHideViewWhenNoMore(false);
+        mLoadMoreRecyclerView.addItemDecoration(new SpaceItemDecoration(10));
+//        mLoadMoreRecyclerView.addItemDecoration(new StickyItemDecoration(this));
         mLoadMoreRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoad() {
-              /*  JHandler.handler().postDelayed(new Runnable() {
+                JHandler.handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         count++;
@@ -64,7 +62,7 @@ public class LoadMoreDemo extends BaseActivity {
                             mLoadMoreRecyclerView.setHasLoadMore(true);
                         }
                     }
-                }, 2000);*/
+                }, 2000);
             }
         });
 
@@ -75,44 +73,18 @@ public class LoadMoreDemo extends BaseActivity {
                     mDatas.add("");
                 }
                 mLoadMoreAdapter.notifyDataSetChanged();
+                mLoadMoreRecyclerView.setHasLoadMore(true);
 //                mLoadMoreRecyclerView.setHasLoadMore(true);
             }
         });
         mLoadMoreAdapter = new LoadMoreAdapter();
         mLoadMoreRecyclerView.setAdapter(mLoadMoreAdapter);
-        mLoadMoreRecyclerView.setSpanSizeLookup(new LoadMoreRecyclerView.SpanSizeLookup() {
+       /* mLoadMoreRecyclerView.setSpanSizeLookup(new LoadMoreRecyclerView.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 return position == 20 || position == 68 ? 2 : 1;
             }
-        });
-
-        isFileExists("h5_5");
-    }
-
-    /**
-     * 判断assets文件夹下的文件是否存在
-     *
-     * @return false 不存在    true 存在
-     */
-    private boolean isFileExists(String filename) {
-        AssetManager assetManager = getAssets();
-        try {
-            String[] names = assetManager.list("h5/h6");
-            for (int i = 0; i < names.length; i++) {
-                System.out.println("------------------name:  " + names[i]);
-                if (names[i].equals(filename.trim())) {
-                    System.out.println(filename + "存在");
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(filename + "不存在");
-            return false;
-        }
-        System.out.println(filename + "不存在");
-        return false;
+        });*/
     }
 
     class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -161,7 +161,7 @@
 -keepclassmembers enum com.j256.** { *; }
 -keep interface com.j256.**
 -keepclassmembers interface com.j256.** { *; }
--keepattributes *Annotation*
+#-keepattributes *Annotation*
 -keepclassmembers class * {
 @com.j256.ormlite.field.DatabaseField *;
 }
@@ -203,3 +203,24 @@
 -keep class com.tencent.** { *; }
 
 -keep public class * extends com.chinaredstar.core.base.BaseBean
+
+#event bus
+#-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+#UCrop
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
+
+#zxing
+-keep class com.google.zxing.** {*;}
+-dontwarn com.google.zxing.**

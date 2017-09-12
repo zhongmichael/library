@@ -3,4 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="@dimen/loading_progressbar_size"
+            android:layout_height="@dimen/loading_progressbar_size"
+            android:layout_marginRight="10dp"
+            android:indeterminateDrawable="@drawable/libbase_loading" />
+
+        <TextView
+            android:id="@+id/tv_loading_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/libbase_loading"
+            android:textColor="@color/c_919191" />
+    </LinearLayout>
+
 </RelativeLayout>

@@ -14,4 +14,7 @@
     <string name="rationale_storage">这个程序需要读写权限。</string>
     <string name="rationale">我们需要访问您的.......</string>
     <string name="dm_disable">您的手机禁用了下载列表功能，请开启该功能，步骤如下： 设置->应用程序管理->全部->下载列表->启动</string>
+
+    <string name="libbase_loading">加载中…</string>
+    <string name="libbase_loaded_finished">已经到底了/(ㄒoㄒ)/~~</string>
 </resources>

@@ -90,9 +90,22 @@ public class ImageUtil {
     }
 
     /**
+     * 预加载图片
+     */
+    public static void preloadPic(final String url) {
+        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        //预加载到内存缓存:
+//        DataSource<Void> prefetchDataSource =
+        imagePipeline.prefetchToBitmapCache(imageRequest, BaseApplication.getInstance());
+        //预加载到磁盘缓存:
+        imagePipeline.prefetchToDiskCache(imageRequest, BaseApplication.getInstance());
+    }
+
+    /**
      * 图片保存到相册
      **/
-    public static void savePicToAlbum(final String url,  final String title, final String description) {
+    public static void savePicToAlbum(final String url, final String title, final String description) {
         ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
         DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, BaseApplication.getInstance());

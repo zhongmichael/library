@@ -2,6 +2,9 @@ package com.chinaredstar.core.view.recyclerview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.chinaredstar.core.R;
 
@@ -11,7 +14,8 @@ import com.chinaredstar.core.R;
  */
 
 public class DefaultLoadMoreView extends BaseLoadMoreView {
-
+    ProgressBar pb_loading;
+    TextView tv_loading_status;
 
     @Override
     protected int getResourceId() {
@@ -20,6 +24,8 @@ public class DefaultLoadMoreView extends BaseLoadMoreView {
 
     @Override
     protected void initView() {
+        pb_loading = findViewById(R.id.pb_loading);
+        tv_loading_status = findViewById(R.id.tv_loading_status);
     }
 
     public DefaultLoadMoreView(Context context) {
@@ -37,9 +43,13 @@ public class DefaultLoadMoreView extends BaseLoadMoreView {
 
     @Override
     public void showNoMore() {
+        pb_loading.setVisibility(View.GONE);
+        tv_loading_status.setText(getContext().getResources().getString(R.string.libbase_loaded_finished));
     }
 
     @Override
     public void showLoading() {
+        pb_loading.setVisibility(View.VISIBLE);
+        tv_loading_status.setText(getContext().getResources().getString(R.string.libbase_loading));
     }
 }

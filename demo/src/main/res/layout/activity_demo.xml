@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="apkUpdate"
+            android:text="app更新demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="banner"
+            android:text="banenr(广告栏)demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="eventbus"
+            android:text="eventbus(事件传递)Demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="fresco"
+            android:text="Fresco(图片加载，下载)demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="loadmore"
+            android:text="recyclerview加载更多demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="netwrok"
+            android:text="网络请求，json解析dmeo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="photo"
+            android:text="拍照，相册demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="pulltofresh"
+            android:text="下拉刷新demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="qrcode"
+            android:text="二维码扫描demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="cache"
+            android:text="数据库缓存dmeo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="addFragment"
+            android:text="add fragment demo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:onClick="ViewPagerFramgent"
+            android:text="ViewPager fragment demo" />
+    </LinearLayout>
+</ScrollView>
+
