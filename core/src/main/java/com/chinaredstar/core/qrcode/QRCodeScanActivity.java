@@ -3,11 +3,15 @@ package com.chinaredstar.core.qrcode;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Vibrator;
+import android.view.View;
+import android.widget.Toast;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PhotoHelper;
+import com.chinaredstar.core.utils.StatusBarUtil;
+import com.chinaredstar.core.utils.StringUtil;
 
 import java.lang.ref.SoftReference;
 
@@ -27,9 +31,18 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
     @Override
     protected void initWidget() {
+        StatusBarUtil.setImmersiveStatusBar(findViewById(R.id.id_statusbar_placeholder), this);
         mQRCodeView = (ZXingView) findViewById(R.id.zxingview);
         // 设置扫描二维码的代理
         mQRCodeView.setDelegate(this);
+    }
+
+    public void onBack(View v) {
+        finish();
+    }
+
+    public void onOpenAlbum(View v) {
+        chooseQRCodeFromGallery();
     }
 
     @Override
@@ -41,6 +54,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     protected boolean retainStatusBarHeight() {//不要状态栏
         return false;
     }
+
 
     @Override
     protected boolean enabledImmersiveStyle() {//沉浸式
@@ -100,10 +114,15 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
     private void resultCallback(String result) {
         LogUtil.i(TAG, "result: " + result);
-        Intent data = new Intent();
-        data.putExtra(KEY_SCAN_RESULT, result);
-        setResult(RESULT_OK, data);
-        finish();
+        if (!StringUtil.isBlank(result)) {
+            Intent data = new Intent();
+            data.putExtra(KEY_SCAN_RESULT, result);
+            setResult(RESULT_OK, data);
+            finish();
+        } else {
+//            startSpot();
+            Toast.makeText(mActivity, getString(R.string.scan_empty), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

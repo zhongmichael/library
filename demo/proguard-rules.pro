@@ -224,3 +224,12 @@
 #zxing
 -keep class com.google.zxing.** {*;}
 -dontwarn com.google.zxing.**
+
+
+#听云
+# ProGuard configurations for NetworkBench Lens
+-keep class com.networkbench.** { *; }
+-dontwarn com.networkbench.**
+-keepattributes Exceptions, Signature, InnerClasses
+# End NetworkBench Lens
+-keepattributes SourceFile,LineNumberTable

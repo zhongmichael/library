@@ -10,6 +10,7 @@ import com.chinaredstar.push.emui.EmuiPushProvider;
 import com.chinaredstar.push.flyme.FlymePushProvider;
 import com.chinaredstar.push.jpush.JPushProvider;
 import com.chinaredstar.push.miui.MiuiPushProvider;
+import com.networkbench.agent.impl.NBSAppAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class MyApp extends BaseApplication {
         HxPush.addPushProvider(new FlymePushProvider(this));
         HxPush.addPushProvider(new EmuiPushProvider());
         HxPush.register(this);
+
+        NBSAppAgent.setLicenseKey("efa90bd6885c419ab7e8f01692de3390").withLocationServiceEnabled(true).startInApplication(this.getApplicationContext());
     }
 
     @Override
