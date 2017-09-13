@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -34,8 +33,8 @@ public class BaseActivity extends PermissionsActivity {
     protected Activity mActivity = this;
     private View mStatusBar;
     private LinearLayout mRootView;
-    private ViewGroup mHeaderView;
-    private ViewGroup mContentView;
+    private View mHeaderView;
+    private View mContentView;
     private LayoutInflater mLayoutInflater;
 
     @Override
@@ -54,16 +53,24 @@ public class BaseActivity extends PermissionsActivity {
         if (ebsEnabled()) {
             EventBus.getDefault().register(this);
         }
-        this.setContentView(R.layout.activity_libbase_layout);
-        this.mStatusBar = findViewById(R.id.id_statusbar_view);
-        this.mRootView = findViewById(R.id.id_root_view);
-        if (this.getHeaderLayoutId() > -1) {
-            this.mHeaderView = (ViewGroup) this.getInflater().inflate(this.getHeaderLayoutId(), null);
-            this.mRootView.addView(this.mHeaderView, -1, -2);
+        setContentView(R.layout.activity_libbase_layout);
+        mStatusBar = findViewById(R.id.id_statusbar_view);
+        mRootView = findViewById(R.id.id_root_view);
+        if (getHeaderLayoutId() > -1) {
+            mHeaderView = inflate(getHeaderLayoutId());
+        } else if (null != getHeaderLayoutView()) {
+            mHeaderView = getHeaderLayoutView();
         }
-        if (this.getContentLayoutId() > -1) {
-            this.mContentView = (ViewGroup) this.getInflater().inflate(this.getContentLayoutId(), null);
-            this.mRootView.addView(this.mContentView, -1, -1);
+        if (getContentLayoutId() > -1) {
+            mContentView = inflate(getContentLayoutId());
+        } else if (null != getContentLayoutView()) {
+            mContentView = getContentLayoutView();
+        }
+        if (null != mHeaderView) {
+            mRootView.addView(mHeaderView, -1, -2);
+        }
+        if (null != mContentView) {
+            mRootView.addView(this.mContentView, -1, -1);
         }
         if (enabledImmersiveStyle()) {
             initImmersiveStyle();
@@ -75,6 +82,10 @@ public class BaseActivity extends PermissionsActivity {
         this.initWidget();
         this.initListener();
         this.initData();
+    }
+
+    protected View inflate(int resLayoutId) {
+        return this.getInflater().inflate(resLayoutId, null);
     }
 
     protected LayoutInflater getInflater() {
@@ -135,8 +146,16 @@ public class BaseActivity extends PermissionsActivity {
         return R.layout.libbase_header_layout;
     }
 
+    protected View getHeaderLayoutView() {
+        return null;
+    }
+
     protected int getContentLayoutId() {
         return -1;
+    }
+
+    protected View getContentLayoutView() {
+        return null;
     }
 
     protected void initValue() {
