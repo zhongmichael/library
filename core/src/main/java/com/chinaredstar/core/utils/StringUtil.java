@@ -45,10 +45,7 @@ public class StringUtil {
      * @since 2.0
      */
     public static boolean isBlank(String str) {
-        if (null == str || str.trim().length() == 0) {
-            return true;
-        }
-        return false;
+        return null == str || str.trim().length() == 0;
     }
 
     /**
