@@ -17,13 +17,13 @@
         app:qrcv_customScanLineDrawable="@drawable/scan_icon_scanline"
         app:qrcv_isBarcode="false"
         app:qrcv_isCenterVertical="false"
-        app:qrcv_isOnlyDecodeScanBoxArea="false"
+        app:qrcv_isOnlyDecodeScanBoxArea="true"
         app:qrcv_isScanLineReverse="true"
         app:qrcv_isShowDefaultGridScanLineDrawable="false"
         app:qrcv_isShowDefaultScanLineDrawable="true"
         app:qrcv_isShowTipBackground="true"
         app:qrcv_isShowTipTextAsSingleLine="false"
-        app:qrcv_isTipTextBelowRect="false"
+        app:qrcv_isTipTextBelowRect="true"
         app:qrcv_maskColor="#33FFFFFF"
         app:qrcv_qrCodeTipText="将二维码/条码放入框内，即可自动扫描"
         app:qrcv_rectWidth="200dp"
@@ -32,7 +32,50 @@
         app:qrcv_scanLineSize="0.5dp"
         app:qrcv_tipTextColor="@android:color/white"
         app:qrcv_tipTextSize="12sp"
-        app:qrcv_toolbarHeight="56dp"
-        app:qrcv_topOffset="90dp" />
+        app:qrcv_toolbarHeight="@dimen/titlebar_height"
+        app:qrcv_topOffset="120dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/id_statusbar_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titlebar_height">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                style="@style/TitleBar_Button"
+                android:onClick="onBack"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/white_back_arrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/scan"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/fs_18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_album"
+                style="@style/TitleBar_Button"
+                android:layout_alignParentRight="true"
+                android:onClick="onOpenAlbum"
+                android:text="@string/album"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/fs_16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
 
 </FrameLayout>

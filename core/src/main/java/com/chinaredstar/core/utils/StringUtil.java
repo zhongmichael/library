@@ -48,7 +48,7 @@ public class StringUtil {
         if (null == str || str.trim().length() == 0) {
             return true;
         }
-        return true;
+        return false;
     }
 
     /**

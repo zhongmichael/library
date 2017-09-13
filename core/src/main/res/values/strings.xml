@@ -17,4 +17,7 @@
 
     <string name="libbase_loading">加载中…</string>
     <string name="libbase_loaded_finished">已经到底了/(ㄒoㄒ)/~~</string>
+    <string name="scan">扫一扫</string>
+    <string name="album">相册</string>
+    <string name="scan_empty">未发现二维码/条形码</string>
 </resources>

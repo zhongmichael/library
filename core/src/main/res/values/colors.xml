@@ -7,4 +7,6 @@
     <color name="colorPrimaryDarkTrans">#CCf57257</color>
 
     <color name="c_919191">#919191</color>
+    <color name="c_white">#FFFFFF</color>
+    <color name="c_transparent">#00000000</color>
 </resources>
