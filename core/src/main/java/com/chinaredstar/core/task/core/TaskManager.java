@@ -1,15 +1,22 @@
 package com.chinaredstar.core.task.core;
 
+import com.chinaredstar.core.utils.LogUtil;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Created by hairui.xiang on 2017/9/13.
  */
 
 public class TaskManager {
     private volatile static TaskManager mManager = null;
-    private TaskExecutor mTaskExecutor;
+    private ExecutorService mTaskExecutor;
 
     private TaskManager() {
-        mTaskExecutor = TaskExecutor.newExecutor();
+        int threadCount = TheadCountCalculator.calculateBestThreadCount();
+        LogUtil.d("calculateBestThreadCount: " + threadCount);
+        mTaskExecutor = Executors.newFixedThreadPool(threadCount);
     }
 
     public static TaskManager getInstance() {
