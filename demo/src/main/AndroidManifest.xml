@@ -91,7 +91,9 @@
         <activity
             android:name=".ScrollableLayoutDemo2"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".TaskMangerDemo"
+            android:screenOrientation="portrait" />
         <receiver
             android:name=".receiver.MyReceiver"
             android:exported="true">
