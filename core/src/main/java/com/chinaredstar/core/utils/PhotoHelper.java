@@ -141,7 +141,7 @@ public class PhotoHelper {
 
 
     private static File getOutputPhoto(boolean isCrop) {
-        File photosDir = new File(PathUtil.getAppFilesDir(), "photos/");
+        File photosDir = new File(PathUtil.getAppCacheDir(), "pictures/");
         if (!photosDir.exists()) {
             photosDir.mkdirs();
         }
@@ -209,6 +209,10 @@ public class PhotoHelper {
         } else if ("file".equals(uri.getScheme())) {
             path = uri.toString().substring(uri.getScheme().length());
         }
+        if (null != path && path.startsWith(":///")) {//scheme content
+            path = path.replace(":///", "/");
+        }
+        System.out.println("path: " + path);
         return path;
     }
 }

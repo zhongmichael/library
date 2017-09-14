@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.eventbus.EventCenter;
+import com.chinaredstar.core.task.core.ITask;
+import com.chinaredstar.core.task.core.TaskManager;
 import com.chinaredstar.core.utils.ActivityStack;
 import com.chinaredstar.core.utils.HandlerUtil;
 import com.chinaredstar.core.utils.NetworkUtil;
@@ -121,11 +123,11 @@ public class BaseActivity extends PermissionsActivity {
 
     private void initImmersiveStyle() {
         if (null != this.mStatusBar && retainStatusBarHeight()) {
-            this.mStatusBar.setBackgroundColor(getStatusBarBackgroundColor());
+            this.mStatusBar.setBackgroundColor(getResources().getColor(getStatusBarBackgroundColor()));
             StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
         }
         if (null != this.mHeaderView) {
-            this.mHeaderView.setBackgroundColor(getTitlebarBackgroundColor());
+            this.mHeaderView.setBackgroundColor(getResources().getColor(getTitlebarBackgroundColor()));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
@@ -231,5 +233,11 @@ public class BaseActivity extends PermissionsActivity {
      */
     protected boolean ebsEnabled() {
         return false;
+    }
+
+    protected void execTask(ITask task) {
+        if (null != task) {
+            TaskManager.getInstance().excute(task);
+        }
     }
 }
