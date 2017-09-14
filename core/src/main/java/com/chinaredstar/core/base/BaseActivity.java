@@ -222,10 +222,11 @@ public class BaseActivity extends PermissionsActivity {
      * ASYNC 无论事件在哪个线程发布，都会创建新的子线程在执行
      */
     @Subscribe(threadMode = ThreadMode.MAIN)//, priority = 100
-    public void onEventCenter(EventCenter event) {
-        onEventCallback(event);
+    public final void onEventCenter(EventCenter event) {
+        if (null != event) {
+            onEventCallback(event);
+        }
     }
-
 
     /**
      * 根据code区分当前事件类型
