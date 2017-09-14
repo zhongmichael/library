@@ -98,6 +98,8 @@ public class BaseActivity extends PermissionsActivity {
     }
 
     /**
+     * 只有当 enabledImmersiveStyle( ) 方法 return true 时有效
+     * <p>
      * 保留状态栏高度
      *
      * @return <li>true 创建一个和状态栏高度一样的view</li>
