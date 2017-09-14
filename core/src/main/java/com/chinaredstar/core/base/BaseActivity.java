@@ -32,13 +32,12 @@ import static com.chinaredstar.core.utils.NetworkUtil.NETWORK_CHANGE_ACTION;
  */
 
 public class BaseActivity extends PermissionsActivity {
-    protected Activity mActivity = this;
+    protected Activity mActivity;
     private View mStatusBar;
     private LinearLayout mRootView;
     private View mHeaderView;
     private View mContentView;
-    private LayoutInflater mLayoutInflater = LayoutInflater.from(this);
-    ;
+    private LayoutInflater mLayoutInflater;
 
     @Override
     protected void onDestroy() {
@@ -56,6 +55,8 @@ public class BaseActivity extends PermissionsActivity {
         if (enabledEventBus()) {
             EventBus.getDefault().register(this);
         }
+        mActivity = this;
+        mLayoutInflater = LayoutInflater.from(this);
         setContentView(R.layout.activity_libbase_layout);
         mStatusBar = findViewById(R.id.id_statusbar_view);
         mRootView = findViewById(R.id.id_root_view);
