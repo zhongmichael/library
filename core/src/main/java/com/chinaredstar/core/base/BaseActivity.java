@@ -237,6 +237,15 @@ public class BaseActivity extends PermissionsActivity {
         return false;
     }
 
+    /**
+     * 执行异步任务
+     * <p>
+     * 执行结果将在onEventCallback(EventCenter event)方法里返回，task的id 相当于event的code
+     *
+     * @param task 计算缓存大小   {@link com.chinaredstar.core.task.CalculateCacheTask }
+     *             清除缓存       {@link com.chinaredstar.core.task.ClearCacheTask}
+     *             压缩图片       {@link com.chinaredstar.core.task.CompressImageTask}
+     */
     protected void execTask(ITask task) {
         if (null != task) {
             TaskManager.getInstance().excute(task);
