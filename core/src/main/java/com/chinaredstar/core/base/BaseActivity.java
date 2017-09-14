@@ -37,7 +37,8 @@ public class BaseActivity extends PermissionsActivity {
     private LinearLayout mRootView;
     private View mHeaderView;
     private View mContentView;
-    private LayoutInflater mLayoutInflater;
+    private LayoutInflater mLayoutInflater = LayoutInflater.from(this);
+    ;
 
     @Override
     protected void onDestroy() {
@@ -86,15 +87,12 @@ public class BaseActivity extends PermissionsActivity {
         this.initData();
     }
 
-    protected View inflate(int resLayoutId) {
-        return this.getInflater().inflate(resLayoutId, null);
+    protected final View inflate(int resLayoutId) {
+        return getInflater().inflate(resLayoutId, null);
     }
 
-    protected LayoutInflater getInflater() {
-        if (null == this.mLayoutInflater) {
-            this.mLayoutInflater = LayoutInflater.from(this);
-        }
-        return this.mLayoutInflater;
+    protected final LayoutInflater getInflater() {
+        return mLayoutInflater;
     }
 
     /**
@@ -180,7 +178,7 @@ public class BaseActivity extends PermissionsActivity {
     protected static void onNetworkAvailable() {
     }
 
-    public Handler getHandler() {
+    public final Handler getHandler() {
         return HandlerUtil.handler();
     }
 
@@ -253,7 +251,7 @@ public class BaseActivity extends PermissionsActivity {
      *             清除缓存       {@link com.chinaredstar.core.task.ClearCacheTask}
      *             压缩图片       {@link com.chinaredstar.core.task.CompressImageTask}
      */
-    protected void execTask(ITask task) {
+    protected final void execTask(ITask task) {
         if (null != task) {
             TaskManager.getInstance().excute(task);
         }

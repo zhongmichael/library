@@ -67,7 +67,7 @@ public abstract class BaseFragment extends Fragment {
      * @param res
      * @return
      */
-    public <T extends View> T findViewById(int res) {
+    public final <T extends View> T findViewById(int res) {
         if (null != mRootView) {
             return mRootView.findViewById(res);
         } else {
