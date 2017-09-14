@@ -50,7 +50,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             debuggable true
             resValue "string", "appname", "debug_demo"
             buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -62,7 +62,7 @@ android {
 
         release {
             minifyEnabled true
-            debuggable true
+            debuggable false
             resValue "string", "appname", "release_demo"
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //内存泄露检查
