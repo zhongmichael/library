@@ -123,11 +123,11 @@ public class BaseActivity extends PermissionsActivity {
 
     private void initImmersiveStyle() {
         if (null != this.mStatusBar && retainStatusBarHeight()) {
-            this.mStatusBar.setBackgroundColor(getResources().getColor(getStatusBarBackgroundColor()));
+            this.mStatusBar.setBackgroundResource(getStatusBarBackgroundColor());
             StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
         }
         if (null != this.mHeaderView) {
-            this.mHeaderView.setBackgroundColor(getResources().getColor(getTitlebarBackgroundColor()));
+            this.mHeaderView.setBackgroundResource(getTitlebarBackgroundColor());
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
