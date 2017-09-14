@@ -10,14 +10,15 @@ import com.chinaredstar.core.task.CalculateCacheTask;
 import com.chinaredstar.core.task.ClearCacheTask;
 import com.chinaredstar.core.task.core.TaskResult;
 
+import static com.chinaredstar.core.constant.EC.EC_CALCULATE_CACHE_SIZE;
+import static com.chinaredstar.core.constant.EC.EC_CLEAR_CACHE;
+
 /**
  * Created by hairui.xiang on 2017/9/14.
  */
 
 public class TaskMangerDemo extends BaseActivity {
     TextView tv_show;
-    final int EC_GET_CACHE_SIZE = 10;
-    final int EC_CLEAR_CACHE = 11;
 
     @Override
     protected int getContentLayoutId() {
@@ -32,7 +33,7 @@ public class TaskMangerDemo extends BaseActivity {
     @Override
     protected void onEventCallback(EventCenter event) {
         switch (event.code) {
-            case EC_GET_CACHE_SIZE:
+            case EC_CALCULATE_CACHE_SIZE:
                 tv_show.setText(((TaskResult) event.data).obj.toString());
                 break;
             case EC_CLEAR_CACHE:
@@ -48,7 +49,7 @@ public class TaskMangerDemo extends BaseActivity {
     }
 
     public void getCacheSize(View v) {
-        execTask(new CalculateCacheTask(EC_GET_CACHE_SIZE));
+        execTask(new CalculateCacheTask(EC_CALCULATE_CACHE_SIZE));
     }
 
     public void clearCache(View v) {

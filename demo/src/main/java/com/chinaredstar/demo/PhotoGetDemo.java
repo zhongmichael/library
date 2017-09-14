@@ -9,6 +9,8 @@ import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.task.CompressImageTask;
 import com.chinaredstar.core.utils.PhotoHelper;
 
+import static com.chinaredstar.core.constant.EC.EC_COMPRESS_IMAGE;
+
 /**
  * Created by hairui.xiang on 2017/9/6.
  */
@@ -50,12 +52,12 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
     @Override
     public void onGetPhotoPath(String uri) {
         System.out.println("url: " + uri);
-        execTask(new CompressImageTask(111111, uri));
+        execTask(new CompressImageTask(EC_COMPRESS_IMAGE, uri));
     }
 
     @Override
     protected void onEventCallback(EventCenter event) {
-        if (111111 == event.code) {
+        if (EC_COMPRESS_IMAGE == event.code) {
             System.out.println("data: " + event.data);
         }
     }
