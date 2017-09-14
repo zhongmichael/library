@@ -83,7 +83,7 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
     }
 
     @Override
-    protected boolean ebsEnabled() {
+    protected boolean enabledEventBus() {
         return true;
     }
 }

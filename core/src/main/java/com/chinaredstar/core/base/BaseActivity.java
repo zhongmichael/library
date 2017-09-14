@@ -52,7 +52,7 @@ public class BaseActivity extends PermissionsActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.push(this);
-        if (ebsEnabled()) {
+        if (enabledEventBus()) {
             EventBus.getDefault().register(this);
         }
         setContentView(R.layout.activity_libbase_layout);
@@ -226,14 +226,20 @@ public class BaseActivity extends PermissionsActivity {
         onEventCallback(event);
     }
 
+
+    /**
+     * 根据code区分当前事件类型
+     */
     protected void onEventCallback(EventCenter event) {
         // handle event
     }
 
     /**
      * 注册event bus
+     *
+     * @return true 自动注册eventbus
      */
-    protected boolean ebsEnabled() {
+    protected boolean enabledEventBus() {
         return false;
     }
 

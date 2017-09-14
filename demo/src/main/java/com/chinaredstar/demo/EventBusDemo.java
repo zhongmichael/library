@@ -31,7 +31,7 @@ public class EventBusDemo extends BaseActivity {
     }
 
     @Override
-    protected boolean ebsEnabled() {
+    protected boolean enabledEventBus() {
         return true;
     }
 

@@ -16,8 +16,8 @@ import com.chinaredstar.core.task.core.TaskResult;
 
 public class TaskMangerDemo extends BaseActivity {
     TextView tv_show;
-    final int C_GET_CACHE_SIZE = 10;
-    final int C_CLEAR_CACHE = 11;
+    final int EC_GET_CACHE_SIZE = 10;
+    final int EC_CLEAR_CACHE = 11;
 
     @Override
     protected int getContentLayoutId() {
@@ -25,17 +25,17 @@ public class TaskMangerDemo extends BaseActivity {
     }
 
     @Override
-    protected boolean ebsEnabled() {
+    protected boolean enabledEventBus() {
         return true;
     }
 
     @Override
     protected void onEventCallback(EventCenter event) {
         switch (event.code) {
-            case C_GET_CACHE_SIZE:
+            case EC_GET_CACHE_SIZE:
                 tv_show.setText(((TaskResult) event.data).obj.toString());
                 break;
-            case C_CLEAR_CACHE:
+            case EC_CLEAR_CACHE:
                 Toast.makeText(mActivity, "清除完成", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -48,10 +48,10 @@ public class TaskMangerDemo extends BaseActivity {
     }
 
     public void getCacheSize(View v) {
-        execTask(new CalculateCacheTask(C_GET_CACHE_SIZE));
+        execTask(new CalculateCacheTask(EC_GET_CACHE_SIZE));
     }
 
     public void clearCache(View v) {
-        execTask(new ClearCacheTask(C_CLEAR_CACHE));
+        execTask(new ClearCacheTask(EC_CLEAR_CACHE));
     }
 }
