@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.chinaredstar.core.R;
@@ -37,6 +38,7 @@ public class BaseActivity extends PermissionsActivity {
     private LinearLayout mRootView;
     private View mHeaderView;
     private View mContentView;
+    private FrameLayout mLoadingViewContainer;
     private LayoutInflater mLayoutInflater;
 
     @Override
@@ -60,6 +62,9 @@ public class BaseActivity extends PermissionsActivity {
         setContentView(R.layout.activity_libbase_layout);
         mStatusBar = findViewById(R.id.id_statusbar_view);
         mRootView = findViewById(R.id.id_root_view);
+
+        mLoadingViewContainer = (FrameLayout) inflate(R.layout.libbase_content_layout);
+
         if (getHeaderLayoutId() > -1) {
             mHeaderView = inflate(getHeaderLayoutId());
         } else if (null != getHeaderLayoutView()) {
@@ -70,12 +75,15 @@ public class BaseActivity extends PermissionsActivity {
         } else if (null != getContentLayoutView()) {
             mContentView = getContentLayoutView();
         }
+        if (null != mContentView) {
+            mLoadingViewContainer.addView(mContentView);
+        }
         if (null != mHeaderView) {
             mRootView.addView(mHeaderView, -1, -2);
         }
-        if (null != mContentView) {
-            mRootView.addView(this.mContentView, -1, -1);
-        }
+
+        mRootView.addView(this.mLoadingViewContainer, -1, -1);
+
         if (enabledImmersiveStyle()) {
             initImmersiveStyle();
         }
@@ -255,6 +263,29 @@ public class BaseActivity extends PermissionsActivity {
     protected final void execTask(ITask task) {
         if (null != task) {
             TaskManager.getInstance().excute(task);
+        }
+    }
+
+    /**
+     * 页面内加载框
+     */
+    protected View getLoadingView() {
+        return null;
+    }
+
+    protected boolean isShowingLoadingView() {
+        return null != getLoadingView() && mLoadingViewContainer.indexOfChild(getLoadingView()) >= 0;
+    }
+
+    protected void showLoading() {
+        if (!isShowingLoadingView()) {
+            mLoadingViewContainer.addView(getLoadingView());
+        }
+    }
+
+    protected void hideLoading() {
+        if (isShowingLoadingView()) {
+            mLoadingViewContainer.removeView(getLoadingView());
         }
     }
 }

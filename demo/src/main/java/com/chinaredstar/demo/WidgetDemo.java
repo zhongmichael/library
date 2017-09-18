@@ -18,11 +18,6 @@ public class WidgetDemo extends BaseActivity {
     }
 
     public void showToast(View view) {
-     /*   LayoutInflater inflate = (LayoutInflater) BaseApplication.getInstance().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflate.inflate(R.layout.w_toast, null);
-        TextView tv = (TextView) v.findViewById(R.id.tv_toast_message);
-        tv.setText("gogogo");
-        ToastUtil.showCenterToast(this, v, "tosssss", 5000);*/
         XToast.create(mActivity)
                 .setText("gogoog")
                 .setAnimation(XTostAnimationUtil.ANIMATION_PULL)

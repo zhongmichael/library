@@ -201,13 +201,8 @@ public class XToast {
 
         mParentView.setLayoutParams(params);
 
-        if (mView.getParent() instanceof ViewGroup) {
-            ((ViewGroup) mView.getParent()).removeAllViews();
-        }
-
-        if (mParentView.getParent() instanceof ViewGroup) {
-            ((ViewGroup) mParentView.getParent()).removeView(mParentView);
-        }
+        mParentView.removeView(mView);
+        mRootView.removeView(mParentView);
 
         mRootView.addView(mParentView);
 
