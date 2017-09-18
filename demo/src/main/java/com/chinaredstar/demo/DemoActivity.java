@@ -86,4 +86,8 @@ public class DemoActivity extends BaseActivity {
         startPager(TaskMangerDemo.class);
     }
 
+    public void widget(View v) {
+        startPager(WidgetDemo.class);
+    }
+
 }

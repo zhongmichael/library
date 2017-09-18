@@ -31,10 +31,10 @@
 
     <application
         android:name="com.chinaredstar.demo.MyApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/appname"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:allowBackup="false"
         android:theme="@style/AppTheme">
         <activity
             android:name=".DemoActivity"
@@ -94,6 +94,10 @@
         <activity
             android:name=".TaskMangerDemo"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".WidgetDemo"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".receiver.MyReceiver"
             android:exported="true">
