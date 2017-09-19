@@ -35,6 +35,7 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
 
     public void binding(ViewPager vp) {
         this.mViewPager = vp;
+        this.mViewPager.setOffscreenPageLimit(mDotsSize);
         this.mViewPager.setOnPageChangeListener(mOnPageChangeListener);
     }
 

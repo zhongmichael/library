@@ -57,10 +57,11 @@ public class BannerActivity extends BaseActivity {
             @Override
             protected void setCurrentDot(int position) {
                 System.out.println("position: " + position);
-                for(int i = 0; i< ll_dots.getChildCount(); i++){
+                for (int i = 0; i < ll_dots.getChildCount(); i++) {
                     ll_dots.getChildAt(i).setSelected(false);
                 }
-                ll_dots.getChildAt(position).setSelected(true);
+                if (null != ll_dots.getChildAt(position))
+                    ll_dots.getChildAt(position).setSelected(true);
             }
         });
     }
