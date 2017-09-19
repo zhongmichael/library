@@ -55,8 +55,9 @@ public class XDialog {
             return this;
         }
 
-        public void setGravity(int mGravity) {
+        public Builder setGravity(int mGravity) {
             this.mGravity = mGravity;
+            return this;
         }
 
         public Dialog create() {
