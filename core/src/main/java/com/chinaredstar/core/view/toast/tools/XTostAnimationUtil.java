@@ -1,7 +1,9 @@
-package com.chinaredstar.core.view.toast;
+package com.chinaredstar.core.view.toast.tools;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+
+import com.chinaredstar.core.view.toast.XToast;
 
 /**
  * Created by hairui.xiang on 2017/9/18.

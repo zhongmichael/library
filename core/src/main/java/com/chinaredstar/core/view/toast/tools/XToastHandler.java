@@ -1,4 +1,6 @@
-package com.chinaredstar.core.view.toast;
+package com.chinaredstar.core.view.toast.tools;
+
+import com.chinaredstar.core.view.toast.XToast;
 
 /**
  * Created by hairui.xiang on 2017/9/19.

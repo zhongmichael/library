@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.utils.keyboard.ViewUtil;
+import com.chinaredstar.core.view.toast.tools.XToastHandler;
+import com.chinaredstar.core.view.toast.tools.XToastTimelyHandler;
+import com.chinaredstar.core.view.toast.tools.XTostAnimationUtil;
 
 /**
  * Created by hairui.xiang on 2017/9/18.

@@ -1,10 +1,12 @@
-package com.chinaredstar.core.view.toast;
+package com.chinaredstar.core.view.toast.tools;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import com.chinaredstar.core.view.toast.XToast;
 
 /**
  * Created by hairui.xiang on 2017/9/18.

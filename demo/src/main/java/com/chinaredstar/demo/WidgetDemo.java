@@ -6,8 +6,8 @@ import android.view.View;
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.view.XDialog;
 import com.chinaredstar.core.view.toast.XToast;
-import com.chinaredstar.core.view.toast.XToastTimelyHandler;
-import com.chinaredstar.core.view.toast.XTostAnimationUtil;
+import com.chinaredstar.core.view.toast.tools.XToastTimelyHandler;
+import com.chinaredstar.core.view.toast.tools.XTostAnimationUtil;
 
 /**
  * Created by hairui.xiang on 2017/9/15.
