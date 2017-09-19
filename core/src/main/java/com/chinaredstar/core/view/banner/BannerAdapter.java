@@ -114,6 +114,9 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
             if (msg.what == mCycleWhat) {
                 mCycleHandler.removeMessages(mCycleWhat);
                 if (null != mViewPager) {
+                    if (mViewPager instanceof BannerViewPager) {
+                        ((BannerViewPager) mViewPager).setCustomScrollSpeed();
+                    }
                     mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
                 }
                 mCycleHandler.sendEmptyMessageDelayed(mCycleWhat, mDuration);
@@ -132,6 +135,9 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
+                        if (mViewPager instanceof BannerViewPager) {
+                            ((BannerViewPager) mViewPager).setDefaultScrollSpeed();
+                        }
                         mCycleHandler.removeMessages(mCycleWhat);
                         break;
                     case MotionEvent.ACTION_CANCEL:

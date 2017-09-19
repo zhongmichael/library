@@ -1,6 +1,5 @@
 package com.chinaredstar.demo;
 
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -48,15 +47,16 @@ public class BannerActivity extends BaseActivity {
         mBannerView.setAdapter(new BannerAdapter<BannerInfo>(mBannerInfo) {
             @Override
             protected View getView(BannerInfo data, int position) {
+                System.out.println("position: " + position);
                 SimpleDraweeView child = new SimpleDraweeView(mActivity);
-                child.setLayoutParams(new ViewPager.LayoutParams());
+//                child.setLayoutParams(new ViewPager.LayoutParams());
                 child.setImageURI(data.url);
                 return child;
             }
 
             @Override
             protected void setCurrentDot(int position) {
-                System.out.println("position: " + position);
+//                System.out.println("position: " + position);
                 for (int i = 0; i < ll_dots.getChildCount(); i++) {
                     ll_dots.getChildAt(i).setSelected(false);
                 }

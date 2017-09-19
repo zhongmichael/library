@@ -3,6 +3,10 @@ package com.chinaredstar.core.view.banner;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.animation.Interpolator;
+import android.widget.Scroller;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by hairui.xiang on 2017/9/11.
@@ -15,8 +19,9 @@ import android.util.AttributeSet;
 
 public class BannerViewPager extends ViewPager {
     private BannerAdapter mAdapter;
-    private static final int mScrollSpeed = 1000;
-    private static final int mSwitchDuration = 3500;
+    private int mScrollSpeed = 1000;
+    private int mSwitchDuration = 3500;
+    private Scroller mScroller;
 
     public BannerViewPager(Context context) {
         super(context);
@@ -29,8 +34,8 @@ public class BannerViewPager extends ViewPager {
     public <T> void setAdapter(BannerAdapter<T> adapter) {
         this.mAdapter = adapter;
         this.mAdapter.binding(this);
-        this.setScrollSpeed(mScrollSpeed);
-        this.setSwitchDuration(mSwitchDuration);
+        this.setScrollSpeed(1000);
+        this.setSwitchDuration(3500);
         super.setAdapter(this.mAdapter);
     }
 
@@ -45,8 +50,43 @@ public class BannerViewPager extends ViewPager {
      * @param scrollSpeed ViewPager滚动速度, 值越大滚动越慢
      */
     public void setScrollSpeed(int scrollSpeed) {
-        new BannerSpeedScroller(getContext()).setScrollSpeed(this, scrollSpeed);
+        mScrollSpeed = scrollSpeed;
+        setCustomScrollSpeed();
     }
+
+    public void setCustomScrollSpeed() {
+        if (!(mScroller instanceof BannerSpeedScroller)) {
+            try {
+                Field mField = ViewPager.class.getDeclaredField("mScroller");
+                mField.setAccessible(true);
+                mScroller = new BannerSpeedScroller(getContext()).setScrollSpeed(mScrollSpeed);//, new AccelerateInterpolator()
+                mField.set(this, mScroller);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setDefaultScrollSpeed() {
+        if (mScroller instanceof BannerSpeedScroller) {
+            try {
+                Field mField = ViewPager.class.getDeclaredField("mScroller");
+                mField.setAccessible(true);
+                mScroller = new Scroller(getContext(), sInterpolator);
+                mField.set(this, mScroller);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static final Interpolator sInterpolator = new Interpolator() {
+        @Override
+        public float getInterpolation(float t) {
+            t -= 1.0f;
+            return t * t * t * t * t + 1.0f;
+        }
+    };
 
     public void startRun() {
         this.mAdapter.startCycle();
@@ -55,5 +95,4 @@ public class BannerViewPager extends ViewPager {
     public void stopRun() {
         this.mAdapter.stopCycle();
     }
-
 }
