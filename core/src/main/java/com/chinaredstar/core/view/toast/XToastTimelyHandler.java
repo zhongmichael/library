@@ -93,7 +93,18 @@ public class XToastTimelyHandler extends Handler implements XToastHandler {
     }
 
     @Override
-    public void onCancel(XToast xToast) {
+    public void onProcess(XToast xToast) {
+        if (!xToast.isShowing()) {
+            Message message = Message.obtain();
+            message.what = SHOW_TOAST;
+            message.obj = xToast;
+            sendMessage(message);
+        }
+    }
+
+
+    @Override
+    public void dismiss(XToast xToast) {
         if (!xToast.isShowing()) {
             return;
         }
@@ -104,12 +115,7 @@ public class XToastTimelyHandler extends Handler implements XToastHandler {
     }
 
     @Override
-    public void onProcess(XToast xToast) {
-        if (!xToast.isShowing()) {
-            Message message = Message.obtain();
-            message.what = SHOW_TOAST;
-            message.obj = xToast;
-            sendMessage(message);
-        }
+    public void onCancel() {
+        removeCallbacksAndMessages(null);
     }
 }

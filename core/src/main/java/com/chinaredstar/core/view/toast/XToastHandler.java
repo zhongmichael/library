@@ -11,5 +11,7 @@ public interface XToastHandler {
 
     void hideToast(XToast xToast);
 
-    void onCancel(XToast xToast);
+    void onCancel();
+
+    void dismiss(XToast xToast);
 }

@@ -106,18 +106,6 @@ public class XToastSerialHandler extends Handler implements XToastHandler {
         mQueue.poll();
     }
 
-    @Override
-    public void onCancel(XToast xToast) {
-        if (!xToast.isShowing()) {
-            return;
-        }
-        xToast.getRootView().removeView(xToast.getParentView());
-        if (xToast.getOnDisappearListener() != null) {
-            xToast.getOnDisappearListener().onDisappear(xToast);
-        }
-
-    }
-
     public void showToast(XToast xToast) {
         //如果当前有XToast正在展示，直接返回
         if (xToast.isShowing()) return;
@@ -137,5 +125,22 @@ public class XToastSerialHandler extends Handler implements XToastHandler {
     public void onProcess(XToast xToast) {
         mQueue.offer(xToast);
         showNextToast();
+    }
+
+    public void dismiss(XToast xToast) {
+        if (!xToast.isShowing()) {
+            return;
+        }
+
+        xToast.getRootView().removeView(xToast.getParentView());
+        if (xToast.getOnDisappearListener() != null) {
+            xToast.getOnDisappearListener().onDisappear(xToast);
+        }
+    }
+
+    @Override
+    public void onCancel() {
+        mQueue.clear();
+        removeCallbacksAndMessages(null);
     }
 }

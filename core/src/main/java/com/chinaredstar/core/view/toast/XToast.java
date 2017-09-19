@@ -88,8 +88,8 @@ public class XToast {
         return null != mView && mView.isShown();
     }
 
-    public void cancel() {
-        mXToastHandler.onCancel(this);
+    public void dismiss() {
+        mXToastHandler.dismiss(this);
     }
 
     final public static class Builder {
