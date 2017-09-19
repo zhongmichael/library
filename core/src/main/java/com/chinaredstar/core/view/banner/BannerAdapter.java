@@ -185,6 +185,9 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
             // (arg0 % dotsSize - 1) % (dotsSize - 2)
             // }
             if (state != ViewPager.SCROLL_STATE_IDLE) {
+                if (mIsCycle && arg0 == 0) {
+                    arg0 = getCount() - 2;
+                }
                 setCurrentDot((arg0 - 1) % mDotsSize);
             }
         }
