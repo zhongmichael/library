@@ -26,7 +26,6 @@ public class XToast {
     private RelativeLayout mParentView;
     private View mView;
     private TextView mTextView;
-    private Context mContext;
     private LayoutInflater mInflater;
     private int mGravity;
     private int mHorizontalMargin;
@@ -40,60 +39,25 @@ public class XToast {
     private AnimatorSet mHideAnimatorSet;
     private int mShowAnimationType = XTostAnimationUtil.ANIMATION_DEFAULT;
     private int mHideAnimationType = XTostAnimationUtil.ANIMATION_DEFAULT;
+    private XToastHandler mXToastHandler;
 
     public interface OnDisappearListener {
         void onDisappear(XToast xToast);
     }
 
-    public static XToast create(Context context) {
-        return new XToast(context);
-    }
-
-    private XToast(Context context) {
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(mContext);
-        ;
-    }
-
-    public XToast setView(View view) {
-        this.mView = view;
-        return this;
-    }
-
-    public XToast setRootView(ViewGroup rootView) {
-        this.mRootView = rootView;
-        return this;
-    }
-
-    public XToast setGravity(int gravity, int xOffset, int yOffset) {
-        this.mGravity = gravity;
-        this.mHorizontalMargin = xOffset;
-        this.mVerticalMargin = yOffset;
-        return this;
-    }
-
-    public XToast setDuration(int mDuration) {
-        this.mDuration = mDuration;
-        return this;
-    }
-
-    public XToast setTextColor(int mTextColor) {
-        this.mTextColor = mTextColor;
-        return this;
-    }
-
-    public XToast setTextSize(int mTextSize) {
-        this.mTextSize = mTextSize;
-        return this;
-    }
-
-    public XToast setText(CharSequence mTextContent) {
-        this.mTextContent = mTextContent;
-        return this;
+    private XToast() {
     }
 
     public int getDuration() {
         return mDuration;
+    }
+
+    public AnimatorSet getShowAnimatorSet() {
+        return this.mShowAnimatorSet;
+    }
+
+    public AnimatorSet getHideAnimatorSet() {
+        return this.mHideAnimatorSet;
     }
 
     public int getViewMeasuredHeight() {
@@ -112,120 +76,176 @@ public class XToast {
         return mView;
     }
 
-    public XToast setAnimation(int animationType) {
-        this.mShowAnimationType = animationType;
-        this.mHideAnimationType = animationType;
-        return this;
-    }
-
-    public XToast setShowAnimation(int animationType) {
-        this.mShowAnimationType = animationType;
-        return this;
-    }
-
-    public XToast setHideAnimation(int animationType) {
-        this.mHideAnimationType = animationType;
-        return this;
-    }
-
-    public void setShowAnimatorSet(AnimatorSet mShowAnimatorSet) {
-        this.mShowAnimatorSet = mShowAnimatorSet;
-    }
-
-    public void setHideAnimatorSet(AnimatorSet mHideAnimatorSet) {
-        this.mHideAnimatorSet = mHideAnimatorSet;
-    }
-
-    public AnimatorSet getShowAnimatorSet() {
-        return this.mShowAnimatorSet;
-    }
-
-    public AnimatorSet getHideAnimatorSet() {
-        return this.mHideAnimatorSet;
+    public XToastHandler getXToastHandler() {
+        return mXToastHandler;
     }
 
     public OnDisappearListener getOnDisappearListener() {
         return mListener;
     }
 
-    public void setOnDisappearListener(OnDisappearListener mListener) {
-        this.mListener = mListener;
-    }
-
-    private void buidler() {
-        if (null == mRootView) {
-            mRootView = ((Activity) mContext).findViewById(android.R.id.content);
-        }
-
-        if (null == mParentView) {
-            mParentView = new RelativeLayout(mContext);
-        }
-
-        if (null == mView) {
-            mView = mInflater.inflate(R.layout.libbase_toast_view, mParentView, false);
-            mTextView = mView.findViewById(R.id.tv_toast_msg);
-            mTextView.setTextColor(mTextColor);
-            mTextView.setTextSize(mTextSize);
-            mTextView.setText(mTextContent);
-        }
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT);
-
-        params.gravity = mGravity;
-
-        switch (mGravity) {
-            case Gravity.TOP:
-            case Gravity.TOP | Gravity.LEFT:
-            case Gravity.TOP | Gravity.CENTER_HORIZONTAL:
-            case Gravity.CENTER:
-                params.leftMargin = mHorizontalMargin;
-                params.topMargin = mVerticalMargin;
-                break;
-            case Gravity.TOP | Gravity.RIGHT:
-                params.rightMargin = mHorizontalMargin;
-                params.topMargin = mVerticalMargin;
-                break;
-            case Gravity.BOTTOM:
-            case Gravity.BOTTOM | Gravity.LEFT:
-            case Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL:
-                params.leftMargin = mHorizontalMargin;
-                params.bottomMargin = mVerticalMargin;
-                break;
-            case Gravity.BOTTOM | Gravity.RIGHT:
-                params.rightMargin = mHorizontalMargin;
-                params.bottomMargin = mVerticalMargin;
-                break;
-        }
-
-        mParentView.setLayoutParams(params);
-
-        mParentView.removeView(mView);
-        mRootView.removeView(mParentView);
-
-        mRootView.addView(mParentView);
-
-        ViewUtil.measuredHeight(mView);
-
-        if (null == mShowAnimatorSet) {
-            this.mShowAnimatorSet = XTostAnimationUtil.getShowAnimation(this, mShowAnimationType);
-        }
-        if (null == mHideAnimatorSet) {
-            this.mHideAnimatorSet = XTostAnimationUtil.getHideAnimation(this, mHideAnimationType);
-        }
-    }
-
     public boolean isShowing() {
         return null != mView && mView.isShown();
     }
 
-    private void dismiss() {
-        XToastHandler.getInstance().hideToast(this);
+    public void cancel() {
+        mXToastHandler.onCancel(this);
     }
 
-    public void show() {
-        buidler();
-        XToastHandler.getInstance().add(this);
+    final public static class Builder {
+        private XToast mXToast;
+        private Context mContext;
+
+        public Builder(Context context) {
+            mXToast = new XToast();
+            mContext = context;
+            mXToast.mInflater = LayoutInflater.from(mContext);
+        }
+
+        public Builder setView(View view) {
+            mXToast.mView = view;
+            return this;
+        }
+
+        public Builder setRootView(ViewGroup rootView) {
+            mXToast.mRootView = rootView;
+            return this;
+        }
+
+        public Builder setGravity(int gravity, int xOffset, int yOffset) {
+            mXToast.mGravity = gravity;
+            mXToast.mHorizontalMargin = xOffset;
+            mXToast.mVerticalMargin = yOffset;
+            return this;
+        }
+
+        public Builder setDuration(int mDuration) {
+            mXToast.mDuration = mDuration;
+            return this;
+        }
+
+        public Builder setTextColor(int mTextColor) {
+            mXToast.mTextColor = mTextColor;
+            return this;
+        }
+
+        public Builder setTextSize(int mTextSize) {
+            mXToast.mTextSize = mTextSize;
+            return this;
+        }
+
+        public Builder setText(CharSequence mTextContent) {
+            mXToast.mTextContent = mTextContent;
+            return this;
+        }
+
+        public Builder setAnimation(int animationType) {
+            mXToast.mShowAnimationType = animationType;
+            mXToast.mHideAnimationType = animationType;
+            return this;
+        }
+
+        public Builder setShowAnimation(int animationType) {
+            mXToast.mShowAnimationType = animationType;
+            return this;
+        }
+
+        public Builder setHideAnimation(int animationType) {
+            mXToast.mHideAnimationType = animationType;
+            return this;
+        }
+
+        public Builder setShowAnimatorSet(AnimatorSet mShowAnimatorSet) {
+            mXToast.mShowAnimatorSet = mShowAnimatorSet;
+            return this;
+        }
+
+        public Builder setHideAnimatorSet(AnimatorSet mHideAnimatorSet) {
+            mXToast.mHideAnimatorSet = mHideAnimatorSet;
+            return this;
+        }
+
+        public Builder setOnDisappearListener(OnDisappearListener mListener) {
+            mXToast.mListener = mListener;
+            return this;
+        }
+
+        public Builder setXToastHandler(XToastHandler mXToastHandler) {
+            mXToast.mXToastHandler = mXToastHandler;
+            return this;
+        }
+
+        private Builder create() {
+            if (null == mXToast.mRootView) {
+                mXToast.mRootView = ((Activity) mContext).findViewById(android.R.id.content);
+            }
+
+            if (null == mXToast.mParentView) {
+                mXToast.mParentView = new RelativeLayout(mContext);
+            }
+
+            if (null == mXToast.mView) {
+                mXToast.mView = mXToast.mInflater.inflate(R.layout.libbase_toast_view, mXToast.mParentView, false);
+                mXToast.mTextView = mXToast.mView.findViewById(R.id.tv_toast_msg);
+                mXToast.mTextView.setTextColor(mXToast.mTextColor);
+                mXToast.mTextView.setTextSize(mXToast.mTextSize);
+                mXToast.mTextView.setText(mXToast.mTextContent);
+            }
+
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT);
+
+            params.gravity = mXToast.mGravity;
+
+            switch (mXToast.mGravity) {
+                case Gravity.TOP:
+                case Gravity.TOP | Gravity.LEFT:
+                case Gravity.TOP | Gravity.CENTER_HORIZONTAL:
+                case Gravity.CENTER:
+                    params.leftMargin = mXToast.mHorizontalMargin;
+                    params.topMargin = mXToast.mVerticalMargin;
+                    break;
+                case Gravity.TOP | Gravity.RIGHT:
+                    params.rightMargin = mXToast.mHorizontalMargin;
+                    params.topMargin = mXToast.mVerticalMargin;
+                    break;
+                case Gravity.BOTTOM:
+                case Gravity.BOTTOM | Gravity.LEFT:
+                case Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL:
+                    params.leftMargin = mXToast.mHorizontalMargin;
+                    params.bottomMargin = mXToast.mVerticalMargin;
+                    break;
+                case Gravity.BOTTOM | Gravity.RIGHT:
+                    params.rightMargin = mXToast.mHorizontalMargin;
+                    params.bottomMargin = mXToast.mVerticalMargin;
+                    break;
+            }
+
+            mXToast.mParentView.setLayoutParams(params);
+
+            mXToast.mParentView.removeView(mXToast.mView);
+            mXToast.mRootView.removeView(mXToast.mParentView);
+
+            mXToast.mRootView.addView(mXToast.mParentView);
+
+            ViewUtil.measuredHeight(mXToast.mView);
+
+            if (null == mXToast.mShowAnimatorSet) {
+                mXToast.mShowAnimatorSet = XTostAnimationUtil.getShowAnimation(mXToast, mXToast.mShowAnimationType);
+            }
+            if (null == mXToast.mHideAnimatorSet) {
+                mXToast.mHideAnimatorSet = XTostAnimationUtil.getHideAnimation(mXToast, mXToast.mHideAnimationType);
+            }
+            return this;
+        }
+
+        public XToast show() {
+            create();
+            if (null == mXToast.mXToastHandler)
+                mXToast.mXToastHandler = XToastTimelyHandler.getInstance();
+            mXToast.mXToastHandler.onProcess(mXToast);
+            return mXToast;
+        }
     }
 }
