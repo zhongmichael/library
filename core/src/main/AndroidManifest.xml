@@ -3,7 +3,7 @@
 
     <application>
         <!-- apk更新完成广播 -->
-        <receiver android:name="com.chinaredstar.core.utils.ApkUtil$InstallAPKReceiver">
+        <receiver android:name="com.chinaredstar.core.receiver.InstallAPKReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>

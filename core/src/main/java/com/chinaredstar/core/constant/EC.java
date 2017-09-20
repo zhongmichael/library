@@ -9,4 +9,5 @@ public class EC {//evnet code
     public static final int EC_CALCULATE_CACHE_SIZE = 3001;//计算缓存大小
     public static final int EC_CLEAR_CACHE = 3002;//清除缓存
     public static final int EC_COMPRESS_IMAGE = 3003;//压缩图片
+    public static final int EC_DOWNLOAD_APK = 3004;//app更新
 }
