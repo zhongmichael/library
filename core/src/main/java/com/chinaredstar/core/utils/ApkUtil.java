@@ -23,7 +23,7 @@ public class ApkUtil {
 
     public static void install(File file) {
         if (file != null) {
-            LogUtil.i("install file: " + file.toString());
+            LogUtil.i("install file: " + file.getAbsolutePath());
             //apk文件的本地路径
             //会根据用户的数据类型打开android系统相应的Activity。
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -33,10 +33,10 @@ public class ApkUtil {
                 //权限
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             } else {
-                uri = Uri.parse("file://" + file.toString());
+                uri = Uri.parse("file://" + file.getAbsolutePath());
             }
             //设置intent的数据类型是应用程序application
-            intent.setDataAndType(uri, BaseApplication.getInstance().getContentResolver().getType(uri));//"application/vnd.android.package-archive"
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");//
             //为这个新apk开启一个新的activity栈
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //开始安装

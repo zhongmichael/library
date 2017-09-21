@@ -8,14 +8,18 @@ import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.constant.EC;
 import com.chinaredstar.core.constant.RC;
 import com.chinaredstar.core.eventbus.EventCenter;
+import com.chinaredstar.core.okhttp.OkHttpUtils;
+import com.chinaredstar.core.okhttp.callback.FileCallBack;
+import com.chinaredstar.core.utils.ApkUtil;
 import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PathUtil;
 import com.chinaredstar.core.utils.download.ApkDownloadUtil;
 import com.chinaredstar.core.utils.download.DownloadProgress;
-import com.chinaredstar.core.utils.download.DownloadUtil;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.Call;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -25,7 +29,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class ApkUpdateDemo extends BaseActivity {
     private TextView tv_progress1, tv_progress2;
-    final static int EC_DOWNLOAD = 11111;
     int type = 0;
     String url = "http://imtt.dd.qq.com/16891/D8A0D91C87420C8B7FA66806015C4D94.apk?fsname=com.istone.activity_6.4.2_53.apk&csr=97c2";
 
@@ -52,7 +55,7 @@ public class ApkUpdateDemo extends BaseActivity {
         if (type == 0) {
             ApkDownloadUtil.download(url, "@2.0");
         } else if (type == 1) {
-            DownloadUtil.download(this, url, PathUtil.getAppCacheDir() + "/" + PathUtil.DOWNLOAD_DIR, "V_" + 2.0 + ".apk", EC_DOWNLOAD);
+            download(url, PathUtil.getAppCacheDir() + "/" + PathUtil.DOWNLOAD_DIR, "V_" + 2.0 + ".apk");
         }
     }
 
@@ -88,12 +91,6 @@ public class ApkUpdateDemo extends BaseActivity {
                     tv_progress1.setText(mProgress.progress * 100 + "%");
                 }
                 break;
-            case EC_DOWNLOAD: // okhttp3
-                if (event.data instanceof DownloadProgress) {
-                    DownloadProgress mProgress = (DownloadProgress) event.data;
-                    tv_progress2.setText(mProgress.progress * 100 + "%");
-                }
-                break;
         }
     }
 
@@ -110,5 +107,30 @@ public class ApkUpdateDemo extends BaseActivity {
     @Override
     protected boolean enabledEventBus() {
         return true;
+    }
+
+    /***
+     * okttp3
+     * @param url 下载地址
+     * @param destFileDir 目标文件存储的文件夹路径
+     * @param destFileName 目标文件存储的文件名
+     * */
+    public void download(String url, final String destFileDir, final String destFileName) {
+        OkHttpUtils.get().url(url).build().execute(new FileCallBack(destFileDir, destFileName) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(File response, int id) {
+                ApkUtil.install(response);
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+                tv_progress2.setText(progress * 100 + "%");
+            }
+        });
     }
 }
