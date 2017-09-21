@@ -85,7 +85,7 @@ public class ApkDownloadUtil {
             apkDir.mkdirs();
         }
         String apkName = "V_" + newVersion + ".apk";
-        down.setDestinationInExternalFilesDir(BaseApplication.getInstance(),"/" + PathUtil.DOWNLOAD_DIR, apkName);
+        down.setDestinationInExternalFilesDir(BaseApplication.getInstance(), "/" + PathUtil.DOWNLOAD_DIR, apkName);
         // 将下载请求放入队列
         long refernece = ((DownloadManager) BaseApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(down);
         // 把当前下载的ID保存起来
@@ -112,7 +112,7 @@ public class ApkDownloadUtil {
             ////////////////////callback progress
             EventCenter<DownloadProgress> ec = new EventCenter<>();
             ec.code = EC_DOWNLOAD_APK;
-            ec.data = new DownloadProgress((float) (bytesDL < 0 ? 0 : bytesDL) / fileSize, fileSize);
+            ec.data = new DownloadProgress((float) Math.abs(bytesDL) / Math.abs(fileSize), fileSize);
             EventBus.getDefault().post(ec);
             /////////////////////////
             switch (status) {
@@ -132,7 +132,7 @@ public class ApkDownloadUtil {
                     break;
             }
         }
-
+        if (null != c) c.close();
     }
 
     public static boolean enabledDownloadManager() {

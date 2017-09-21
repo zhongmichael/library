@@ -1,7 +1,5 @@
 package com.chinaredstar.core.utils.download;
 
-import android.content.Context;
-
 import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.okhttp.OkHttpUtils;
 import com.chinaredstar.core.okhttp.callback.FileCallBack;
@@ -24,7 +22,7 @@ public class DownloadUtil {
      * @param destFileDir 目标文件存储的文件夹路径
      * @param destFileName 目标文件存储的文件名
      * */
-    public static void download(final Context activity, String url, final String destFileDir, final String destFileName, final int eventCode) {
+    public static void download(String url, final String destFileDir, final String destFileName, final int eventCode) {
         OkHttpUtils.get().url(url).build().execute(new FileCallBack(destFileDir, destFileName) {
             @Override
             public void onError(Call call, Exception e, int id) {
