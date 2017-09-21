@@ -1,4 +1,4 @@
-package com.chinaredstar.core.utils.download;
+package com.chinaredstar.core.utils;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -10,10 +10,9 @@ import android.widget.Toast;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.base.BaseApplication;
+import com.chinaredstar.core.base.BaseBean;
 import com.chinaredstar.core.cache.ss.SharedPreferencesHelper;
 import com.chinaredstar.core.eventbus.EventCenter;
-import com.chinaredstar.core.utils.HandlerUtil;
-import com.chinaredstar.core.utils.PathUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +25,16 @@ import static com.chinaredstar.core.constant.EC.EC_DOWNLOAD_APK;
  */
 
 public class ApkDownloadUtil {
+
+    public static final class DownloadProgress extends BaseBean {
+        public float progress;
+        public long total;
+
+        public DownloadProgress(float progress, long total) {
+            this.progress = progress;
+            this.total = total;
+        }
+    }
 
     private final static ContentObserver mObserver = new ContentObserver(
             HandlerUtil.handler()) {

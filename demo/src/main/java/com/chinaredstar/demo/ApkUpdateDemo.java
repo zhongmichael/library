@@ -10,11 +10,10 @@ import com.chinaredstar.core.constant.RC;
 import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.okhttp.OkHttpUtils;
 import com.chinaredstar.core.okhttp.callback.FileCallBack;
+import com.chinaredstar.core.utils.ApkDownloadUtil;
 import com.chinaredstar.core.utils.ApkUtil;
 import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PathUtil;
-import com.chinaredstar.core.utils.download.ApkDownloadUtil;
-import com.chinaredstar.core.utils.download.DownloadProgress;
 
 import java.io.File;
 import java.util.List;
@@ -86,8 +85,8 @@ public class ApkUpdateDemo extends BaseActivity {
     protected void onEventCallback(EventCenter event) {
         switch (event.code) {
             case EC.EC_DOWNLOAD_APK://  downloadmanager
-                if (event.data instanceof DownloadProgress) {
-                    DownloadProgress mProgress = (DownloadProgress) event.data;
+                if (event.data instanceof ApkDownloadUtil.DownloadProgress) {
+                    ApkDownloadUtil.DownloadProgress mProgress = (ApkDownloadUtil.DownloadProgress) event.data;
                     tv_progress1.setText(mProgress.progress * 100 + "%");
                 }
                 break;
