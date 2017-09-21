@@ -12,7 +12,7 @@ import java.io.File;
  */
 
 public class FileProviderUtil {
-    public static final String FILEPROVIDER_AUTHORITIES_VALUE = "com.chinaredstar.core.fileprovider";
+    public static final String FILEPROVIDER_AUTHORITIES_VALUE = "com.chinaredstar.xcore.lib.fileprovider";
 
     public static Uri getUriForFile(File file) {
         return FileProvider.getUriForFile(BaseApplication.getInstance(), FILEPROVIDER_AUTHORITIES_VALUE, file);

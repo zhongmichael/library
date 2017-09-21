@@ -25,7 +25,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.chinaredstar.core.fileprovider"
+            android:authorities="com.chinaredstar.xcore.lib.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <!--元数据-->
