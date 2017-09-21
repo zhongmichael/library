@@ -137,15 +137,20 @@ public class PhotoHelper {
      * 打开相册
      */
     public static void onOpenAlbum(Activity activity) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
+     /*   Intent intent = new Intent();
+        intent.setType("image*//*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        activity.startActivityForResult(Intent.createChooser(intent, "选择图片"), RC_ACTION_PICK);
+        activity.startActivityForResult(Intent.createChooser(intent, "选择图片"), RC_ACTION_PICK);*/
 
        /* Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image*//*");
         activity.startActivityForResult(intent, RC_ACTION_PICK);*/
+
+        Intent intent = new Intent(Intent.ACTION_PICK);// 激活系统图库，选择一张图片
+        intent.setType("image/*");
+        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//使用以上这种模式，并添加以上两句
+        activity.startActivityForResult(intent, RC_ACTION_PICK);// 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_GALLERY
     }
 
 
