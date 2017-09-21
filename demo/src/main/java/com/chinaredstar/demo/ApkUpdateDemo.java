@@ -52,7 +52,7 @@ public class ApkUpdateDemo extends BaseActivity {
         if (type == 0) {
             ApkDownloadUtil.download(url, "@2.0");
         } else if (type == 1) {
-            DownloadUtil.download(url, PathUtil.getAppCacheDir() + "/apk/", "V_" + 2.0 + ".apk", EC_DOWNLOAD);
+            DownloadUtil.download(this, url, PathUtil.getAppCacheDir() + "/" + PathUtil.DOWNLOAD_DIR, "V_" + 2.0 + ".apk", EC_DOWNLOAD);
         }
     }
 

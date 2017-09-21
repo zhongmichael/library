@@ -12,6 +12,9 @@ import java.io.File;
  */
 
 public class PathUtil {
+    public static final String IMAGE_DIR = "images/";//图片存储目录
+    public static final String DOWNLOAD_DIR = "downloads/";//apk版本更新存放目录
+
     public static final String H5_ASSET_PREFIX = "file:///android_asset/";
     public static final String H5_SDCARD_PREFIX = "content://com.android.htmlfileprovider/";
 

@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import static com.chinaredstar.core.utils.PathUtil.IMAGE_DIR;
+
 /**
  * Created by hairui.xiang on 2017/9/14.
  */
@@ -170,7 +172,7 @@ public class ImageCompressUtil {
     }
 
     private static String getOutputPath() {
-        File photosDir = new File(PathUtil.getAppCacheDir(), "pictures/");
+        File photosDir = new File(PathUtil.getAppCacheDir(), PathUtil.IMAGE_DIR);
         if (!photosDir.exists()) {
             photosDir.mkdirs();
         }

@@ -2,11 +2,13 @@ package com.chinaredstar.demo;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Environment;
 import android.view.View;
 
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.task.CompressImageTask;
+import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PhotoHelper;
 
 import static com.chinaredstar.core.constant.EC.EC_COMPRESS_IMAGE;
@@ -16,6 +18,21 @@ import static com.chinaredstar.core.constant.EC.EC_COMPRESS_IMAGE;
  */
 
 public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener {
+    @Override
+    protected void initValue() {
+        //        getFilesDir :/data/user/0/com.chinaredstar.demo/files
+        //        getCacheDir :/data/user/0/com.chinaredstar.demo/cache
+        //         getExternalStorageDirectory :/storage/emulated/0
+        //        getExternalFilesDir :/storage/emulated/0/Android/data/com.chinaredstar.demo/files
+        //       getExternalCacheDir :/storage/emulated/0/Android/data/com.chinaredstar.demo/cache
+        String r =
+                "getFilesDir :" + mActivity.getFilesDir().toString() + "\n" +
+                        "getCacheDir :" + mActivity.getCacheDir() + "\n" +
+                        "getExternalStorageDirectory :" + Environment.getExternalStorageDirectory() + "\n" +
+                        "getExternalFilesDir :" + mActivity.getExternalFilesDir(null) + "\n" +
+                        "getExternalCacheDir :" + mActivity.getExternalCacheDir();
+        LogUtil.i(r);
+    }
 
     @Override
     protected int getContentLayoutId() {

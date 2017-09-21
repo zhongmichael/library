@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- "/" -->
+    <!--<root-path name="" path=""/>-->
+    <!--Context.getFilesDir().-->
+    <files-path  name="images" path="images"/>
+    <!-- getCacheDir().-->
+    <cache-path name="images1" path="images" />
+    <!-- Environment.getExternalStorageDirectory().-->
+    <external-path name="images2" path="images" />
+    <!--Context#getExternalFilesDir(String) Context.getExternalFilesDir(null).   -->
+    <external-files-path name="images3" path="images" />
+    <!-- Context.getExternalCacheDir().  -->
+    <external-cache-path name="images4" path="images" />
+
+
+    <!--下载文件存放目录-->
+    <files-path name="downloads" path="downloads"/>
+    <cache-path name="downloads1" path="downloads" />
+    <external-path name="downloads2" path="downloads" />
+    <external-files-path name="downloads3" path="downloads" />
+    <external-cache-path name="downloads4" path="downloads" />
+</paths>

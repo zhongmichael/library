@@ -80,12 +80,12 @@ public class ApkDownloadUtil {
         // 设置为可被媒体扫描器找到
         down.allowScanningByMediaScanner();
         // 设置下载后文件存放的位置
-        File apkDir = new File(PathUtil.getAppFilesDir().toString(), "apk/");
+        File apkDir = new File(PathUtil.getAppCacheDir(), PathUtil.DOWNLOAD_DIR);
         if (!apkDir.exists()) {
             apkDir.mkdirs();
         }
         String apkName = "V_" + newVersion + ".apk";
-        down.setDestinationInExternalPublicDir(apkDir.getAbsolutePath(), apkName);
+        down.setDestinationInExternalFilesDir(BaseApplication.getInstance(),"/" + PathUtil.DOWNLOAD_DIR, apkName);
         // 将下载请求放入队列
         long refernece = ((DownloadManager) BaseApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(down);
         // 把当前下载的ID保存起来
@@ -132,6 +132,7 @@ public class ApkDownloadUtil {
                     break;
             }
         }
+
     }
 
     public static boolean enabledDownloadManager() {
