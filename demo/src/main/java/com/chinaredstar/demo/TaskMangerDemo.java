@@ -45,7 +45,7 @@ public class TaskMangerDemo extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
-        tv_show = findViewById(R.id.tv_show);
+        tv_show = (TextView) findViewById(R.id.tv_show);
     }
 
     public void getCacheSize(View v) {

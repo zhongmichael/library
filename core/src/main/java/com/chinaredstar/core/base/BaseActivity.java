@@ -61,7 +61,7 @@ public class BaseActivity extends PermissionsActivity {
         mLayoutInflater = LayoutInflater.from(this);
         setContentView(R.layout.activity_libbase_layout);
         mStatusBar = findViewById(R.id.id_statusbar_view);
-        mRootView = findViewById(R.id.id_root_view);
+        mRootView = (LinearLayout) findViewById(R.id.id_root_view);
 
         mLoadingViewContainer = (FrameLayout) inflate(R.layout.libbase_content_layout);
 

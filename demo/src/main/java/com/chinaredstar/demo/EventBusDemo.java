@@ -18,7 +18,7 @@ public class EventBusDemo extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
-        tv_content = findViewById(R.id.tv_content);
+        tv_content = (TextView) findViewById(R.id.tv_content);
     }
 
     public void onGo(View view) {

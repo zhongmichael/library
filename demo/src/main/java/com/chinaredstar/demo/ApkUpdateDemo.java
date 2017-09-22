@@ -6,20 +6,17 @@ import android.widget.TextView;
 
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.constant.EC;
-import com.chinaredstar.core.constant.RC;
 import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.okhttp.OkHttpUtils;
 import com.chinaredstar.core.okhttp.callback.FileCallBack;
 import com.chinaredstar.core.utils.ApkDownloadUtil;
 import com.chinaredstar.core.utils.ApkUtil;
-import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PathUtil;
 
 import java.io.File;
-import java.util.List;
 
 import okhttp3.Call;
-import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -39,46 +36,8 @@ public class ApkUpdateDemo extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
-        tv_progress1 = findViewById(R.id.tv_progress1);
-        tv_progress2 = findViewById(R.id.tv_progress2);
-    }
-
-    @Override
-    protected String[] iNeedPermissions() {
-        return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
-    }
-
-    @Override
-    protected void onUserPermitPermissionsDothing() {
-        LogUtil.d("用户同意了。。。。。。。。。。。。。。。。。");
-        if (type == 0) {
-            ApkDownloadUtil.download(url, "@2.0");
-        } else if (type == 1) {
-            download(url, PathUtil.getAppCacheDir() + "/" + PathUtil.DOWNLOAD_DIR, "V_" + 2.0 + ".apk");
-        }
-    }
-
-    @Override
-    protected void onUserRejectPermissionDothing() {
-        super.onUserRejectPermissionDothing();
-        LogUtil.d("用户拒绝了。。。。。。。。。。。。。。。。。");
-    }
-
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this, "当前需要读写权限！如果没有权限，应用将不能正常工作")
-                    .setTitle(getString(R.string.title_settings_dialog))
-                    .setPositiveButton(getString(R.string.setting))
-                    .setNegativeButton(getString(R.string.cancel), null /* click listener */)
-                    .setRequestCode(RC.RC_SETTINGS_SCREEN)
-                    .build()
-                    .show();
-        }
+        tv_progress1 = (TextView) findViewById(R.id.tv_progress1);
+        tv_progress2 = (TextView) findViewById(R.id.tv_progress2);
     }
 
     @Override
@@ -94,13 +53,33 @@ public class ApkUpdateDemo extends BaseActivity {
     }
 
     public void download1(View v) {//downloadmanager
-        type = 0;
-        requestPermissions();
+        downloadManeger();
     }
 
     public void download2(View v) {//okhttp3
-        type = 1;
-        requestPermissions();
+        okhttp3();
+    }
+
+    @AfterPermissionGranted(1001)
+    public void downloadManeger() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // Have permission, do the thing!
+            ApkDownloadUtil.download(url, "@2.0");
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, "我们需要访问你的存储卡。", R.string.open_permission, R.string.cancel, 1001, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+    @AfterPermissionGranted(1002)
+    public void okhttp3() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // Have permission, do the thing!
+            download(url, PathUtil.getAppFilesDir() + "/apk/", "v2.apk");
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, "我们需要访问你的存储卡。", R.string.open_permission, R.string.cancel, 1002, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
     }
 
     @Override

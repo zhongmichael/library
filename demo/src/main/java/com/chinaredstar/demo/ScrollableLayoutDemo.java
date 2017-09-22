@@ -41,9 +41,9 @@ public class ScrollableLayoutDemo extends BaseActivity {
 
     @Override
     protected void initWidget() {
-        sl_root = findViewById(R.id.sl_root);
-        ptr_view = findViewById(R.id.ptr_view);
-        lmr_list = findViewById(R.id.lmr_list);
+        sl_root = (ScrollableLayout) findViewById(R.id.sl_root);
+        ptr_view = (PulToRefreshLayout) findViewById(R.id.ptr_view);
+        lmr_list = (LoadMoreRecyclerView) findViewById(R.id.lmr_list);
         sl_root.getHelper().setCurrentScrollableContainer(lmr_list);
 
         lmr_list.setLayoutManager(new LinearLayoutManager(this));

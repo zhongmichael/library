@@ -31,7 +31,7 @@ public class PullRefreshDemo extends BaseActivity {
 
     @Override
     protected void initWidget() {
-        mPtrLayout = findViewById(R.id.ptr_view);
+        mPtrLayout = (PulToRefreshLayout) findViewById(R.id.ptr_view);
     }
 
     @Override

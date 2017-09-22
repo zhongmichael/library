@@ -11,13 +11,18 @@ import com.chinaredstar.core.task.CompressImageTask;
 import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PhotoHelper;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 import static com.chinaredstar.core.constant.EC.EC_COMPRESS_IMAGE;
+import static com.chinaredstar.core.constant.RC.RC_CAMERA_PERM;
+import static com.chinaredstar.core.constant.RC.RC_READ_EXTERNAL_STORAGE_PERM;
 
 /**
  * Created by hairui.xiang on 2017/9/6.
  */
 
-public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener {
+public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener ,EasyPermissions.PermissionCallbacks{
     @Override
     protected void initValue() {
         //        getFilesDir :/data/user/0/com.chinaredstar.demo/files
@@ -39,31 +44,49 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
         return R.layout.activity_camera;
     }
 
-    @Override
-    protected String[] iNeedPermissions() {
-        return new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    @AfterPermissionGranted(RC_CAMERA_PERM)
+    public void cameraTask() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+            // Have permission, do the thing!
+            PhotoHelper.onTakePhotos(this);
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.rationale_camera),
+                    RC_CAMERA_PERM,
+                    Manifest.permission.CAMERA);
+        }
     }
 
-    @Override
-    protected void onUserPermitPermissionsDothing() {
-    }
-
-    @Override
-    protected void onUserRejectPermissionDothing() {
+    @AfterPermissionGranted(RC_READ_EXTERNAL_STORAGE_PERM)
+    public void readExternalStorage() {
+        System.out.println("--------------readExternalStorage----------------");
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            // Have permission, do the thing!
+            PhotoHelper.onOpenAlbum(this);
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(
+                    this,
+                    "我们需要访问你的相册",
+                    RC_READ_EXTERNAL_STORAGE_PERM,
+                    Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
     }
 
     /**
      * 拍照
      */
     public void onTakePhotos(View view) {
-        PhotoHelper.onTakePhotos(this);
+        cameraTask();
     }
 
     /**
      * 打开相册
      */
     public void onOpenAlbum(View view) {
-        PhotoHelper.onOpenAlbum(this);
+        readExternalStorage();
     }
 
     @Override
@@ -105,4 +128,5 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
     protected boolean enabledEventBus() {
         return true;
     }
+
 }

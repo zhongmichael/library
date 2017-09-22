@@ -29,8 +29,8 @@ public class BannerActivity extends BaseActivity {
 
     @Override
     protected void initWidget() {
-        mBannerView = findViewById(R.id.bvp_banner);
-        ll_dots = findViewById(R.id.ll_dots);
+        mBannerView = (BannerViewPager) findViewById(R.id.bvp_banner);
+        ll_dots = (LinearLayout) findViewById(R.id.ll_dots);
     }
 
     @Override
