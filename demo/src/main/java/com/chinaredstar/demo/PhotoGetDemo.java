@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.view.View;
 
+import com.baoyz.actionsheet.ActionSheet;
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.task.CompressImageTask;
@@ -22,7 +23,7 @@ import static com.chinaredstar.core.constant.RC.RC_READ_EXTERNAL_STORAGE_PERM;
  * Created by hairui.xiang on 2017/9/6.
  */
 
-public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener ,EasyPermissions.PermissionCallbacks{
+public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGetListener, EasyPermissions.PermissionCallbacks {
     @Override
     protected void initValue() {
         //        getFilesDir :/data/user/0/com.chinaredstar.demo/files
@@ -45,7 +46,7 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
     }
 
     @AfterPermissionGranted(RC_CAMERA_PERM)
-    public void cameraTask() {
+    public void openCamera() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
             // Have permission, do the thing!
             PhotoHelper.onTakePhotos(this);
@@ -60,7 +61,7 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
     }
 
     @AfterPermissionGranted(RC_READ_EXTERNAL_STORAGE_PERM)
-    public void readExternalStorage() {
+    public void openAlbum() {
         System.out.println("--------------readExternalStorage----------------");
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             // Have permission, do the thing!
@@ -79,14 +80,36 @@ public class PhotoGetDemo extends BaseActivity implements PhotoHelper.OnPhotoGet
      * 拍照
      */
     public void onTakePhotos(View view) {
-        cameraTask();
+        openCamera();
     }
 
     /**
      * 打开相册
      */
     public void onOpenAlbum(View view) {
-        readExternalStorage();
+        openAlbum();
+    }
+
+
+    public void onOpenPicker(View view) {
+        setTheme(R.style.ActionSheetStyleiOS7_);
+        ActionSheet.createBuilder(this, getSupportFragmentManager())
+                .setOtherButtonTitles(new String[]{"拍照", "打开相册"}).setListener(new ActionSheet.ActionSheetListener() {
+            @Override
+            public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+
+            }
+
+            @Override
+            public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                if (0 == index) {
+                    openCamera();
+                } else if (1 == index) {
+                    openAlbum();
+                }
+
+            }
+        }).setCancelButtonTitle("取消").show();
     }
 
     @Override
