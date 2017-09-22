@@ -118,9 +118,11 @@ public class BaseActivity extends PermissionsActivity {
 
     /**
      * 状态栏颜色
+     * </p>
+     * 默认与标题栏同色
      */
     protected int getStatusBarBackgroundColor() {
-        return R.color.colorPrimary;
+        return getTitlebarBackgroundColor();
     }
 
     /**
