@@ -87,13 +87,16 @@ public class BaseActivity extends PermissionsActivity {
         if (enabledImmersiveStyle()) {
             initImmersiveStyle();
         }
-        if (!NetworkUtil.isNetworkAvailable(this)) {
-            onNetworkInvalid();
-        }
+
         this.initValue();
         this.initWidget();
         this.initListener();
-        this.initData();
+
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            onNetworkInvalid();
+        } else {
+            this.initData();
+        }
     }
 
     protected final View inflate(int resLayoutId) {
@@ -183,26 +186,32 @@ public class BaseActivity extends PermissionsActivity {
     protected void initData() {
     }
 
-    protected void onNetworkInvalid() {
+    protected void onNetworkChangetoDisabled() {
     }
 
-    protected void onNetworkAvailable() {
+    protected void onNetworkChangetoEnabled() {
+    }
+
+    protected void onNetworkInvalid() {
     }
 
     public final Handler getHandler() {
         return HandlerUtil.handler();
     }
 
+    /**
+     * 网络状态改变广播
+     */
     private final BroadcastReceiver mNetworkMonitorReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (NETWORK_CHANGE_ACTION.equals(intent.getAction())) {
                 if (!NetworkUtil.isNetworkAvailable(context)) { // network invalid
-                    onNetworkInvalid();
+                    onNetworkChangetoDisabled();
                 } else if (NetworkUtil.isConnectedWifi(context)) { // valid wifi
-                    onNetworkAvailable();
+                    onNetworkChangetoEnabled();
                 } else if (NetworkUtil.isConnectedMobile(context)) {// valid mobile
-                    onNetworkAvailable();
+                    onNetworkChangetoEnabled();
                 }
             }
         }
