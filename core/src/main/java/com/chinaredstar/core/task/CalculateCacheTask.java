@@ -16,7 +16,7 @@ public class CalculateCacheTask extends ITask {
         super(id);
     }
 
-    public CalculateCacheTask(int id, String[] paths) {
+    public CalculateCacheTask(int id, String... paths) {
         super(id);
         this.paths = paths;
     }

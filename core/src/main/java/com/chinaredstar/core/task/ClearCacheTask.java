@@ -16,7 +16,7 @@ public class ClearCacheTask extends ITask {
         super(id);
     }
 
-    public ClearCacheTask(int id, String[] paths) {
+    public ClearCacheTask(int id, String... paths) {
         super(id);
         this.paths = paths;
     }
