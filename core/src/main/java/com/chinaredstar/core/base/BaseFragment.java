@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chinaredstar.core.butterknife.ButterKnife;
+
 /**
  * Created by hairui.xiang on 2017/8/22.
  */
@@ -19,6 +21,7 @@ public abstract class BaseFragment extends PermissionsFragment {
     protected abstract int getLayoutResID();
 
     protected void initWidget() {
+        ButterKnife.inject(this);
     }
 
     protected void initValue() {

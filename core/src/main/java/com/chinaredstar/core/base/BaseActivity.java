@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.chinaredstar.core.R;
+import com.chinaredstar.core.butterknife.ButterKnife;
 import com.chinaredstar.core.eventbus.EventCenter;
 import com.chinaredstar.core.task.core.ITask;
 import com.chinaredstar.core.task.core.TaskManager;
@@ -178,6 +179,7 @@ public class BaseActivity extends PermissionsActivity {
     }
 
     protected void initWidget() {
+        ButterKnife.inject(this);
     }
 
     protected void initListener() {
