@@ -6,6 +6,7 @@
         <receiver android:name="com.chinaredstar.core.receiver.InstallAPKReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="com.chinaredstar.hrxlibcore.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 

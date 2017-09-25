@@ -2,21 +2,25 @@ package com.chinaredstar.core.utils;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.widget.Toast;
 
-import com.chinaredstar.core.R;
 import com.chinaredstar.core.base.BaseApplication;
 import com.chinaredstar.core.base.BaseBean;
 import com.chinaredstar.core.cache.ss.SharedPreferencesHelper;
 import com.chinaredstar.core.eventbus.EventCenter;
+import com.chinaredstar.core.okhttp.OkHttpUtils;
+import com.chinaredstar.core.okhttp.callback.FileCallBack;
+import com.chinaredstar.core.receiver.InstallAPKReceiver;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+
+import okhttp3.Call;
 
 import static com.chinaredstar.core.constant.EC.EC_DOWNLOAD_APK;
 
@@ -65,7 +69,8 @@ public class ApkDownloadUtil {
      */
     private static void download(String url, String newVersion, String title, String desc, boolean isShowNotiUI) {
         if (!enabledDownloadManager()) {
-            Toast.makeText(BaseApplication.getInstance(), BaseApplication.getInstance().getString(R.string.dm_disable), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(BaseApplication.getInstance(), BaseApplication.getInstance().getString(R.string.dm_disable), Toast.LENGTH_SHORT).show();
+            okhttp3Download(url, newVersion);
             return;
             //
         }
@@ -119,10 +124,7 @@ public class ApkDownloadUtil {
             int bytesDL = c.getInt(bytesDLIndex);// current download length
             int status = c.getInt(statusIndex);  // Display the status
             ////////////////////callback progress
-            EventCenter<DownloadProgress> ec = new EventCenter<>();
-            ec.code = EC_DOWNLOAD_APK;
-            ec.data = new DownloadProgress((float) Math.abs(bytesDL) / Math.abs(fileSize), fileSize);
-            EventBus.getDefault().post(ec);
+            callbackProgress((float) Math.abs(bytesDL) / Math.abs(fileSize), fileSize);
             /////////////////////////
             switch (status) {
                 case DownloadManager.STATUS_PAUSED:
@@ -152,5 +154,43 @@ public class ApkDownloadUtil {
             return false;
         }
         return true;
+    }
+
+    /***
+     * okttp3
+     * @param url 下载地址
+     *            @param newVersion 新版本号
+     * */
+    private static void okhttp3Download(String url, String newVersion) {
+        String path = PathUtil.getAppFilesDir().getAbsolutePath() + File.pathSeparator + PathUtil.DOWNLOAD_DIR;
+        String apkName = "V_" + newVersion + ".apk";
+        OkHttpUtils.get().url(url).build().execute(new FileCallBack(path, apkName) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(File file, int id) {
+                Intent i = new Intent();
+                i.putExtra("okhttp3_apk_download_path", file.getAbsoluteFile());
+                i.setAction(InstallAPKReceiver.ACTION_DOWNLOAD_COMPLETE);
+                BaseApplication.getInstance().sendBroadcast(i);
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+                callbackProgress(progress, total);
+            }
+        });
+    }
+
+    private static void callbackProgress(float progress, long total) {
+        ////////////////////callback progress
+        EventCenter<DownloadProgress> ec = new EventCenter<>();
+        ec.code = EC_DOWNLOAD_APK;
+        ec.data = new DownloadProgress(progress, total);
+        EventBus.getDefault().post(ec);
+        /////////////////////////
     }
 }
