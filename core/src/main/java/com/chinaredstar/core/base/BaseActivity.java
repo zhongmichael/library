@@ -183,17 +183,17 @@ public class BaseActivity extends PermissionsActivity {
     protected void initData() {
     }
 
-    protected static void onNetworkInvalid() {
+    protected void onNetworkInvalid() {
     }
 
-    protected static void onNetworkAvailable() {
+    protected void onNetworkAvailable() {
     }
 
     public final Handler getHandler() {
         return HandlerUtil.handler();
     }
 
-    private final static BroadcastReceiver mNetworkMonitorReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mNetworkMonitorReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (NETWORK_CHANGE_ACTION.equals(intent.getAction())) {
