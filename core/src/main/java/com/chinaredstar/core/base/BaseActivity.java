@@ -59,7 +59,7 @@ public class BaseActivity extends PermissionsActivity {
         }
         mActivity = this;
         mLayoutInflater = LayoutInflater.from(this);
-        setContentView(R.layout.activity_libbase_layout);
+        setContentView(R.layout.libbase_common_layout);
         mStatusBar = findViewById(R.id.id_statusbar_view);
         mRootView = (LinearLayout) findViewById(R.id.id_root_view);
 
