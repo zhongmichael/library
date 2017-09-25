@@ -10,17 +10,29 @@ import com.chinaredstar.core.utils.PathUtil;
  */
 
 public class CalculateCacheTask extends ITask {
+    private String[] paths;
 
     public CalculateCacheTask(int id) {
         super(id);
+    }
+
+    public CalculateCacheTask(int id, String[] paths) {
+        super(id);
+        this.paths = paths;
     }
 
     @Override
     public TaskResult doTask() {
         TaskResult result = new TaskResult();
         try {
-            double size = FileSizeCalculateUtil
-                    .calculateFileSize(PathUtil.getAppCacheDir().toString(), FileSizeCalculateUtil.UNIT_MB);
+            double size = 0;
+            if (null != paths && paths.length != 0) {
+                for (String path : paths) {
+                    size += FileSizeCalculateUtil.calculateFileSize(path, FileSizeCalculateUtil.UNIT_MB);
+                }
+            } else {
+                size = FileSizeCalculateUtil.calculateFileSize(PathUtil.getAppCacheDir().toString(), FileSizeCalculateUtil.UNIT_MB);
+            }
             result.obj = size + "MB";
             result.isSuccess = true;
         } catch (Exception e) {
