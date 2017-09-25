@@ -11,7 +11,7 @@ public class DatabaseConfig {
     private static List<Class<?>> mTables = new ArrayList<>();
     private static List<Class<?>> mUpgradeTables = new ArrayList<>();
     private static int mDatabaseVersion = 1;
-    private static String mDatabaseName = "chinaredstar";
+    private static String mDatabaseName = "chinaredstar_hrcore";
 
     public static List<Class<?>> getTables() {
         return mTables;
