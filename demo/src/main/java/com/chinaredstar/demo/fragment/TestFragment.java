@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.chinaredstar.core.base.BaseFragment;
+import com.chinaredstar.core.butterknife.InjectView;
 import com.chinaredstar.demo.R;
 
 /**
@@ -12,6 +13,7 @@ import com.chinaredstar.demo.R;
  */
 
 public class TestFragment extends BaseFragment {
+    @InjectView(R.id.tv_text)
     TextView tv_text;
 
     public static Fragment newInstance(int index) {
@@ -30,7 +32,6 @@ public class TestFragment extends BaseFragment {
     @Override
     protected void initWidget() {
         super.initWidget();
-        tv_text = findViewById(R.id.tv_text);
         tv_text.setText(String.valueOf(getArguments().getInt("index")));
     }
 
