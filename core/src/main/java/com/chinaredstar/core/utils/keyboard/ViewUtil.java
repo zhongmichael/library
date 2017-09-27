@@ -18,6 +18,7 @@ package com.chinaredstar.core.utils.keyboard;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
@@ -53,4 +54,9 @@ public class ViewUtil {
     }
 
 
+    public static void measuredHeight(View view) {
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(widthMeasureSpec, heightMeasureSpec);
+    }
 }

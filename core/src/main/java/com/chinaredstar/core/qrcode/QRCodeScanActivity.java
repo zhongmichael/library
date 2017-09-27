@@ -1,22 +1,22 @@
 package com.chinaredstar.core.qrcode;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chinaredstar.core.R;
 import com.chinaredstar.core.base.BaseActivity;
+import com.chinaredstar.core.constant.EC;
+import com.chinaredstar.core.eventbus.EventCenter;
+import com.chinaredstar.core.task.DecodeQRCodeTask;
+import com.chinaredstar.core.task.core.TaskResult;
 import com.chinaredstar.core.utils.LogUtil;
 import com.chinaredstar.core.utils.PhotoHelper;
 import com.chinaredstar.core.utils.StatusBarUtil;
 import com.chinaredstar.core.utils.StringUtil;
 
-import java.lang.ref.SoftReference;
-
 import cn.bingoogolapple.qrcode.core.QRCodeView;
-import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 /**
@@ -99,33 +99,6 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     }
 
     /**
-     * 处理扫描结果
-     *
-     * @param result
-     */
-    @Override
-    public void onScanQRCodeSuccess(String result) {
-//        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        vibrate();
-        // 延迟1.5秒后开始识别
-//        mQRCodeView.startSpot();
-        resultCallback(result);
-    }
-
-    private void resultCallback(String result) {
-        LogUtil.i(TAG, "result: " + result);
-        if (!StringUtil.isBlank(result)) {
-            Intent data = new Intent();
-            data.putExtra(KEY_SCAN_RESULT, result);
-            setResult(RESULT_OK, data);
-            finish();
-        } else {
-//            startSpot();
-            Toast.makeText(mActivity, getString(R.string.scan_empty), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
      * 处理打开相机出错
      */
     @Override
@@ -199,9 +172,51 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     }
 
     @Override
+    protected boolean enabledEventBus() {
+        return true;
+    }
+
+    private void resultCallback(String result) {
+        LogUtil.i(TAG, "result: " + result);
+        if (!StringUtil.isBlank(result)) {
+            Intent data = new Intent();
+            data.putExtra(KEY_SCAN_RESULT, result);
+            setResult(RESULT_OK, data);
+            finish();
+        } else {
+//            startSpot();
+            Toast.makeText(mActivity, getString(R.string.scan_empty), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 处理扫描结果
+     *
+     * @param result
+     */
+    @Override
+    public void onScanQRCodeSuccess(String result) {
+//        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        vibrate();
+        // 延迟1.5秒后开始识别
+//        mQRCodeView.startSpot();
+        resultCallback(result);
+    }
+
+    @Override
     public void onGetPhotoPath(String path) {
-        mDecodeQRCodeTask = new DecodeQRCodeTask(this);
-        mDecodeQRCodeTask.execute(path);
+        execTask(new DecodeQRCodeTask(EC.EC_DECODE_QR_CODE, path));
+//        mDecodeQRCodeTask = new DecodeQRCodeTask(this);
+//        mDecodeQRCodeTask.execute(path);
+    }
+
+    @Override
+    protected void onEventCallback(EventCenter event) {
+        if (EC.EC_DECODE_QR_CODE == event.code) {
+            if (event.data instanceof TaskResult && null != ((TaskResult) event.data).obj) {
+                resultCallback(((TaskResult) event.data).obj.toString());
+            }
+        }
     }
 
     @Override
@@ -212,9 +227,9 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         PhotoHelper.onActivityResult(requestCode, resultCode, data, null, this);
     }
 
-    private static DecodeQRCodeTask mDecodeQRCodeTask;
+//    private static DecodeQRCodeTask mDecodeQRCodeTask;
 
-    private static final class DecodeQRCodeTask extends AsyncTask<String, Void, String> {
+   /* private static final class DecodeQRCodeTask extends AsyncTask<String, Void, String> {
         SoftReference<QRCodeScanActivity> mActivity;
 
         public DecodeQRCodeTask(QRCodeScanActivity activity) {
@@ -231,11 +246,11 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
             if (null != this.mActivity && null != this.mActivity.get()) {
                 this.mActivity.get().resultCallback(result);
             }
-           /* if (TextUtils.isEmpty(result)) {
+           *//* if (TextUtils.isEmpty(result)) {
                 Toast.makeText(BaseApplication.getInstance(), "未发现二维码!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(BaseApplication.getInstance(), result, Toast.LENGTH_SHORT).show();
-            }*/
+            }*//*
         }
-    }
+    }*/
 }

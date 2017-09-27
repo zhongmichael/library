@@ -1,11 +1,8 @@
 package com.chinaredstar.core.view.banner;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by hairui.xiang on 2017/9/11.
@@ -36,14 +33,12 @@ public class BannerSpeedScroller extends Scroller {
         super.startScroll(startX, startY, dx, dy, mScrollSpeed);
     }
 
-    public void setScrollSpeed(ViewPager vp, int scrollSpeed) {
+    public BannerSpeedScroller setScrollSpeed(int scrollSpeed) {
         this.mScrollSpeed = scrollSpeed;
-        try {
-            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            mScroller.set(vp, this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return this;
+    }
+
+    public int getScrollSpeed() {
+        return mScrollSpeed;
     }
 }

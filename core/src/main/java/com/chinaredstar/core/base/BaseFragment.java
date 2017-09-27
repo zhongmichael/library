@@ -2,16 +2,17 @@ package com.chinaredstar.core.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.chinaredstar.core.butterknife.ButterKnife;
 
 /**
  * Created by hairui.xiang on 2017/8/22.
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends PermissionsFragment {
     private View mRootView;
     private boolean isOnCreated;
     private boolean isVisible;
@@ -20,6 +21,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutResID();
 
     protected void initWidget() {
+        ButterKnife.inject(this);
     }
 
     protected void initValue() {
@@ -67,7 +69,7 @@ public abstract class BaseFragment extends Fragment {
      * @param res
      * @return
      */
-    public <T extends View> T findViewById(int res) {
+    public final <T extends View> T findViewById(int res) {
         if (null != mRootView) {
             return mRootView.findViewById(res);
         } else {

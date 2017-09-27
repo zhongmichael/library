@@ -1,11 +1,11 @@
 package com.chinaredstar.demo;
 
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.chinaredstar.core.base.BaseActivity;
 import com.chinaredstar.core.base.BaseBean;
+import com.chinaredstar.core.butterknife.InjectView;
 import com.chinaredstar.core.view.banner.BannerAdapter;
 import com.chinaredstar.core.view.banner.BannerViewPager;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -18,7 +18,9 @@ import java.util.List;
  */
 
 public class BannerActivity extends BaseActivity {
+    @InjectView(R.id.bvp_banner)
     BannerViewPager mBannerView;
+    @InjectView(R.id.ll_dots)
     LinearLayout ll_dots;
 
     String[] urls = new String[]{
@@ -28,11 +30,11 @@ public class BannerActivity extends BaseActivity {
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505130774387&di=e81e0110d9bc515ebb379b902b9ca948&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Ffaf2b2119313b07e6077d3bc0ad7912396dd8cb8.jpg"
     };
 
-    @Override
+/*    @Override
     protected void initWidget() {
-        mBannerView = findViewById(R.id.bvp_banner);
-        ll_dots = findViewById(R.id.ll_dots);
-    }
+        mBannerView = (BannerViewPager) findViewById(R.id.bvp_banner);
+        ll_dots = (LinearLayout) findViewById(R.id.ll_dots);
+    }*/
 
     @Override
     protected int getContentLayoutId() {
@@ -48,19 +50,21 @@ public class BannerActivity extends BaseActivity {
         mBannerView.setAdapter(new BannerAdapter<BannerInfo>(mBannerInfo) {
             @Override
             protected View getView(BannerInfo data, int position) {
+                System.out.println("position: " + position);
                 SimpleDraweeView child = new SimpleDraweeView(mActivity);
-                child.setLayoutParams(new ViewPager.LayoutParams());
+//                child.setLayoutParams(new ViewPager.LayoutParams());
                 child.setImageURI(data.url);
                 return child;
             }
 
             @Override
             protected void setCurrentDot(int position) {
-                System.out.println("position: " + position);
-                for(int i = 0; i< ll_dots.getChildCount(); i++){
+//                System.out.println("position: " + position);
+                for (int i = 0; i < ll_dots.getChildCount(); i++) {
                     ll_dots.getChildAt(i).setSelected(false);
                 }
-                ll_dots.getChildAt(position).setSelected(true);
+                if (null != ll_dots.getChildAt(position))
+                    ll_dots.getChildAt(position).setSelected(true);
             }
         });
     }

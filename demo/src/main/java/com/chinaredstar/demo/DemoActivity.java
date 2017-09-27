@@ -81,4 +81,13 @@ public class DemoActivity extends BaseActivity {
     public void stickheader2(View v) {
         startPager(ScrollableLayoutDemo2.class);
     }
+
+    public void task(View v) {
+        startPager(TaskMangerDemo.class);
+    }
+
+    public void widget(View v) {
+        startPager(WidgetDemo.class);
+    }
+
 }

@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.chinaredstar.core.R;
+import com.chinaredstar.core.butterknife.ButterKnife;
 import com.chinaredstar.core.eventbus.EventCenter;
+import com.chinaredstar.core.task.core.ITask;
+import com.chinaredstar.core.task.core.TaskManager;
 import com.chinaredstar.core.utils.ActivityStack;
 import com.chinaredstar.core.utils.HandlerUtil;
 import com.chinaredstar.core.utils.NetworkUtil;
@@ -31,11 +34,12 @@ import static com.chinaredstar.core.utils.NetworkUtil.NETWORK_CHANGE_ACTION;
  */
 
 public class BaseActivity extends PermissionsActivity {
-    protected Activity mActivity = this;
+    protected Activity mActivity;
     private View mStatusBar;
     private LinearLayout mRootView;
-    private ViewGroup mHeaderView;
-    private ViewGroup mContentView;
+    private View mHeaderView;
+    private View mContentView;
+    private FrameLayout mLoadingViewContainer;
     private LayoutInflater mLayoutInflater;
 
     @Override
@@ -51,40 +55,62 @@ public class BaseActivity extends PermissionsActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.push(this);
-        if (ebsEnabled()) {
+        if (enabledEventBus()) {
             EventBus.getDefault().register(this);
         }
-        this.setContentView(R.layout.activity_libbase_layout);
-        this.mStatusBar = findViewById(R.id.id_statusbar_view);
-        this.mRootView = findViewById(R.id.id_root_view);
-        if (this.getHeaderLayoutId() > -1) {
-            this.mHeaderView = (ViewGroup) this.getInflater().inflate(this.getHeaderLayoutId(), null);
-            this.mRootView.addView(this.mHeaderView, -1, -2);
+        mActivity = this;
+        mLayoutInflater = LayoutInflater.from(this);
+        setContentView(R.layout.libbase_common_layout);
+        mStatusBar = findViewById(R.id.id_statusbar_view);
+        mRootView = (LinearLayout) findViewById(R.id.id_root_view);
+
+        mLoadingViewContainer = (FrameLayout) inflate(R.layout.libbase_content_layout);
+
+        if (getHeaderLayoutId() > -1) {
+            mHeaderView = inflate(getHeaderLayoutId());
+        } else if (null != getHeaderLayoutView()) {
+            mHeaderView = getHeaderLayoutView();
         }
-        if (this.getContentLayoutId() > -1) {
-            this.mContentView = (ViewGroup) this.getInflater().inflate(this.getContentLayoutId(), null);
-            this.mRootView.addView(this.mContentView, -1, -1);
+        if (getContentLayoutId() > -1) {
+            mContentView = inflate(getContentLayoutId());
+        } else if (null != getContentLayoutView()) {
+            mContentView = getContentLayoutView();
         }
+        if (null != mContentView) {
+            mLoadingViewContainer.addView(mContentView);
+        }
+        if (null != mHeaderView) {
+            mRootView.addView(mHeaderView, -1, -2);
+        }
+
+        mRootView.addView(this.mLoadingViewContainer, -1, -1);
+
         if (enabledImmersiveStyle()) {
             initImmersiveStyle();
         }
-        if (!NetworkUtil.isNetworkAvailable(this)) {
-            onNetworkInvalid();
-        }
+
         this.initValue();
         this.initWidget();
         this.initListener();
-        this.initData();
+
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            onNetworkInvalid();
+        } else {
+            this.initData();
+        }
     }
 
-    protected LayoutInflater getInflater() {
-        if (null == this.mLayoutInflater) {
-            this.mLayoutInflater = LayoutInflater.from(this);
-        }
-        return this.mLayoutInflater;
+    protected final View inflate(int resLayoutId) {
+        return getInflater().inflate(resLayoutId, null);
+    }
+
+    protected final LayoutInflater getInflater() {
+        return mLayoutInflater;
     }
 
     /**
+     * 只有当 enabledImmersiveStyle( ) 方法 return true 时有效
+     * <p>
      * 保留状态栏高度
      *
      * @return <li>true 创建一个和状态栏高度一样的view</li>
@@ -96,9 +122,11 @@ public class BaseActivity extends PermissionsActivity {
 
     /**
      * 状态栏颜色
+     * </p>
+     * 默认与标题栏同色
      */
     protected int getStatusBarBackgroundColor() {
-        return R.color.colorPrimary;
+        return getTitlebarBackgroundColor();
     }
 
     /**
@@ -110,13 +138,13 @@ public class BaseActivity extends PermissionsActivity {
 
     private void initImmersiveStyle() {
         if (null != this.mStatusBar && retainStatusBarHeight()) {
-            this.mStatusBar.setBackgroundColor(getStatusBarBackgroundColor());
+            this.mStatusBar.setBackgroundResource(getStatusBarBackgroundColor());
             StatusBarUtil.setImmersiveStatusBar(mStatusBar, this);
         }
         if (null != this.mHeaderView) {
-            this.mHeaderView.setBackgroundColor(getTitlebarBackgroundColor());
+            this.mHeaderView.setBackgroundResource(getTitlebarBackgroundColor());
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {// api 4.4
             //此FLAG可使状态栏透明，且当前视图在绘制时，从屏幕顶端开始即top = 0开始绘制，这也是实现沉浸效果的基础
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
@@ -135,14 +163,23 @@ public class BaseActivity extends PermissionsActivity {
         return R.layout.libbase_header_layout;
     }
 
+    protected View getHeaderLayoutView() {
+        return null;
+    }
+
     protected int getContentLayoutId() {
         return -1;
+    }
+
+    protected View getContentLayoutView() {
+        return null;
     }
 
     protected void initValue() {
     }
 
     protected void initWidget() {
+        ButterKnife.inject(this);
     }
 
     protected void initListener() {
@@ -151,26 +188,32 @@ public class BaseActivity extends PermissionsActivity {
     protected void initData() {
     }
 
-    protected static void onNetworkInvalid() {
+    protected void onNetworkChangetoDisabled() {
     }
 
-    protected static void onNetworkAvailable() {
+    protected void onNetworkChangetoEnabled() {
     }
 
-    public Handler getHandler() {
+    protected void onNetworkInvalid() {
+    }
+
+    public final Handler getHandler() {
         return HandlerUtil.handler();
     }
 
-    private final static BroadcastReceiver mNetworkMonitorReceiver = new BroadcastReceiver() {
+    /**
+     * 网络状态改变广播
+     */
+    private final BroadcastReceiver mNetworkMonitorReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (NETWORK_CHANGE_ACTION.equals(intent.getAction())) {
                 if (!NetworkUtil.isNetworkAvailable(context)) { // network invalid
-                    onNetworkInvalid();
+                    onNetworkChangetoDisabled();
                 } else if (NetworkUtil.isConnectedWifi(context)) { // valid wifi
-                    onNetworkAvailable();
+                    onNetworkChangetoEnabled();
                 } else if (NetworkUtil.isConnectedMobile(context)) {// valid mobile
-                    onNetworkAvailable();
+                    onNetworkChangetoEnabled();
                 }
             }
         }
@@ -199,18 +242,63 @@ public class BaseActivity extends PermissionsActivity {
      * ASYNC 无论事件在哪个线程发布，都会创建新的子线程在执行
      */
     @Subscribe(threadMode = ThreadMode.MAIN)//, priority = 100
-    public void onEventCenter(EventCenter event) {
-        onEventCallback(event);
+    public final void onEventCenter(EventCenter event) {
+        if (null != event) {
+            onEventCallback(event);
+        }
     }
 
+    /**
+     * 根据code区分当前事件类型
+     */
     protected void onEventCallback(EventCenter event) {
         // handle event
     }
 
     /**
      * 注册event bus
+     *
+     * @return true 自动注册eventbus
      */
-    protected boolean ebsEnabled() {
+    protected boolean enabledEventBus() {
         return false;
+    }
+
+    /**
+     * 执行异步任务
+     * <p>
+     * 执行结果将在onEventCallback(EventCenter event)方法里返回，task的id 相当于event的code
+     *
+     * @param task 计算缓存大小   {@link com.chinaredstar.core.task.CalculateCacheTask }
+     *             清除缓存       {@link com.chinaredstar.core.task.ClearCacheTask}
+     *             压缩图片       {@link com.chinaredstar.core.task.CompressImageTask}
+     */
+    protected final void execTask(ITask task) {
+        if (null != task) {
+            TaskManager.getInstance().excute(task);
+        }
+    }
+
+    /**
+     * 页面内加载框
+     */
+    protected View getLoadingView() {
+        return null;
+    }
+
+    protected boolean isShowingLoadingView() {
+        return null != getLoadingView() && mLoadingViewContainer.indexOfChild(getLoadingView()) >= 0;
+    }
+
+    protected void showLoading() {
+        if (!isShowingLoadingView()) {
+            mLoadingViewContainer.addView(getLoadingView());
+        }
+    }
+
+    protected void hideLoading() {
+        if (isShowingLoadingView()) {
+            mLoadingViewContainer.removeView(getLoadingView());
+        }
     }
 }

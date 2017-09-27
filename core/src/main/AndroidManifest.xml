@@ -3,9 +3,10 @@
 
     <application>
         <!-- apk更新完成广播 -->
-        <receiver android:name="com.chinaredstar.core.utils.ApkUtil$InstallAPKReceiver">
+        <receiver android:name="com.chinaredstar.core.receiver.InstallAPKReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="com.chinaredstar.hrxlibcore.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 
@@ -22,6 +23,17 @@
         <activity
             android:name="com.chinaredstar.core.qrcode.QRCodeScanActivity"
             android:screenOrientation="portrait" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.chinaredstar.xcore.lib.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!--元数据-->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/libbase_file_paths" />
+        </provider>
     </application>
 
 </manifest>

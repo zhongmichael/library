@@ -35,6 +35,7 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
 
     public void binding(ViewPager vp) {
         this.mViewPager = vp;
+        this.mViewPager.setOffscreenPageLimit(mDotsSize);
         this.mViewPager.setOnPageChangeListener(mOnPageChangeListener);
     }
 
@@ -113,6 +114,9 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
             if (msg.what == mCycleWhat) {
                 mCycleHandler.removeMessages(mCycleWhat);
                 if (null != mViewPager) {
+                    if (mViewPager instanceof BannerViewPager) {
+                        ((BannerViewPager) mViewPager).setCustomScrollSpeed();
+                    }
                     mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
                 }
                 mCycleHandler.sendEmptyMessageDelayed(mCycleWhat, mDuration);
@@ -131,6 +135,9 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
+                        if (mViewPager instanceof BannerViewPager) {
+                            ((BannerViewPager) mViewPager).setDefaultScrollSpeed();
+                        }
                         mCycleHandler.removeMessages(mCycleWhat);
                         break;
                     case MotionEvent.ACTION_CANCEL:
@@ -184,6 +191,9 @@ public abstract class BannerAdapter<T> extends PagerAdapter {
             // (arg0 % dotsSize - 1) % (dotsSize - 2)
             // }
             if (state != ViewPager.SCROLL_STATE_IDLE) {
+                if (mIsCycle && arg0 == 0) {
+                    arg0 = getCount() - 2;
+                }
                 setCurrentDot((arg0 - 1) % mDotsSize);
             }
         }

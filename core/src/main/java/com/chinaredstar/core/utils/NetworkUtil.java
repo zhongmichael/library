@@ -6,6 +6,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import com.chinaredstar.core.base.BaseApplication;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,11 +92,10 @@ public class NetworkUtil {
     /**
      * Get the network info
      *
-     * @param context
      * @return
      */
-    private static NetworkInfo getNetworkInfo(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static NetworkInfo getNetworkInfo() {
+        ConnectivityManager cm = (ConnectivityManager) BaseApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();
     }
 
@@ -105,7 +106,7 @@ public class NetworkUtil {
      * @return
      */
     public static boolean isConnected(Context context) {
-        NetworkInfo info = getNetworkInfo(context);
+        NetworkInfo info = getNetworkInfo();
         return (null != info && info.isConnected());
     }
 
@@ -115,7 +116,7 @@ public class NetworkUtil {
      * @param context
      */
     public static boolean isConnectedWifi(Context context) {
-        NetworkInfo info = getNetworkInfo(context);
+        NetworkInfo info = getNetworkInfo();
         return (null != info && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
     }
 
@@ -125,7 +126,7 @@ public class NetworkUtil {
      * @param context
      */
     public static boolean isConnectedMobile(Context context) {
-        NetworkInfo info = getNetworkInfo(context);
+        NetworkInfo info = getNetworkInfo();
         return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 
@@ -136,7 +137,7 @@ public class NetworkUtil {
      * @return
      */
     public static boolean isConnectedFast(Context context) {
-        NetworkInfo info = getNetworkInfo(context);
+        NetworkInfo info = getNetworkInfo();
         return (info != null && info.isConnected() && isConnectionFast(info.getType(), info.getSubtype()));
     }
 
@@ -144,7 +145,7 @@ public class NetworkUtil {
      * 网络监测，判断当前网络是否可用
      */
     public static boolean isNetworkAvailable(Context context) {
-        NetworkInfo info = getNetworkInfo(context);
+        NetworkInfo info = getNetworkInfo();
         return null != info && info.isAvailable();
     }
 

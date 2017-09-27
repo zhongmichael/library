@@ -25,8 +25,8 @@ public class TestFragmentDemo extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
 
-        id_fragment = findViewById(R.id.id_fragment);
-        id_tablayout = findViewById(R.id.id_tablayout);
+        id_fragment = (FrameLayout) findViewById(R.id.id_fragment);
+        id_tablayout = (TabLayout) findViewById(R.id.id_tablayout);
 
         id_tablayout.addTab(id_tablayout.newTab().setText("A"));
         id_tablayout.addTab(id_tablayout.newTab().setText("B"));

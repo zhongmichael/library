@@ -35,7 +35,7 @@ public abstract class FileCallBack extends Callback<File> {
 
     public File saveFile(Response response, final int id) throws IOException {
         InputStream is = null;
-        byte[] buf = new byte[2048];
+        byte[] buf = new byte[2048 * 4];
         int len = 0;
         FileOutputStream fos = null;
         try {

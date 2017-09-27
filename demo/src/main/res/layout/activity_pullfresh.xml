@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.chinaredstar.core.view.pulltorefresh.PulToRefreshLayout
+    <com.chinaredstar.core.view.pulltorefresh.t1.PulToRefreshLayout
         android:id="@+id/ptr_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,5 +13,5 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="pull to refresh test" />
-    </com.chinaredstar.core.view.pulltorefresh.PulToRefreshLayout>
+    </com.chinaredstar.core.view.pulltorefresh.t1.PulToRefreshLayout>
 </LinearLayout>

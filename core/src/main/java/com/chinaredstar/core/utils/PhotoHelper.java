@@ -113,11 +113,20 @@ public class PhotoHelper {
         Intent intent = new Intent(ACTION_IMAGE_CAPTURE);
         File file = getOutputPhoto(false);
         if (null == file) {
-            //File can not be created!
+            LogUtil.e("File can not be created!");
+            return;
         }
-        Uri imgUri = Uri.fromFile(file);
+        LogUtil.i("TakePhotos file: " + file.toString());
+        Uri imgUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //        Uri imgUri = FileProvider.getUriForFile(activity, PathUtil.FILEPROVIDER_AUTHORITIES_VALUE, file);
+            imgUri = FileProviderUtil.getUriForFile(file);
+        } else {
+            imgUri = Uri.fromFile(file);
+        }
         if (null != imgUri) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             activity.startActivityForResult(intent, RC_ACTION_IMAGE_CAPTURE);
         } else {
 
@@ -128,20 +137,25 @@ public class PhotoHelper {
      * 打开相册
      */
     public static void onOpenAlbum(Activity activity) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
+     /*   Intent intent = new Intent();
+        intent.setType("image*//*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        activity.startActivityForResult(Intent.createChooser(intent, "选择图片"), RC_ACTION_PICK);
+        activity.startActivityForResult(Intent.createChooser(intent, "选择图片"), RC_ACTION_PICK);*/
 
        /* Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image*//*");
         activity.startActivityForResult(intent, RC_ACTION_PICK);*/
+
+        Intent intent = new Intent(Intent.ACTION_PICK);// 激活系统图库，选择一张图片
+        intent.setType("image/*");
+        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//使用以上这种模式，并添加以上两句
+        activity.startActivityForResult(intent, RC_ACTION_PICK);// 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_GALLERY
     }
 
 
     private static File getOutputPhoto(boolean isCrop) {
-        File photosDir = new File(PathUtil.getAppFilesDir(), "photos/");
+        File photosDir = new File(PathUtil.getAppCacheDir(), PathUtil.IMAGE_DIR);
         if (!photosDir.exists()) {
             photosDir.mkdirs();
         }
@@ -207,8 +221,9 @@ public class PhotoHelper {
                 }
             }
         } else if ("file".equals(uri.getScheme())) {
-            path = uri.toString().substring(uri.getScheme().length());
+            path = uri.getPath();
         }
+        LogUtil.i("query path by uri: " + path);
         return path;
     }
 }

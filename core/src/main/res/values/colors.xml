@@ -9,4 +9,5 @@
     <color name="c_919191">#919191</color>
     <color name="c_white">#FFFFFF</color>
     <color name="c_transparent">#00000000</color>
+    <color name="c_alpha">#0000</color>
 </resources>
