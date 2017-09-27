@@ -43,9 +43,9 @@ public class ObservableScrollView extends ScrollView {
         void onScrolltoBottom();
     }
 
-    static class StateHandler extends BaseWeakReferenceHandler {
+    private static class StateHandler extends BaseWeakReferenceHandler {
 
-        public StateHandler(Object o) {
+        private StateHandler(Object o) {
             super(o);
         }
 
