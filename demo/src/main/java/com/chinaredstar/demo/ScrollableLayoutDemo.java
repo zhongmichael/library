@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chinaredstar.core.base.BaseActivity;
-import com.chinaredstar.core.view.pulltorefresh.PulToRefreshLayout;
+import com.chinaredstar.core.view.pulltorefresh.t1.PulToRefreshLayout;
 import com.chinaredstar.core.view.recyclerview.DefaultLoadMoreView;
 import com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView;
 import com.chinaredstar.core.view.recyclerview.OnLoadMoreListener;

@@ -25,7 +25,7 @@
         android:text="navigationbar"
         android:textColor="#fff" />
 
-    <com.chinaredstar.core.view.pulltorefresh.PulToRefreshLayout
+    <com.chinaredstar.core.view.pulltorefresh.t1.PulToRefreshLayout
         android:id="@+id/ptr_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -36,6 +36,6 @@
             android:layout_height="match_parent">
 
         </com.chinaredstar.core.view.recyclerview.LoadMoreRecyclerView>
-    </com.chinaredstar.core.view.pulltorefresh.PulToRefreshLayout>
+    </com.chinaredstar.core.view.pulltorefresh.t1.PulToRefreshLayout>
 
 </com.scrollablelayout.ScrollableLayout>

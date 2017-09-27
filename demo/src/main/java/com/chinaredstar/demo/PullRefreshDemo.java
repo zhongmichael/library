@@ -1,7 +1,7 @@
 package com.chinaredstar.demo;
 
 import com.chinaredstar.core.base.BaseActivity;
-import com.chinaredstar.core.view.pulltorefresh.PulToRefreshLayout;
+import com.chinaredstar.core.view.pulltorefresh.t1.PulToRefreshLayout;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
