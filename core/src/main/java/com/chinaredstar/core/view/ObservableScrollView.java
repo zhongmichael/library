@@ -34,7 +34,7 @@ public class ObservableScrollView extends ScrollView {
     }
 
     public interface OnScrollListener {
-        void onScrolled(ObservableScrollView observableScrollView, int x, int y, int oldx, int oldy);
+        void onScrollChanged(ObservableScrollView observableScrollView, int x, int y, int oldx, int oldy);
 
         void onScrollStateChanged(ObservableScrollView view, int newState);
 
@@ -94,7 +94,7 @@ public class ObservableScrollView extends ScrollView {
     protected void onScrollChanged(int x, int y, int oldx, int oldy) {
         super.onScrollChanged(x, y, oldx, oldy);
         if (isEnabledScrollListener()) {
-            mOnScrollListener.onScrolled(this, x, y, oldx, oldy);
+            mOnScrollListener.onScrollChanged(this, x, y, oldx, oldy);
             if (getScrollY() + getHeight() >= computeVerticalScrollRange()) {
                 mOnScrollListener.onScrolltoBottom();
             } else if (getScrollY() == 0) {
