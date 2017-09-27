@@ -1,9 +1,9 @@
-package com.chinaredstar.core.view.pulltorefresh;
+package com.chinaredstar.core.view.pulltorefresh.t1;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.chinaredstar.core.view.pulltorefresh.header.ThreeColourDotsHeader;
+import com.chinaredstar.core.view.pulltorefresh.t1.header.ThreeColourDotsHeader;
 
 /**
  * Created by hairui.xiang on 2017/8/4.

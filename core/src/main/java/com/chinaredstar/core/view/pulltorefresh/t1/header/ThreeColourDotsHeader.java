@@ -1,4 +1,4 @@
-package com.chinaredstar.core.view.pulltorefresh.header;
+package com.chinaredstar.core.view.pulltorefresh.t1.header;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -78,7 +78,7 @@ public class ThreeColourDotsHeader extends FrameLayout implements PtrUIHandler {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.libbase_pull_header, this);
+        inflate(getContext(), R.layout.libbase_pull_ptr_header, this);
         iv_orange_dot = findViewById(R.id.iv_orange_dot);
         iv_green_dot = findViewById(R.id.iv_green_dot);
         iv_blue_dot = findViewById(R.id.iv_blue_dot);
