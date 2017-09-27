@@ -13,22 +13,18 @@ public class IPullableRecyclerView extends RecyclerView implements IPullable {
 
     public IPullableRecyclerView(Context arg0, AttributeSet arg1, int arg2) {
         super(arg0, arg1, arg2);
-        // TODO Auto-generated constructor stub
     }
 
     public IPullableRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
     }
 
     public IPullableRecyclerView(Context context) {
         super(context);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public boolean canPullUp() {
-        // TODO Auto-generated method stub
         try {
             if (!isCanPullup) {
                 return false;
@@ -64,7 +60,6 @@ public class IPullableRecyclerView extends RecyclerView implements IPullable {
 
     @Override
     public boolean canPullDown() {
-        // TODO Auto-generated method stub
         try {
             if (!isCanPuldown) {
                 return false;
@@ -96,7 +91,6 @@ public class IPullableRecyclerView extends RecyclerView implements IPullable {
     }
 
     public boolean isBottom() {
-        // TODO Auto-generated method stub
         try {
             if (null != getAdapter() && getAdapter().getItemCount() == 0) {
                 return true;
